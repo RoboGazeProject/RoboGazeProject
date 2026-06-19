@@ -6,7 +6,7 @@
 
   <meta name="title" content="RoboGaze: Evaluating Robot World Models via Structured Vision-Language Analysis">
   <meta name="description" content="RoboGaze is a training-free multi-agent VLM framework for structured, temporally localized diagnosis of generated robot-manipulation videos.">
-  <meta name="keywords" content="RoboGaze, robot world models, robot video evaluation, vision-language models, manipulation, glitch diagnosis, CoRL 2026">
+  <meta name="keywords" content="RoboGaze, robot world models, robot video evaluation, vision-language models, manipulation, glitch diagnosis, video generation, embodied AI">
   <meta name="author" content="Anonymous CoRL 2026 Submission">
   <meta name="robots" content="index, follow">
   <meta name="language" content="English">
@@ -26,10 +26,9 @@
   <meta name="citation_title" content="RoboGaze: Evaluating Robot World Models via Structured Vision-Language Analysis">
   <meta name="citation_author" content="Anonymous">
   <meta name="citation_publication_date" content="2026">
-  <meta name="citation_conference_title" content="Conference on Robot Learning">
 
   <meta name="theme-color" content="#155e75">
-  <title>RoboGaze | CoRL 2026 Submission</title>
+  <title>RoboGaze: Evaluating Robot World Models via Structured Vision-Language Analysis</title>
 
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/index.css">
@@ -47,37 +46,89 @@
     <i class="fas fa-chevron-up"></i>
   </button>
 
+  <nav class="rg-nav" aria-label="Section navigation">
+    <div class="rg-nav-inner">
+      <a class="rg-nav-brand" href="#top">RoboGaze</a>
+      <div class="rg-nav-links">
+        <a href="#video">Video</a>
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#taxonomy">Taxonomy</a>
+        <a href="#benchmark">Benchmark</a>
+        <a href="#results">Results</a>
+      </div>
+    </div>
+  </nav>
+
   <main id="main-content">
+    <span id="top"></span>
     <section class="hero publication-header robogaze-hero">
       <div class="hero-body">
         <div class="container is-max-widescreen">
           <div class="columns is-vcentered is-variable is-7">
             <div class="column is-6">
-              <p class="venue-tag">CoRL 2026 Submission</p>
+              <p class="venue-tag">CoRL 2026</p>
               <h1 class="title is-1 publication-title">RoboGaze: Evaluating Robot World Models via Structured Vision-Language Analysis</h1>
               <p class="hero-summary">
-                A training-free, multi-agent VLM evaluator that turns generated robot-manipulation videos into structured, temporally localized diagnostic reports.
+                A training-free, multi-agent VLM evaluator that turns generated robot-manipulation videos into structured, temporally localized diagnostic reports &mdash; telling you <em>what</em> failed, <em>when</em>, <em>why</em>, and <em>how severely</em>.
               </p>
+
+              <!-- CoRL 2026 double-blind: authors anonymized. Restore the block below for the arXiv version. -->
               <div class="publication-authors hero-authors">
                 <span class="author-block">Anonymous Authors</span>
               </div>
+              <!-- ARXIV-AUTHORS-START
+              <div class="publication-authors hero-authors">
+                <span class="author-block">Minh-Loi Nguyen<sup>1</sup>,</span>
+                <span class="author-block">Nghiem Tuong Diep<sup>2</sup>,</span>
+                <span class="author-block">Hung Khang Nguyen<sup>2</sup>,</span>
+                <span class="author-block">Minh Le<sup>2</sup>,</span>
+                <span class="author-block">Doanh Le Thien<sup>1,2</sup>,</span>
+                <span class="author-block">Hoang H. Tran<sup>1</sup>,</span>
+                <span class="author-block">Dung Duy Le<sup>1</sup>,</span>
+                <span class="author-block">Vu Duong<sup>1</sup>,</span>
+                <span class="author-block">Daniel Sonntag<sup>3</sup>,</span>
+                <span class="author-block">An Thai Le<sup>1,2,6</sup>,</span>
+                <span class="author-block">Duy M. H. Nguyen<sup>3,4,5</sup>,</span>
+                <span class="author-block">Ngo Anh Vien<sup>&dagger;1,2</sup>,</span>
+                <span class="author-block">Tran Van Nhiem<sup>&dagger;2</sup></span>
+              </div>
+              <div class="affiliation-block">
+                <p>
+                  <sup>1</sup>Center for AI Research, VinUniversity&nbsp;&nbsp;
+                  <sup>2</sup>VinRobotics&nbsp;&nbsp;
+                  <sup>3</sup>DFKI&nbsp;&nbsp;
+                  <sup>4</sup>University of Stuttgart&nbsp;&nbsp;
+                  <sup>5</sup>Max Planck Research School for Intelligent Systems&nbsp;&nbsp;
+                  <sup>6</sup>Technische Universit&auml;t Darmstadt
+                </p>
+                <p class="eql-cntrb"><sup>&dagger;</sup>Project Leads</p>
+              </div>
+              ARXIV-AUTHORS-END -->
+
               <div class="publication-links">
                 <span class="link-block">
                   <a class="external-link button is-normal is-rounded is-dark is-disabled" aria-disabled="true">
                     <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                    <span>Paper Coming Soon</span>
+                    <span>arXiv (coming soon)</span>
                   </a>
                 </span>
                 <span class="link-block">
                   <a class="external-link button is-normal is-rounded is-dark is-disabled" aria-disabled="true">
                     <span class="icon"><i class="fab fa-github"></i></span>
-                    <span>Code Coming Soon</span>
+                    <span>Code (coming soon)</span>
                   </a>
                 </span>
                 <span class="link-block">
                   <a class="external-link button is-normal is-rounded is-dark is-disabled" aria-disabled="true">
+                    <span class="icon"><i class="fas fa-database"></i></span>
+                    <span>Dataset (coming soon)</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a class="external-link button is-normal is-rounded is-dark" href="#video">
                     <span class="icon"><i class="fas fa-play"></i></span>
-                    <span>Videos Coming Soon</span>
+                    <span>Watch Video</span>
                   </a>
                 </span>
               </div>
@@ -85,7 +136,7 @@
             <div class="column is-6">
               <figure class="hero-figure">
                 <img src="static/images/teaser_2.png" alt="RoboGaze diagnostic overview" loading="eager">
-                <figcaption>RoboGaze provides interpretable, temporally localized failure diagnostics for generated robot videos.</figcaption>
+                <figcaption>RoboGaze delivers interpretable, temporally localized failure diagnostics where monolithic VLM judges miss fine-grained physical anomalies &mdash; approaching the human ceiling on both description-F<sub>1</sub> and clean-clip accuracy.</figcaption>
               </figure>
             </div>
           </div>
@@ -93,20 +144,35 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="video">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Overview Video</h2>
+        <p class="section-intro">
+          A short walkthrough of RoboGaze: from a task instruction and a generated video to a verified, temporally grounded glitch report.
+        </p>
+        <div class="video-frame">
+          <video controls playsinline preload="metadata" poster="static/images/teaser_2.png">
+            <source src="static/videos/demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="abstract">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
               <p>
-                Recent advances in robot world models enable synthetic video generation for embodied prediction and planning. However, evaluating these videos is challenging: visually realistic outputs often violate physical laws, temporal consistency, or task logic, while conventional metrics and monolithic Vision-Language Model judges fail to generalize or provide precise diagnostic value.
+                Recent advances in robot world models enable synthetic video generation for embodied prediction and planning. However, evaluating these videos is challenging: visually realistic outputs often violate physical laws, temporal consistency, or task logic, while conventional metrics and monolithic Vision-Language Model (VLM) judges fail to generalize or provide precise diagnostic value.
               </p>
               <p>
-                RoboGaze is a training-free, multi-agent VLM framework that provides structured, interpretable evaluation for generated robot-manipulation videos. Given a task instruction and video, RoboGaze operates via a three-stage pipeline: task-scene grounding, dimension-specific specialist routing, and critic-based verification. It outputs temporally localized glitch reports categorized under a novel 6-dimension, 30-type robotics-specific taxonomy.
+                We present <strong>RoboGaze</strong>, a training-free, multi-agent VLM framework that provides structured, interpretable evaluation for generated robot-manipulation videos. Given a task instruction and video, RoboGaze operates via a three-stage pipeline: <em>task-scene grounding</em>, <em>dimension-specific specialist routing</em>, and <em>critic-based verification</em>. It outputs temporally localized glitch reports categorized under a novel 6-dimension, 30-type robotics-specific taxonomy.
               </p>
               <p>
-                To benchmark RoboGaze, we introduce a human-validated dataset of 382 clips spanning simulated and real-world multi-view manipulation. Across eight open-source and proprietary VLM backbones, RoboGaze improves description-F1 by up to 43 points and temporal alignment by up to 37 points, while lifting clean-clip accuracy from under 25% to over 80%.
+                To benchmark RoboGaze, we introduce a human-validated dataset of 382 clips spanning simulated and real-world multi-view manipulation. Evaluating eight open-source and proprietary VLM backbones, RoboGaze dramatically outperforms zero-shot baselines, improving description-F<sub>1</sub> by up to <strong>+43 points</strong> and temporal alignment (F<sub>1</sub>&nbsp;&times;&nbsp;IoU) by up to <strong>+37 points</strong> &mdash; closing approximately <strong>85%</strong> of the gap to the human ceiling. Its critic verifier mitigates the &ldquo;cry-wolf&rdquo; false-positive flaw of standard VLMs, lifting clean-clip accuracy from under <strong>25%</strong> to over <strong>80%</strong>.
               </p>
             </div>
           </div>
@@ -116,160 +182,86 @@
 
     <section class="section hero is-light">
       <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">What RoboGaze Reports</h2>
+        <h2 class="title is-3 has-text-centered">Headline Results</h2>
         <div class="stats-grid">
           <div class="stat-tile">
-            <span class="stat-number">6</span>
-            <span class="stat-label">diagnostic dimensions</span>
+            <span class="stat-number">+43</span>
+            <span class="stat-label">description-F<sub>1</sub> points over zero-shot baselines</span>
           </div>
           <div class="stat-tile">
-            <span class="stat-number">30</span>
-            <span class="stat-label">robotics-specific glitch types</span>
+            <span class="stat-number">+37</span>
+            <span class="stat-label">temporal alignment (F<sub>1</sub>&nbsp;&times;&nbsp;IoU) points</span>
           </div>
           <div class="stat-tile">
-            <span class="stat-number">382</span>
-            <span class="stat-label">human-validated clips</span>
+            <span class="stat-number">&lt;25% &rarr; 80%+</span>
+            <span class="stat-label">clean-clip accuracy &mdash; the &ldquo;cry-wolf&rdquo; flaw, fixed</span>
           </div>
           <div class="stat-tile">
-            <span class="stat-number">8</span>
-            <span class="stat-label">VLM backbones evaluated</span>
+            <span class="stat-number">~85%</span>
+            <span class="stat-label">of the gap to the human ceiling, closed</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="method">
       <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">Main Results</h2>
+        <h2 class="title is-3 has-text-centered">Three Key Ideas</h2>
         <p class="section-intro">
-          RoboGaze consistently improves semantic agreement, temporal localization, joint diagnostic quality, and clean-clip accuracy across proprietary and open VLM backbones on RoboGazeBench.
+          RoboGaze reframes robot-video evaluation as a structured reasoning problem rather than a single quality score. Three ingredients make it work.
         </p>
-        <div class="results-table-wrap">
-          <table class="results-table">
-            <caption>Main results on RoboGazeBench, averaged across the three datasets. V, CoT, and RG denote vanilla prompting, chain-of-thought prompting, and the same backbone wrapped by RoboGaze. Higher is better.</caption>
-            <thead>
-              <tr>
-                <th rowspan="2">Family</th>
-                <th rowspan="2">Model</th>
-                <th colspan="3">Desc. F1</th>
-                <th colspan="3">mIoU</th>
-                <th colspan="3">F x IoU</th>
-                <th colspan="3">Clean</th>
-              </tr>
-              <tr>
-                <th>V</th>
-                <th>CoT</th>
-                <th class="rg-col">RG</th>
-                <th>V</th>
-                <th>CoT</th>
-                <th class="rg-col">RG</th>
-                <th>V</th>
-                <th>CoT</th>
-                <th class="rg-col">RG</th>
-                <th>V</th>
-                <th>CoT</th>
-                <th class="rg-col">RG</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th rowspan="4" scope="rowgroup">Prop.</th>
-                <td>Gemini 3.1 Pro</td>
-                <td>25.4</td><td>32.4</td><td class="rg-col strong">67.9</td>
-                <td>.39</td><td>.43</td><td class="rg-col strong">.64</td>
-                <td>9.8</td><td>13.9</td><td class="rg-col strong">43.7</td>
-                <td>.13</td><td>.21</td><td class="rg-col strong">.92</td>
-              </tr>
-              <tr>
-                <td>GPT-5.5</td>
-                <td>23.9</td><td>30.5</td><td class="rg-col strong">65.1</td>
-                <td>.37</td><td>.41</td><td class="rg-col strong">.63</td>
-                <td>8.8</td><td>12.5</td><td class="rg-col strong">41.1</td>
-                <td>.09</td><td>.18</td><td class="rg-col strong">.90</td>
-              </tr>
-              <tr>
-                <td>Gemini 3.1 Flash</td>
-                <td>20.2</td><td>26.1</td><td class="rg-col strong">57.8</td>
-                <td>.35</td><td>.39</td><td class="rg-col strong">.61</td>
-                <td>7.0</td><td>10.2</td><td class="rg-col strong">35.0</td>
-                <td>.08</td><td>.16</td><td class="rg-col strong">.87</td>
-              </tr>
-              <tr>
-                <td>Claude Sonnet 4.6</td>
-                <td>21.4</td><td>27.6</td><td class="rg-col strong">60.3</td>
-                <td>.36</td><td>.40</td><td class="rg-col strong">.61</td>
-                <td>7.7</td><td>11.0</td><td class="rg-col strong">36.8</td>
-                <td>.11</td><td>.20</td><td class="rg-col strong">.89</td>
-              </tr>
-              <tr>
-                <th rowspan="4" scope="rowgroup">Open</th>
-                <td>Gemma4-31B</td>
-                <td>17.6</td><td>23.4</td><td class="rg-col strong">56.6</td>
-                <td>.33</td><td>.37</td><td class="rg-col strong">.66</td>
-                <td>5.7</td><td>8.7</td><td class="rg-col strong">34.5</td>
-                <td>.03</td><td>.12</td><td class="rg-col strong">.86</td>
-              </tr>
-              <tr>
-                <td>Qwen3.6-35B</td>
-                <td>16.7</td><td>22.3</td><td class="rg-col strong">53.1</td>
-                <td>.32</td><td>.36</td><td class="rg-col strong">.60</td>
-                <td>5.4</td><td>8.2</td><td class="rg-col strong">31.6</td>
-                <td>.16</td><td>.23</td><td class="rg-col strong">.84</td>
-              </tr>
-              <tr>
-                <td>LLaVA-OV-2-8B</td>
-                <td>14.2</td><td>19.5</td><td class="rg-col strong">47.9</td>
-                <td>.30</td><td>.33</td><td class="rg-col strong">.56</td>
-                <td>4.3</td><td>6.5</td><td class="rg-col strong">26.9</td>
-                <td>.18</td><td>.25</td><td class="rg-col strong">.82</td>
-              </tr>
-              <tr>
-                <td>InternVL3.5-38B</td>
-                <td>15.5</td><td>21.0</td><td class="rg-col strong">50.1</td>
-                <td>.31</td><td>.35</td><td class="rg-col strong">.58</td>
-                <td>4.8</td><td>7.4</td><td class="rg-col strong">28.9</td>
-                <td>.04</td><td>.13</td><td class="rg-col strong">.81</td>
-              </tr>
-              <tr class="human-row">
-                <th scope="row">Human</th>
-                <td>ceiling</td>
-                <td colspan="3">75.5</td>
-                <td colspan="3">0.71</td>
-                <td colspan="3">47.1</td>
-                <td colspan="3">0.94</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="idea-grid">
+          <div class="idea-card">
+            <div class="idea-icon"><i class="fas fa-sitemap"></i></div>
+            <h3 class="idea-title">Robotics-specific glitch taxonomy</h3>
+            <p>
+              A hierarchical <strong>6&times;30</strong> taxonomy of robot-video failures spanning task execution, instruction consistency, object interactions, robot behavior, physical plausibility, and visual quality &mdash; replacing one opaque score with named, actionable failure types.
+            </p>
+            <p class="idea-payoff">6 dimensions &middot; 30 failure types</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-icon"><i class="fas fa-stream"></i></div>
+            <h3 class="idea-title">Subtask-level temporal grounding</h3>
+            <p>
+              Instead of localizing over the full video, RoboGaze converts localization into clip-level task-progress reasoning and groups clips into subtask segments &mdash; pinpointing <em>when</em> each failure happens during execution.
+            </p>
+            <p class="idea-payoff">+37 points temporal alignment</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-icon"><i class="fas fa-check-double"></i></div>
+            <h3 class="idea-title">Verifier-based multi-agent reasoning</h3>
+            <p>
+              A critic verifier re-examines every specialist hypothesis against visual evidence, task context, and scene state &mdash; accepting, rejecting, or merging it. This contests false alarms before they enter the report.
+            </p>
+            <p class="idea-payoff">Eliminates &ldquo;cry-wolf&rdquo; false positives</p>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section hero is-light">
       <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">Per-Dimension Performance</h2>
-        <figure class="paper-figure performance-figure">
-          <img src="static/images/per_dim_performance-1.png" alt="Per-dimension description-F1 for Gemini 3.1 Pro on RoboGazeBench" loading="lazy">
-          <figcaption>
-            Per-dimension description-F1 for Gemini 3.1 Pro on RoboGazeBench, averaged across the three datasets. Description-F1 measures the agreement between predicted and human diagnostic descriptions within each glitch dimension; higher is better.
-          </figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container is-max-widescreen">
         <div class="framework-copy">
-          <h2 class="title is-3 has-text-centered">Framework</h2>
-          <div class="content">
+          <h2 class="title is-3 has-text-centered">The RoboGaze Framework</h2>
+          <div class="content has-text-centered">
             <p>
-              RoboGaze decomposes robot-video evaluation into three phases: task and scene grounding, specialist routing over suspicious temporal spans, and critic verification before producing the final report.
+              A three-phase pipeline turns raw multimodal inputs into a verified, structured glitch report.
             </p>
-            <ul class="method-list">
-              <li><strong>Grounding:</strong> build task memory, scene memory, and clip-level execution observations.</li>
-              <li><strong>Specialists:</strong> route each subtask segment to relevant diagnostic dimensions.</li>
-              <li><strong>Verifier:</strong> reject weak hypotheses and merge supported failures into a report.</li>
-            </ul>
           </div>
+          <ol class="phase-list">
+            <li>
+              <span class="phase-tag">Phase 1</span>
+              <strong>Input &amp; Context Grounding.</strong> Parse the task instruction and initial frame into structured <em>task memory</em> and <em>scene memory</em>, and decompose the video into clip-level execution observations grouped by subtask.
+            </li>
+            <li>
+              <span class="phase-tag">Phase 2</span>
+              <strong>Candidate Discovery &amp; Specialist Analysis.</strong> A router predicts which glitch dimensions are plausible per subtask, then dimension-specific specialists produce evidence-grounded, temporally localized hypotheses.
+            </li>
+            <li>
+              <span class="phase-tag">Phase 3</span>
+              <strong>Verification &amp; Reporting.</strong> A critic verifier validates, rejects, or merges each hypothesis, then synthesizes the survivors into a single coherent report with dimensions, timestamps, evidence, and severity.
+            </li>
+          </ol>
         </div>
         <figure class="paper-figure framework-figure">
           <img src="static/images/pipeline_v4444_200.png" alt="RoboGaze three-phase framework" loading="lazy">
@@ -278,9 +270,228 @@
       </div>
     </section>
 
+    <section class="section" id="taxonomy">
+      <div class="container is-max-widescreen">
+        <h2 class="title is-3 has-text-centered">A Robotics-Specific Glitch Taxonomy</h2>
+        <p class="section-intro">
+          Failures are organized along six coarse dimensions, each refined into fine-grained types &mdash; 30 in total &mdash; spanning the full execution stack of a manipulation rollout.
+        </p>
+        <div class="dimension-grid">
+          <div class="dim-chip"><span class="dim-num">1</span><span class="dim-name">Task Progress</span><span class="dim-desc">Subtask completion and execution order</span></div>
+          <div class="dim-chip"><span class="dim-num">2</span><span class="dim-name">Instruction Consistency</span><span class="dim-desc">Alignment with the commanded task</span></div>
+          <div class="dim-chip"><span class="dim-num">3</span><span class="dim-name">Object&ndash;Scene</span><span class="dim-desc">Object existence, identity, and interactions</span></div>
+          <div class="dim-chip"><span class="dim-num">4</span><span class="dim-name">Robot-Body</span><span class="dim-desc">Robot kinematics and self-consistency</span></div>
+          <div class="dim-chip"><span class="dim-num">5</span><span class="dim-name">Physical Plausibility</span><span class="dim-desc">Contacts, collisions, and dynamics</span></div>
+          <div class="dim-chip"><span class="dim-num">6</span><span class="dim-name">Visual Quality</span><span class="dim-desc">Rendering, artifacts, and temporal coherence</span></div>
+        </div>
+        <p class="section-intro" style="margin-bottom:0;">
+          Specialist agents reason at the fine-grained <em>type</em> level, while headline results aggregate at the dimension level &mdash; giving both pinpoint diagnoses and an interpretable summary.
+        </p>
+      </div>
+    </section>
+
+    <section class="section hero is-light" id="benchmark">
+      <div class="container is-max-widescreen">
+        <h2 class="title is-3 has-text-centered">RoboGazeBench</h2>
+        <p class="section-intro">
+          A human-validated benchmark of <strong>382</strong> generated robot-manipulation clips with temporally localized glitch annotations, severity labels, and free-text diagnostic descriptions &mdash; spanning simulation and real-world domains, single- and multi-view. The three splits test whether diagnostic evaluation transfers across domain realism and camera configuration.
+        </p>
+
+        <div class="split-grid">
+          <div class="split-card">
+            <div class="split-icon"><i class="fas fa-cube"></i></div>
+            <div class="split-count">154</div>
+            <div class="split-name">GR1-Sim</div>
+            <ul class="split-meta">
+              <li><span>Domain</span><strong>Simulated</strong></li>
+              <li><span>View</span><strong>Single</strong></li>
+              <li><span>Duration</span><strong>8&ndash;9 s</strong></li>
+            </ul>
+          </div>
+          <div class="split-card">
+            <div class="split-icon"><i class="fas fa-video"></i></div>
+            <div class="split-count">100</div>
+            <div class="split-name">GR1-Real</div>
+            <ul class="split-meta">
+              <li><span>Domain</span><strong>Real-initialized</strong></li>
+              <li><span>View</span><strong>Single</strong></li>
+              <li><span>Duration</span><strong>5&ndash;6 s</strong></li>
+            </ul>
+          </div>
+          <div class="split-card">
+            <div class="split-icon"><i class="fas fa-th-large"></i></div>
+            <div class="split-count">128</div>
+            <div class="split-name">DROID-MV</div>
+            <ul class="split-meta">
+              <li><span>Domain</span><strong>Real</strong></li>
+              <li><span>View</span><strong>Multi-view</strong></li>
+              <li><span>Duration</span><strong>17&ndash;18 s</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="subsection-title">Human-validated, with strong inter-annotator agreement</h3>
+        <p class="section-intro" style="margin-bottom:1.5rem;">
+          Every clip is annotated from scratch and adjudicated by a senior annotator. On a triple-annotated gold subset, agreement is strong across detection, dimension, temporal span, severity, and free-text description.
+        </p>
+        <div class="agreement-grid">
+          <div class="agreement-tile"><span class="agreement-num">.77</span><span class="agreement-label">Detection &kappa;<br>(per clip)</span></div>
+          <div class="agreement-tile"><span class="agreement-num">.69</span><span class="agreement-label">Dimension &kappa;<br>(per event)</span></div>
+          <div class="agreement-tile"><span class="agreement-num">.64</span><span class="agreement-label">Temporal IoU<br>(mean pairwise)</span></div>
+          <div class="agreement-tile"><span class="agreement-num">.61</span><span class="agreement-label">Severity &alpha;<br>(ordinal)</span></div>
+          <div class="agreement-tile"><span class="agreement-num">.75</span><span class="agreement-label">Description sim.<br>(LLM judge)</span></div>
+        </div>
+
+        <h3 class="subsection-title">Validated across 8 VLM backbones</h3>
+        <div class="backbone-cols">
+          <div class="backbone-group">
+            <span class="backbone-label">Proprietary</span>
+            <div class="backbone-chips">
+              <span class="backbone-chip">Gemini 3.1 Pro</span>
+              <span class="backbone-chip">GPT-5.5</span>
+              <span class="backbone-chip">Gemini 3.1 Flash</span>
+              <span class="backbone-chip">Claude Sonnet 4.6</span>
+            </div>
+          </div>
+          <div class="backbone-group">
+            <span class="backbone-label">Open-source</span>
+            <div class="backbone-chips">
+              <span class="backbone-chip">Gemma4-31B</span>
+              <span class="backbone-chip">Qwen3.6-35B</span>
+              <span class="backbone-chip">LLaVA-OneVision-2-8B</span>
+              <span class="backbone-chip">InternVL3.5-38B</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="container is-max-widescreen">
+        <h2 class="title is-3 has-text-centered">Main Results</h2>
+        <p class="section-intro">
+          RoboGaze consistently improves semantic agreement, temporal localization, joint diagnostic quality, and clean-clip accuracy across proprietary and open VLM backbones on RoboGazeBench.
+        </p>
+        <div class="table-legend">
+          <span class="lg"><span class="lg-key">V</span>Vanilla</span>
+          <span class="lg"><span class="lg-key">CoT</span>Chain-of-Thought</span>
+          <span class="lg lg-ours"><span class="lg-key">RG</span>RoboGaze <strong>(Ours)</strong></span>
+          <span class="lg"><span class="lg-dash"></span>Human ceiling</span>
+          <span class="lg lg-gain"><span class="gain-key">&#9650;</span>gain vs. best baseline</span>
+        </div>
+        <div class="results-table-wrap">
+          <table class="results-table">
+            <caption>Main results on RoboGazeBench, averaged across the three datasets. V, CoT, and RG denote vanilla prompting, chain-of-thought prompting, and the same backbone wrapped by RoboGaze. Green badges show the absolute gain of RoboGaze over the stronger of the two prompting baselines. Higher is better.</caption>
+            <thead>
+              <tr>
+                <th rowspan="2">Family</th>
+                <th rowspan="2">Model</th>
+                <th colspan="3" class="grp">Desc. F1</th>
+                <th colspan="3" class="grp">mIoU</th>
+                <th colspan="3" class="grp">F<sub>1</sub> &times; IoU</th>
+                <th colspan="3" class="grp">Clean</th>
+              </tr>
+              <tr>
+                <th class="grp">V</th>
+                <th>CoT</th>
+                <th class="rg-col">RG<span class="ours-tag">Ours</span></th>
+                <th class="grp">V</th>
+                <th>CoT</th>
+                <th class="rg-col">RG<span class="ours-tag">Ours</span></th>
+                <th class="grp">V</th>
+                <th>CoT</th>
+                <th class="rg-col">RG<span class="ours-tag">Ours</span></th>
+                <th class="grp">V</th>
+                <th>CoT</th>
+                <th class="rg-col">RG<span class="ours-tag">Ours</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th rowspan="4" scope="rowgroup">Prop.</th>
+                <td class="model-col">Gemini 3.1 Pro</td>
+                <td class="grp">25.4</td><td>32.4</td><td class="rg-col"><span class="val">67.9</span><span class="gain">+35.5</span></td>
+                <td class="grp">.39</td><td>.43</td><td class="rg-col"><span class="val">.64</span><span class="gain">+.21</span></td>
+                <td class="grp">9.8</td><td>13.9</td><td class="rg-col"><span class="val">43.7</span><span class="gain">+29.8</span></td>
+                <td class="grp">.13</td><td>.21</td><td class="rg-col"><span class="val">.92</span><span class="gain">+.71</span></td>
+              </tr>
+              <tr>
+                <td class="model-col">GPT-5.5</td>
+                <td class="grp">23.9</td><td>30.5</td><td class="rg-col"><span class="val">65.1</span><span class="gain">+34.6</span></td>
+                <td class="grp">.37</td><td>.41</td><td class="rg-col"><span class="val">.63</span><span class="gain">+.22</span></td>
+                <td class="grp">8.8</td><td>12.5</td><td class="rg-col"><span class="val">41.1</span><span class="gain">+28.6</span></td>
+                <td class="grp">.09</td><td>.18</td><td class="rg-col"><span class="val">.90</span><span class="gain">+.72</span></td>
+              </tr>
+              <tr>
+                <td class="model-col">Gemini 3.1 Flash</td>
+                <td class="grp">20.2</td><td>26.1</td><td class="rg-col"><span class="val">57.8</span><span class="gain">+31.7</span></td>
+                <td class="grp">.35</td><td>.39</td><td class="rg-col"><span class="val">.61</span><span class="gain">+.22</span></td>
+                <td class="grp">7.0</td><td>10.2</td><td class="rg-col"><span class="val">35.0</span><span class="gain">+24.8</span></td>
+                <td class="grp">.08</td><td>.16</td><td class="rg-col"><span class="val">.87</span><span class="gain">+.71</span></td>
+              </tr>
+              <tr>
+                <td class="model-col">Claude Sonnet 4.6</td>
+                <td class="grp">21.4</td><td>27.6</td><td class="rg-col"><span class="val">60.3</span><span class="gain">+32.7</span></td>
+                <td class="grp">.36</td><td>.40</td><td class="rg-col"><span class="val">.61</span><span class="gain">+.21</span></td>
+                <td class="grp">7.7</td><td>11.0</td><td class="rg-col"><span class="val">36.8</span><span class="gain">+25.8</span></td>
+                <td class="grp">.11</td><td>.20</td><td class="rg-col"><span class="val">.89</span><span class="gain">+.69</span></td>
+              </tr>
+              <tr>
+                <th rowspan="4" scope="rowgroup">Open</th>
+                <td class="model-col">Gemma4-31B</td>
+                <td class="grp">17.6</td><td>23.4</td><td class="rg-col"><span class="val">56.6</span><span class="gain">+33.2</span></td>
+                <td class="grp">.33</td><td>.37</td><td class="rg-col"><span class="val">.66</span><span class="gain">+.29</span></td>
+                <td class="grp">5.7</td><td>8.7</td><td class="rg-col"><span class="val">34.5</span><span class="gain">+25.8</span></td>
+                <td class="grp">.03</td><td>.12</td><td class="rg-col"><span class="val">.86</span><span class="gain">+.74</span></td>
+              </tr>
+              <tr>
+                <td class="model-col">Qwen3.6-35B</td>
+                <td class="grp">16.7</td><td>22.3</td><td class="rg-col"><span class="val">53.1</span><span class="gain">+30.8</span></td>
+                <td class="grp">.32</td><td>.36</td><td class="rg-col"><span class="val">.60</span><span class="gain">+.24</span></td>
+                <td class="grp">5.4</td><td>8.2</td><td class="rg-col"><span class="val">31.6</span><span class="gain">+23.4</span></td>
+                <td class="grp">.16</td><td>.23</td><td class="rg-col"><span class="val">.84</span><span class="gain">+.61</span></td>
+              </tr>
+              <tr>
+                <td class="model-col">LLaVA-OV-2-8B</td>
+                <td class="grp">14.2</td><td>19.5</td><td class="rg-col"><span class="val">47.9</span><span class="gain">+28.4</span></td>
+                <td class="grp">.30</td><td>.33</td><td class="rg-col"><span class="val">.56</span><span class="gain">+.23</span></td>
+                <td class="grp">4.3</td><td>6.5</td><td class="rg-col"><span class="val">26.9</span><span class="gain">+20.4</span></td>
+                <td class="grp">.18</td><td>.25</td><td class="rg-col"><span class="val">.82</span><span class="gain">+.57</span></td>
+              </tr>
+              <tr>
+                <td class="model-col">InternVL3.5-38B</td>
+                <td class="grp">15.5</td><td>21.0</td><td class="rg-col"><span class="val">50.1</span><span class="gain">+29.1</span></td>
+                <td class="grp">.31</td><td>.35</td><td class="rg-col"><span class="val">.58</span><span class="gain">+.23</span></td>
+                <td class="grp">4.8</td><td>7.4</td><td class="rg-col"><span class="val">28.9</span><span class="gain">+21.5</span></td>
+                <td class="grp">.04</td><td>.13</td><td class="rg-col"><span class="val">.81</span><span class="gain">+.68</span></td>
+              </tr>
+              <tr class="human-row">
+                <th scope="row">Human</th>
+                <td class="model-col"><span class="ceiling-pill">ceiling</span></td>
+                <td colspan="3" class="grp">75.5</td>
+                <td colspan="3" class="grp">0.71</td>
+                <td colspan="3" class="grp">47.1</td>
+                <td colspan="3" class="grp">0.94</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure class="paper-figure performance-figure">
+          <img src="static/images/per_dim_performance-1.png" alt="Per-dimension description-F1 for Gemini 3.1 Pro on RoboGazeBench" loading="lazy">
+          <figcaption>
+            Per-dimension description-F<sub>1</sub> for Gemini 3.1 Pro on RoboGazeBench, averaged across the three datasets. The largest gains appear on Task Progress, Instruction Consistency, Object&ndash;Scene, and Robot-Body failures &mdash; where diagnosis depends on relational and causal reasoning.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
     <section class="section hero is-light">
       <div class="container is-max-widescreen">
         <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
+        <p class="section-intro">
+          Representative cases: the verifier rescues a true glitch a vanilla judge mislabels, rejects a vanilla false positive, and handles failures both methods detect but localize differently.
+        </p>
         <div class="stacked-figures">
           <figure class="paper-figure paired-result-figure">
             <img src="static/images/qualitative_3.png" alt="Qualitative comparison of RoboGaze and baseline judges" loading="lazy">
@@ -290,15 +501,28 @@
       </div>
     </section>
 
-    <section class="section" id="interface">
-      <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">Videos (coming soon)</h2>
-        <p class="section-intro">
-          Video walkthroughs and demos are in preparation.
-        </p>
+    <!-- CoRL 2026 double-blind: BibTeX hidden (reveals authors). Restore for the arXiv version.
+    <section class="section" id="bibtex">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">BibTeX</h2>
+        <div class="bibtex-header">
+          <p class="section-intro" style="margin:0;text-align:left;">If you find RoboGaze useful, please consider citing:</p>
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()">
+            <i class="fas fa-copy"></i><span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <pre><code id="bibtex-code">@article{nguyen2026robogaze,
+  title   = {RoboGaze: Evaluating Robot World Models via Structured Vision-Language Analysis},
+  author  = {Nguyen, Minh-Loi and Diep, Nghiem Tuong and Nguyen, Hung Khang and
+             Le, Minh and Le Thien, Doanh and Tran, Hoang H. and Le, Dung Duy and
+             Duong, Vu and Sonntag, Daniel and Le, An Thai and Nguyen, Duy M. H. and
+             Vien, Ngo Anh and Nhiem, Tran Van},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
       </div>
     </section>
-
+    -->
   </main>
 
 </body>
