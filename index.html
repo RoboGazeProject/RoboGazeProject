@@ -27,503 +27,982 @@
   <meta name="citation_author" content="Anonymous">
   <meta name="citation_publication_date" content="2026">
 
-  <meta name="theme-color" content="#155e75">
+  <meta name="theme-color" content="#D94F1E">
   <title>RoboGaze: Evaluating Robot World Models via Structured Vision-Language Analysis</title>
 
   <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/index.css">
   <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript>
     <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   </noscript>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script defer src="static/js/index.js"></script>
+
+  <style>
+    :root { --rg-accent:#D94F1E; --rg-ink:#111; }
+    body { background:#fff; }
+
+    /* ── Editorial primitives ───────────────────────────── */
+    .eyebrow {
+      font-family:'Georgia',serif; font-size:0.72rem; font-weight:700;
+      letter-spacing:0.18em; text-transform:uppercase; color:var(--rg-accent);
+      margin-bottom:0.6rem;
+    }
+    .display-h2 {
+      font-family:'Georgia','Times New Roman',serif; font-size:2.1rem; font-weight:700;
+      line-height:1.25; color:var(--rg-ink); margin-bottom:2rem; letter-spacing:-0.3px;
+    }
+    .label-sm {
+      font-family:'Georgia',serif; font-size:0.65rem; font-weight:700;
+      letter-spacing:0.14em; text-transform:uppercase; color:#888;
+    }
+    .serif-body { font-family:'Georgia',serif; }
+
+    /* ── Figure card + lightbox ─────────────────────────── */
+    .figure-card { max-width:900px; margin:0 auto; background:#fff; border:1px solid #e5e5e5;
+      border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.04); padding:24px; }
+    .figure-card img { display:block; width:100%; height:auto; border-radius:4px; }
+    .figure-divider { border:none; border-top:1px solid #e5e5e5; margin:20px 0 16px; }
+    .figure-caption { margin:0; color:#555; font-family:'Georgia',serif; font-size:1rem; line-height:1.7; }
+    .figure-caption-label { font-weight:700; color:#111; }
+
+    .zoomable { cursor:zoom-in; transition:opacity 0.2s; }
+    .zoomable:hover { opacity:0.85; }
+    #img-lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85);
+      z-index:9999; align-items:center; justify-content:center; padding:20px; }
+    #img-lightbox.active { display:flex; }
+    #img-lightbox img { max-width:92vw; max-height:90vh; object-fit:contain; border-radius:8px;
+      box-shadow:0 8px 40px rgba(0,0,0,0.6); animation:zoomIn 0.2s ease; }
+    @keyframes zoomIn { from { transform:scale(0.92); opacity:0; } to { transform:scale(1); opacity:1; } }
+    #lightbox-close { position:fixed; top:18px; right:24px; font-size:2rem; color:#fff;
+      cursor:pointer; line-height:1; user-select:none; z-index:10000; }
+    #lightbox-close:hover { color:#ccc; }
+
+    /* ── Publication links ──────────────────────────────── */
+    .pub-link { display:inline-flex; align-items:center; gap:0.5rem; font-family:'Georgia',serif;
+      font-weight:700; font-size:0.85rem; color:#111; background:#fff; border:1px solid #e0ddd8;
+      border-radius:6px; padding:0.55rem 1.1rem; text-decoration:none; transition:border-color .2s; }
+    .pub-link:hover { border-color:var(--rg-accent); }
+    .pub-link.is-disabled { opacity:0.65; cursor:not-allowed; }
+    .pub-link i { color:var(--rg-accent); }
+    .soon-badge { background:var(--rg-accent); color:#fff; padding:1px 7px; border-radius:4px;
+      font-size:0.62rem; letter-spacing:0.03em; text-transform:uppercase; }
+
+    /* ── Video cards (showcase rows) ────────────────────── */
+    .vrow { display:flex; gap:14px; overflow-x:auto; scroll-behavior:smooth; scrollbar-width:none; padding:4px 2px; }
+    .vrow::-webkit-scrollbar { display:none; }
+
+    /* ── Glitch example cards ───────────────────────────── */
+    .glitch-tabs { display:flex; gap:0.4rem; flex-wrap:wrap; justify-content:center; margin-bottom:2rem; }
+    .glitch-tab { font-family:'Georgia',serif; font-size:0.82rem; font-weight:700; color:#555;
+      background:#fff; border:1px solid #e0ddd8; border-radius:999px; padding:0.45rem 1.1rem; cursor:pointer; transition:.15s; }
+    .glitch-tab:hover { border-color:var(--rg-accent); }
+    .glitch-tab.active { background:var(--rg-ink); color:#fff; border-color:var(--rg-ink); }
+    .glitch-tab small { color:#bbb; font-weight:400; margin-left:0.35rem; }
+    .glitch-tab.active small { color:#bbb; }
+
+    .glitch-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:1.4rem; }
+    .glitch-card { background:#fff; border:1px solid #e8e5e0; border-radius:12px; overflow:hidden;
+      box-shadow:0 2px 10px rgba(0,0,0,0.04); display:flex; flex-direction:column; }
+    .glitch-card video { width:100%; aspect-ratio:16/10; object-fit:cover; background:#111; display:block; }
+    .glitch-body { padding:1rem 1.1rem 1.15rem; }
+    .glitch-task { font-family:'Georgia',serif; font-size:0.9rem; color:#111; line-height:1.5; margin:0 0 0.85rem; }
+    .glitch-task b { color:var(--rg-accent); font-weight:700; }
+
+    .timeline { position:relative; height:8px; background:#efece7; border-radius:999px; margin:0.2rem 0 0.55rem; cursor:pointer; }
+    .timeline-seg { position:absolute; top:0; height:100%; border-radius:999px; opacity:0.65; cursor:pointer; transition:opacity .15s, box-shadow .15s; }
+    .timeline-seg.hl, .timeline-seg.active { opacity:1; box-shadow:0 0 0 2px rgba(17,17,17,0.16); }
+    .timeline-playhead { position:absolute; top:-3px; bottom:-3px; left:0; width:2px; background:#111; z-index:3; pointer-events:none; }
+    .timeline-playhead::after { content:''; position:absolute; top:-3px; left:-3px; width:8px; height:8px; border-radius:50%; background:#111; }
+    .timeline-ticks { display:flex; justify-content:space-between; font-family:'Georgia',serif; font-size:0.62rem; color:#aaa; margin-bottom:0.9rem; }
+
+    .glitch-row { display:flex; gap:0.6rem; align-items:flex-start; padding:0.55rem 0.5rem; border-top:0.5px solid #eee; border-radius:7px; cursor:pointer; transition:background .12s; }
+    .glitch-row:first-of-type { border-top:none; }
+    .glitch-row:hover, .glitch-row.hover, .glitch-row.active { background:#fdf3ee; }
+    .glitch-row.looping { background:#fceee7; box-shadow:inset 3px 0 0 var(--rg-accent); }
+    .glitch-row.clean { cursor:default; }
+    .glitch-row.clean:hover { background:transparent; }
+    .replay-tag { display:none; font-family:'Georgia',serif; font-size:0.62rem; font-weight:700; color:var(--rg-accent); }
+    .glitch-row.looping .replay-tag { display:inline-flex; align-items:center; gap:0.25rem; }
+    .dim-dot { flex:0 0 auto; width:0.7rem; height:0.7rem; border-radius:50%; margin-top:0.28rem; }
+    .glitch-meta { flex:1; min-width:0; }
+    .glitch-head { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.15rem; }
+    .dim-badge { font-family:'Georgia',serif; font-size:0.68rem; font-weight:700; color:#fff;
+      padding:1px 8px; border-radius:999px; letter-spacing:0.01em; }
+    .time-chip { font-family:'Georgia',serif; font-size:0.68rem; font-weight:700; color:#666;
+      background:#f3f1ec; border-radius:4px; padding:1px 6px; }
+    .sev { letter-spacing:1px; font-size:0.62rem; }
+    .glitch-type { font-family:'Georgia',serif; font-size:0.82rem; font-weight:700; color:#222; }
+    .glitch-desc { font-family:'Georgia',serif; font-size:0.8rem; color:#666; line-height:1.5; margin:0.1rem 0 0; }
+    .clean-tag { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Georgia',serif;
+      font-size:0.8rem; font-weight:700; color:#059669; }
+
+    /* ── Results table ──────────────────────────────────── */
+    .rg-table-wrap { overflow-x:auto; }
+    table.rg-table { width:100%; border-collapse:collapse; font-family:'Georgia',serif; font-size:0.82rem; color:#222; }
+    table.rg-table caption { caption-side:bottom; font-size:0.78rem; color:#999; text-align:left; padding-top:0.8rem; line-height:1.6; }
+    table.rg-table th, table.rg-table td { padding:0.4rem 0.5rem; text-align:center; }
+    table.rg-table thead tr.top th { border-bottom:1px solid #ddd; font-weight:700; color:#888;
+      font-size:0.72rem; letter-spacing:0.04em; text-transform:uppercase; }
+    table.rg-table thead tr.sub th { border-bottom:2px solid #111; font-weight:700; color:#555; }
+    table.rg-table td.model, table.rg-table th.model { text-align:left; font-weight:700; color:#111; }
+    table.rg-table .famcell { text-align:left; font-weight:700; color:#111; vertical-align:middle; }
+    table.rg-table .rg-col { background:#fdf3ee; }
+    table.rg-table th.rg-col { color:var(--rg-accent); }
+    table.rg-table .rg-col .val { font-weight:700; color:var(--rg-accent); }
+    table.rg-table .gain { display:block; font-size:0.66rem; color:#059669; font-weight:700; }
+    table.rg-table tbody tr { border-top:0.5px solid #ececec; }
+    table.rg-table tr.human td, table.rg-table tr.human th { border-top:2px solid #111; font-style:italic; color:#555; }
+    .ours-tag { display:inline-block; background:var(--rg-accent); color:#fff; font-size:0.55rem;
+      padding:0 5px; border-radius:999px; margin-left:3px; vertical-align:middle; font-style:normal; }
+
+    /* ── Stat / agreement tiles ─────────────────────────── */
+    .tile-row { display:flex; flex-wrap:wrap; gap:1px; background:#e0ddd8; border:1px solid #e0ddd8; border-radius:12px; overflow:hidden; }
+    .tile { background:#fff; padding:1.3rem 1.5rem; flex:1; min-width:140px; }
+    .tile .big { font-family:'Georgia',serif; font-size:2rem; font-weight:700; color:#111; margin:0; line-height:1.1; }
+    .tile .cap { font-family:'Georgia',serif; font-size:0.82rem; color:var(--rg-accent); margin:0.15rem 0 0; line-height:1.4; }
+
+    /* ── Split cards ────────────────────────────────────── */
+    .split-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:2.5rem; }
+    .split-card { background:#fff; border:1px solid #e8e5e0; border-radius:12px; padding:1.3rem 1.4rem; }
+    .split-card .ico { color:var(--rg-accent); font-size:1.1rem; margin-bottom:0.5rem; }
+    .split-card .cnt { font-family:'Georgia',serif; font-size:2.2rem; font-weight:700; color:#111; line-height:1; }
+    .split-card .nm { font-family:'Georgia',serif; font-size:1rem; font-weight:700; color:var(--rg-accent); margin:0.2rem 0 0.7rem; }
+    .split-card ul { list-style:none; margin:0; padding:0; }
+    .split-card li { display:flex; justify-content:space-between; font-family:'Georgia',serif; font-size:0.8rem; color:#666; padding:0.18rem 0; border-top:0.5px solid #f0eee9; }
+    .split-card li b { color:#111; }
+
+    /* ── Taxonomy chips ─────────────────────────────────── */
+    .dim-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem; }
+    .dim-card { background:#fff; border:1px solid #e8e5e0; border-radius:12px; padding:1.2rem 1.3rem; display:flex; gap:0.9rem; align-items:flex-start; }
+    .dim-card .ico { flex:0 0 auto; width:2.4rem; height:2.4rem; border-radius:9px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem; }
+    .dim-card .nm { font-family:'Georgia',serif; font-size:1rem; font-weight:700; color:#111; margin:0; }
+    .dim-card .ds { font-family:'Georgia',serif; font-size:0.84rem; color:#666; margin:0.2rem 0 0; line-height:1.5; }
+
+    /* ── Custom video player ────────────────────────────── */
+    .vplayer-wrap { width:100%; max-width:860px; position:relative; margin:0 auto; }
+    .vplayer { width:100%; border-radius:10px; background:#111; cursor:pointer; display:block; }
+    .vctrl { position:absolute; bottom:0; left:0; right:0; padding:0.5rem 0.75rem;
+      background:linear-gradient(transparent, rgba(0,0,0,0.55)); border-radius:0 0 10px 10px;
+      opacity:0; transition:opacity 0.2s; display:flex; align-items:center; gap:0.6rem; }
+    .vctrl button { background:none; border:none; color:#fff; cursor:pointer; font-size:1rem; padding:0; line-height:1; flex-shrink:0; }
+    .vctrl input[type=range] { flex:1; height:3px; accent-color:var(--rg-accent); cursor:pointer; }
+    .vctrl .t { font-family:'Georgia',serif; font-size:0.7rem; color:#ddd; white-space:nowrap; flex-shrink:0; }
+
+    /* ── Contribution rows ──────────────────────────────── */
+    .contrib-num { flex:0 0 auto; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--rg-ink);
+      display:flex; align-items:center; justify-content:center; margin-top:0.1rem; }
+    .contrib-num span { font-family:'Georgia',serif; font-size:0.85rem; font-weight:700; color:#fff; }
+
+    /* ── Side nav ───────────────────────────────────────── */
+    #side-nav { display:none; position:fixed; left:1.5rem; top:50%; transform:translateY(-50%); z-index:1000;
+      flex-direction:column; max-width:200px; }
+    .side-nav-link { display:flex; align-items:center; gap:0.55rem; text-decoration:none; padding:0.42rem 0.1rem; position:relative; }
+    .side-nav-link::before { content:''; position:absolute; left:-1.6rem; top:50%; transform:translateY(-50%);
+      width:22px; height:1.5px; background:var(--rg-accent); opacity:0; transition:opacity 0.2s; }
+    .side-nav-link::after { content:''; position:absolute; left:calc(-1.6rem + 22px); top:50%;
+      transform:translate(-50%,-50%); width:6px; height:6px; border-radius:50%; background:var(--rg-accent); opacity:0; transition:opacity 0.2s; }
+    .side-nav-link.active::before, .side-nav-link.active::after,
+    .side-nav-link:hover::before, .side-nav-link:hover::after { opacity:1; }
+    .side-nav-num { font-family:'Georgia',serif; font-size:0.85rem; font-weight:700; color:#ccc; min-width:1.4rem; transition:color 0.2s; }
+    .side-nav-label { font-family:'Georgia',serif; font-size:1rem; color:#bbb; transition:color 0.2s; }
+    .side-nav-link:hover .side-nav-num, .side-nav-link:hover .side-nav-label,
+    .side-nav-link.active .side-nav-num, .side-nav-link.active .side-nav-label { color:var(--rg-accent); }
+
+    @media (max-width:768px) { .display-h2 { font-size:1.65rem; } }
+  </style>
 </head>
 <body>
-  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
-    <i class="fas fa-chevron-up"></i>
-  </button>
 
-  <nav class="rg-nav" aria-label="Section navigation">
-    <div class="rg-nav-inner">
-      <a class="rg-nav-brand" href="#top">RoboGaze</a>
-      <div class="rg-nav-links">
-        <a href="#video">Video</a>
-        <a href="#abstract">Abstract</a>
-        <a href="#method">Method</a>
-        <a href="#taxonomy">Taxonomy</a>
-        <a href="#benchmark">Benchmark</a>
-        <a href="#results">Results</a>
+  <!-- ════════════════ HERO ════════════════ -->
+  <section class="hero" style="background:#f7f4ef;">
+    <div class="hero-body" style="padding:3.5rem 1.5rem 2.5rem;">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <p class="serif-body" style="font-size:0.72rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--rg-accent); margin-bottom:0.9rem;">CoRL 2026 &nbsp;·&nbsp; Under Review</p>
+
+            <h1 class="title is-1" style="font-family:'Georgia','Times New Roman',serif; font-size:2.6rem; font-weight:900; line-height:1.2; color:#111; letter-spacing:-0.5px; margin-bottom:1.3rem;">
+              <span style="color:var(--rg-accent);">RoboGaze</span>: Evaluating Robot World Models via Structured Vision-Language Analysis
+            </h1>
+
+            <p class="serif-body" style="font-size:1.05rem; color:#444; max-width:760px; margin:0 auto 1.6rem; line-height:1.7;">
+              A training-free, multi-agent VLM evaluator that turns generated robot-manipulation videos into structured, temporally localized diagnostic reports &mdash; telling you <em>what</em> failed, <em>when</em>, <em>why</em>, and <em>how severely</em>.
+            </p>
+
+            <!-- CoRL 2026 double-blind: authors anonymized. Restore the block below for the arXiv version. -->
+            <p class="serif-body" style="font-size:0.95rem; color:#5b5b5b; margin:0 auto 1.8rem;">Anonymous Authors</p>
+            <!-- ARXIV-AUTHORS-START
+            (full author + affiliation list goes here for the de-anonymized version)
+            ARXIV-AUTHORS-END -->
+
+            <div class="publication-links" style="display:flex; justify-content:center; gap:0.7rem; flex-wrap:wrap;">
+              <a href="#" onclick="return false;" class="pub-link is-disabled">
+                <i class="fas fa-file-pdf"></i><span>Paper</span><small class="soon-badge">Coming Soon</small>
+              </a>
+              <a href="#" onclick="return false;" class="pub-link is-disabled">
+                <i class="fab fa-github"></i><span>Code</span><small class="soon-badge">Coming Soon</small>
+              </a>
+              <a href="#" onclick="return false;" class="pub-link is-disabled">
+                <i class="fas fa-database"></i><span>RoboGazeBench</span><small class="soon-badge">Coming Soon</small>
+              </a>
+              <a href="#exp_res" class="pub-link"><i class="fas fa-play"></i><span>See it in action</span></a>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <main id="main-content">
-    <span id="top"></span>
-    <section class="hero publication-header robogaze-hero">
-      <div class="hero-body">
-        <div class="container is-max-widescreen">
-          <div class="columns is-vcentered is-variable is-7">
-            <div class="column is-6">
-              <p class="venue-tag">CoRL 2026</p>
-              <h1 class="title is-1 publication-title">RoboGaze: Evaluating Robot World Models via Structured Vision-Language Analysis</h1>
-              <p class="hero-summary">
-                A training-free, multi-agent VLM evaluator that turns generated robot-manipulation videos into structured, temporally localized diagnostic reports &mdash; telling you <em>what</em> failed, <em>when</em>, <em>why</em>, and <em>how severely</em>.
-              </p>
-
-              <!-- CoRL 2026 double-blind: authors anonymized. Restore the block below for the arXiv version. -->
-              <div class="publication-authors hero-authors">
-                <span class="author-block">Anonymous Authors</span>
-              </div>
-              <!-- ARXIV-AUTHORS-START
-              <div class="publication-authors hero-authors">
-                <span class="author-block">Minh-Loi Nguyen<sup>1</sup>,</span>
-                <span class="author-block">Nghiem Tuong Diep<sup>2</sup>,</span>
-                <span class="author-block">Hung Khang Nguyen<sup>2</sup>,</span>
-                <span class="author-block">Minh Le<sup>2</sup>,</span>
-                <span class="author-block">Doanh Le Thien<sup>1,2</sup>,</span>
-                <span class="author-block">Hoang H. Tran<sup>1</sup>,</span>
-                <span class="author-block">Dung Duy Le<sup>1</sup>,</span>
-                <span class="author-block">Vu Duong<sup>1</sup>,</span>
-                <span class="author-block">Daniel Sonntag<sup>3</sup>,</span>
-                <span class="author-block">An Thai Le<sup>1,2,6</sup>,</span>
-                <span class="author-block">Duy M. H. Nguyen<sup>3,4,5</sup>,</span>
-                <span class="author-block">Ngo Anh Vien<sup>&dagger;1,2</sup>,</span>
-                <span class="author-block">Tran Van Nhiem<sup>&dagger;2</sup></span>
-              </div>
-              <div class="affiliation-block">
-                <p>
-                  <sup>1</sup>Center for AI Research, VinUniversity&nbsp;&nbsp;
-                  <sup>2</sup>VinRobotics&nbsp;&nbsp;
-                  <sup>3</sup>DFKI&nbsp;&nbsp;
-                  <sup>4</sup>University of Stuttgart&nbsp;&nbsp;
-                  <sup>5</sup>Max Planck Research School for Intelligent Systems&nbsp;&nbsp;
-                  <sup>6</sup>Technische Universit&auml;t Darmstadt
-                </p>
-                <p class="eql-cntrb"><sup>&dagger;</sup>Project Leads</p>
-              </div>
-              ARXIV-AUTHORS-END -->
-
-              <div class="publication-links">
-                <span class="link-block">
-                  <a class="external-link button is-normal is-rounded is-dark is-disabled" aria-disabled="true">
-                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                    <span>arXiv (coming soon)</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a class="external-link button is-normal is-rounded is-dark is-disabled" aria-disabled="true">
-                    <span class="icon"><i class="fab fa-github"></i></span>
-                    <span>Code (coming soon)</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a class="external-link button is-normal is-rounded is-dark is-disabled" aria-disabled="true">
-                    <span class="icon"><i class="fas fa-database"></i></span>
-                    <span>Dataset (coming soon)</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a class="external-link button is-normal is-rounded is-dark" href="#video">
-                    <span class="icon"><i class="fas fa-play"></i></span>
-                    <span>Watch Video</span>
-                  </a>
-                </span>
-              </div>
-            </div>
-            <div class="column is-6">
-              <figure class="hero-figure">
-                <img src="static/images/teaser_2.png" alt="RoboGaze diagnostic overview" loading="eager">
-                <figcaption>RoboGaze delivers interpretable, temporally localized failure diagnostics where monolithic VLM judges miss fine-grained physical anomalies &mdash; approaching the human ceiling on both description-F<sub>1</sub> and clean-clip accuracy.</figcaption>
-              </figure>
-            </div>
-          </div>
+  <!-- ════════════════ TEASER FIGURE ════════════════ -->
+  <section class="hero" style="background:#f7f4ef;">
+    <div class="container is-max-desktop">
+      <div class="hero-body" style="padding-top:0;">
+        <div class="figure-card">
+          <img src="static/images/teaser_2.png" alt="RoboGaze vs. monolithic VLM judges" loading="eager">
+          <hr class="figure-divider">
+          <p class="figure-caption">
+            <span class="figure-caption-label">RoboGaze vs. monolithic VLM judges.</span>
+            Where standard scalar evaluators miss fine-grained physical anomalies like object penetration (A, B), RoboGaze delivers interpretable, temporally localized failure diagnostics &mdash; approaching the human ceiling on both description-F<sub>1</sub> and clean-clip accuracy (C).
+          </p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section" id="video">
-      <div class="container is-max-desktop">
-        <h2 class="title is-3 has-text-centered">Overview Video</h2>
-        <p class="section-intro">
-          A short walkthrough of RoboGaze: from a task instruction and a generated video to a verified, temporally grounded glitch report.
-        </p>
-        <div class="video-frame">
-          <video controls playsinline preload="metadata" poster="static/images/teaser_2.png">
-            <source src="static/videos/demo.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </div>
-    </section>
+  <!-- ════════════════ ABSTRACT ════════════════ -->
+  <section class="section hero is-light" style="background:#f7f4ef; padding:4rem 1.5rem;" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
 
-    <section class="section" id="abstract">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-four-fifths">
-            <h2 class="title is-3">Abstract</h2>
-            <div class="content has-text-justified">
-              <p>
+          <p class="eyebrow">Abstract</p>
+          <h2 class="display-h2">Realistic robot videos can still be physically wrong &mdash; and a single score won't tell you why.</h2>
+
+          <div style="display:flex; gap:3rem; flex-wrap:wrap; align-items:flex-start;">
+            <!-- Stat sidebar -->
+            <div style="min-width:150px; flex:0 0 170px; padding-top:0.2rem;">
+              <p class="label-sm" style="margin:0 0 0.2rem;">Description-F<sub>1</sub></p>
+              <p class="serif-body" style="font-size:2rem; font-weight:700; color:#111; margin:0;">+43</p>
+              <p class="serif-body" style="font-size:0.9rem; color:var(--rg-accent); margin:0 0 1.3rem;">points over baselines</p>
+
+              <p class="label-sm" style="margin:0 0 0.2rem;">Temporal F<sub>1</sub>&times;IoU</p>
+              <p class="serif-body" style="font-size:2rem; font-weight:700; color:#111; margin:0;">+37</p>
+              <p class="serif-body" style="font-size:0.9rem; color:var(--rg-accent); margin:0 0 1.3rem;">points alignment gain</p>
+
+              <p class="label-sm" style="margin:0 0 0.2rem;">Clean-clip accuracy</p>
+              <p class="serif-body" style="font-size:2rem; font-weight:700; color:#111; margin:0;">&lt;25% &rarr; 80%+</p>
+              <p class="serif-body" style="font-size:0.9rem; color:var(--rg-accent); margin:0 0 1.3rem;">cry-wolf flaw, fixed</p>
+
+              <p class="label-sm" style="margin:0 0 0.2rem;">Validated on</p>
+              <p class="serif-body" style="font-size:2rem; font-weight:700; color:#111; margin:0;">382 clips</p>
+              <p class="serif-body" style="font-size:0.9rem; color:var(--rg-accent); margin:0;">8 VLM backbones</p>
+            </div>
+
+            <!-- Abstract paragraphs -->
+            <div style="flex:1; min-width:260px;">
+              <p class="serif-body" style="font-size:1rem; color:#222; line-height:1.8; margin-bottom:1.2rem;">
                 Recent advances in robot world models enable synthetic video generation for embodied prediction and planning. However, evaluating these videos is challenging: visually realistic outputs often violate physical laws, temporal consistency, or task logic, while conventional metrics and monolithic Vision-Language Model (VLM) judges fail to generalize or provide precise diagnostic value.
               </p>
-              <p>
-                We present <strong>RoboGaze</strong>, a training-free, multi-agent VLM framework that provides structured, interpretable evaluation for generated robot-manipulation videos. Given a task instruction and video, RoboGaze operates via a three-stage pipeline: <em>task-scene grounding</em>, <em>dimension-specific specialist routing</em>, and <em>critic-based verification</em>. It outputs temporally localized glitch reports categorized under a novel 6-dimension, 30-type robotics-specific taxonomy.
+              <p class="serif-body" style="font-size:1rem; color:#222; line-height:1.8; margin-bottom:1.2rem;">
+                We present <strong>RoboGaze</strong>, a training-free, multi-agent VLM framework that provides structured, interpretable evaluation for generated robot-manipulation videos. Given a task instruction and video, RoboGaze operates via a three-stage pipeline: <strong>task-scene grounding</strong>, <strong>dimension-specific specialist routing</strong>, and <strong>critic-based verification</strong>. It outputs temporally localized glitch reports categorized under a novel 6-dimension, 30-type robotics-specific taxonomy.
               </p>
-              <p>
-                To benchmark RoboGaze, we introduce a human-validated dataset of 382 clips spanning simulated and real-world multi-view manipulation. Evaluating eight open-source and proprietary VLM backbones, RoboGaze dramatically outperforms zero-shot baselines, improving description-F<sub>1</sub> by up to <strong>+43 points</strong> and temporal alignment (F<sub>1</sub>&nbsp;&times;&nbsp;IoU) by up to <strong>+37 points</strong> &mdash; closing approximately <strong>85%</strong> of the gap to the human ceiling. Its critic verifier mitigates the &ldquo;cry-wolf&rdquo; false-positive flaw of standard VLMs, lifting clean-clip accuracy from under <strong>25%</strong> to over <strong>80%</strong>.
+              <p class="serif-body" style="font-size:1rem; color:#222; line-height:1.8; margin:0;">
+                To benchmark RoboGaze, we introduce a human-validated dataset of 382 clips spanning simulated and real-world multi-view manipulation. Evaluating eight open-source and proprietary VLM backbones, RoboGaze dramatically outperforms zero-shot baselines &mdash; improving description-F<sub>1</sub> by up to <strong>+43 points</strong> and temporal alignment by up to <strong>+37 points</strong>, closing roughly <strong>85%</strong> of the gap to the human ceiling. Its critic verifier mitigates the &ldquo;cry-wolf&rdquo; false-positive flaw of standard VLMs, lifting clean-clip accuracy from under <strong>25%</strong> to over <strong>80%</strong>.
               </p>
             </div>
           </div>
+
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section hero is-light">
-      <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">Headline Results</h2>
-        <div class="stats-grid">
-          <div class="stat-tile">
-            <span class="stat-number">+43</span>
-            <span class="stat-label">description-F<sub>1</sub> points over zero-shot baselines</span>
-          </div>
-          <div class="stat-tile">
-            <span class="stat-number">+37</span>
-            <span class="stat-label">temporal alignment (F<sub>1</sub>&nbsp;&times;&nbsp;IoU) points</span>
-          </div>
-          <div class="stat-tile">
-            <span class="stat-number">&lt;25% &rarr; 80%+</span>
-            <span class="stat-label">clean-clip accuracy &mdash; the &ldquo;cry-wolf&rdquo; flaw, fixed</span>
-          </div>
-          <div class="stat-tile">
-            <span class="stat-number">~85%</span>
-            <span class="stat-label">of the gap to the human ceiling, closed</span>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- ════════════════ CONTRIBUTIONS ════════════════ -->
+  <section class="section" style="background:#fdf9f7; padding:4rem 1.5rem;" id="contributions">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <p class="eyebrow">Contributions</p>
+          <h2 class="display-h2">Four artifacts for rigorous robot-video evaluation.</h2>
 
-    <section class="section" id="method">
-      <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">Three Key Ideas</h2>
-        <p class="section-intro">
-          RoboGaze reframes robot-video evaluation as a structured reasoning problem rather than a single quality score. Three ingredients make it work.
-        </p>
-        <div class="idea-grid">
-          <div class="idea-card">
-            <div class="idea-icon"><i class="fas fa-sitemap"></i></div>
-            <h3 class="idea-title">Robotics-specific glitch taxonomy</h3>
-            <p>
-              A hierarchical <strong>6&times;30</strong> taxonomy of robot-video failures spanning task execution, instruction consistency, object interactions, robot behavior, physical plausibility, and visual quality &mdash; replacing one opaque score with named, actionable failure types.
-            </p>
-            <p class="idea-payoff">6 dimensions &middot; 30 failure types</p>
-          </div>
-          <div class="idea-card">
-            <div class="idea-icon"><i class="fas fa-stream"></i></div>
-            <h3 class="idea-title">Subtask-level temporal grounding</h3>
-            <p>
-              Instead of localizing over the full video, RoboGaze converts localization into clip-level task-progress reasoning and groups clips into subtask segments &mdash; pinpointing <em>when</em> each failure happens during execution.
-            </p>
-            <p class="idea-payoff">+37 points temporal alignment</p>
-          </div>
-          <div class="idea-card">
-            <div class="idea-icon"><i class="fas fa-check-double"></i></div>
-            <h3 class="idea-title">Verifier-based multi-agent reasoning</h3>
-            <p>
-              A critic verifier re-examines every specialist hypothesis against visual evidence, task context, and scene state &mdash; accepting, rejecting, or merging it. This contests false alarms before they enter the report.
-            </p>
-            <p class="idea-payoff">Eliminates &ldquo;cry-wolf&rdquo; false positives</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section hero is-light">
-      <div class="container is-max-widescreen">
-        <div class="framework-copy">
-          <h2 class="title is-3 has-text-centered">The RoboGaze Framework</h2>
-          <div class="content has-text-centered">
-            <p>
-              A three-phase pipeline turns raw multimodal inputs into a verified, structured glitch report.
-            </p>
-          </div>
-          <ol class="phase-list">
-            <li>
-              <span class="phase-tag">Phase 1</span>
-              <strong>Input &amp; Context Grounding.</strong> Parse the task instruction and initial frame into structured <em>task memory</em> and <em>scene memory</em>, and decompose the video into clip-level execution observations grouped by subtask.
-            </li>
-            <li>
-              <span class="phase-tag">Phase 2</span>
-              <strong>Candidate Discovery &amp; Specialist Analysis.</strong> A router predicts which glitch dimensions are plausible per subtask, then dimension-specific specialists produce evidence-grounded, temporally localized hypotheses.
-            </li>
-            <li>
-              <span class="phase-tag">Phase 3</span>
-              <strong>Verification &amp; Reporting.</strong> A critic verifier validates, rejects, or merges each hypothesis, then synthesizes the survivors into a single coherent report with dimensions, timestamps, evidence, and severity.
-            </li>
-          </ol>
-        </div>
-        <figure class="paper-figure framework-figure">
-          <img src="static/images/pipeline_v4444_200.png" alt="RoboGaze three-phase framework" loading="lazy">
-          <figcaption>The RoboGaze framework: context grounding, routed specialist analysis, and verified reporting.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="section" id="taxonomy">
-      <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">A Robotics-Specific Glitch Taxonomy</h2>
-        <p class="section-intro">
-          Failures are organized along six coarse dimensions, each refined into fine-grained types &mdash; 30 in total &mdash; spanning the full execution stack of a manipulation rollout.
-        </p>
-        <div class="dimension-grid">
-          <div class="dim-chip"><span class="dim-num">1</span><span class="dim-name">Task Progress</span><span class="dim-desc">Subtask completion and execution order</span></div>
-          <div class="dim-chip"><span class="dim-num">2</span><span class="dim-name">Instruction Consistency</span><span class="dim-desc">Alignment with the commanded task</span></div>
-          <div class="dim-chip"><span class="dim-num">3</span><span class="dim-name">Object&ndash;Scene</span><span class="dim-desc">Object existence, identity, and interactions</span></div>
-          <div class="dim-chip"><span class="dim-num">4</span><span class="dim-name">Robot-Body</span><span class="dim-desc">Robot kinematics and self-consistency</span></div>
-          <div class="dim-chip"><span class="dim-num">5</span><span class="dim-name">Physical Plausibility</span><span class="dim-desc">Contacts, collisions, and dynamics</span></div>
-          <div class="dim-chip"><span class="dim-num">6</span><span class="dim-name">Visual Quality</span><span class="dim-desc">Rendering, artifacts, and temporal coherence</span></div>
-        </div>
-        <p class="section-intro" style="margin-bottom:0;">
-          Specialist agents reason at the fine-grained <em>type</em> level, while headline results aggregate at the dimension level &mdash; giving both pinpoint diagnoses and an interpretable summary.
-        </p>
-      </div>
-    </section>
-
-    <section class="section hero is-light" id="benchmark">
-      <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">RoboGazeBench</h2>
-        <p class="section-intro">
-          A human-validated benchmark of <strong>382</strong> generated robot-manipulation clips with temporally localized glitch annotations, severity labels, and free-text diagnostic descriptions &mdash; spanning simulation and real-world domains, single- and multi-view. The three splits test whether diagnostic evaluation transfers across domain realism and camera configuration.
-        </p>
-
-        <div class="split-grid">
-          <div class="split-card">
-            <div class="split-icon"><i class="fas fa-cube"></i></div>
-            <div class="split-count">154</div>
-            <div class="split-name">GR1-Sim</div>
-            <ul class="split-meta">
-              <li><span>Domain</span><strong>Simulated</strong></li>
-              <li><span>View</span><strong>Single</strong></li>
-              <li><span>Duration</span><strong>8&ndash;9 s</strong></li>
-            </ul>
-          </div>
-          <div class="split-card">
-            <div class="split-icon"><i class="fas fa-video"></i></div>
-            <div class="split-count">100</div>
-            <div class="split-name">GR1-Real</div>
-            <ul class="split-meta">
-              <li><span>Domain</span><strong>Real-initialized</strong></li>
-              <li><span>View</span><strong>Single</strong></li>
-              <li><span>Duration</span><strong>5&ndash;6 s</strong></li>
-            </ul>
-          </div>
-          <div class="split-card">
-            <div class="split-icon"><i class="fas fa-th-large"></i></div>
-            <div class="split-count">128</div>
-            <div class="split-name">DROID-MV</div>
-            <ul class="split-meta">
-              <li><span>Domain</span><strong>Real</strong></li>
-              <li><span>View</span><strong>Multi-view</strong></li>
-              <li><span>Duration</span><strong>17&ndash;18 s</strong></li>
-            </ul>
-          </div>
-        </div>
-
-        <h3 class="subsection-title">Human-validated, with strong inter-annotator agreement</h3>
-        <p class="section-intro" style="margin-bottom:1.5rem;">
-          Every clip is annotated from scratch and adjudicated by a senior annotator. On a triple-annotated gold subset, agreement is strong across detection, dimension, temporal span, severity, and free-text description.
-        </p>
-        <div class="agreement-grid">
-          <div class="agreement-tile"><span class="agreement-num">.77</span><span class="agreement-label">Detection &kappa;<br>(per clip)</span></div>
-          <div class="agreement-tile"><span class="agreement-num">.69</span><span class="agreement-label">Dimension &kappa;<br>(per event)</span></div>
-          <div class="agreement-tile"><span class="agreement-num">.64</span><span class="agreement-label">Temporal IoU<br>(mean pairwise)</span></div>
-          <div class="agreement-tile"><span class="agreement-num">.61</span><span class="agreement-label">Severity &alpha;<br>(ordinal)</span></div>
-          <div class="agreement-tile"><span class="agreement-num">.75</span><span class="agreement-label">Description sim.<br>(LLM judge)</span></div>
-        </div>
-
-        <h3 class="subsection-title">Validated across 8 VLM backbones</h3>
-        <div class="backbone-cols">
-          <div class="backbone-group">
-            <span class="backbone-label">Proprietary</span>
-            <div class="backbone-chips">
-              <span class="backbone-chip">Gemini 3.1 Pro</span>
-              <span class="backbone-chip">GPT-5.5</span>
-              <span class="backbone-chip">Gemini 3.1 Flash</span>
-              <span class="backbone-chip">Claude Sonnet 4.6</span>
+          <div style="display:flex; flex-direction:column; gap:0;">
+            <div style="display:flex; gap:1.5rem; align-items:flex-start; padding:1.1rem 0;">
+              <div class="contrib-num"><span>1</span></div>
+              <div>
+                <p class="serif-body" style="font-size:1rem; font-weight:700; color:#111; margin:0 0 0.3rem;">A robotics-specific glitch taxonomy</p>
+                <p class="serif-body" style="font-size:0.95rem; color:#444; line-height:1.8; margin:0;">A hierarchical <strong>6&times;30</strong> taxonomy of robot-video failures spanning task execution, instruction consistency, object interactions, robot behavior, physical plausibility, and visual quality.</p>
+              </div>
             </div>
-          </div>
-          <div class="backbone-group">
-            <span class="backbone-label">Open-source</span>
-            <div class="backbone-chips">
-              <span class="backbone-chip">Gemma4-31B</span>
-              <span class="backbone-chip">Qwen3.6-35B</span>
-              <span class="backbone-chip">LLaVA-OneVision-2-8B</span>
-              <span class="backbone-chip">InternVL3.5-38B</span>
+            <div style="border-top:0.5px solid #e0ddd8;"></div>
+            <div style="display:flex; gap:1.5rem; align-items:flex-start; padding:1.1rem 0;">
+              <div class="contrib-num"><span>2</span></div>
+              <div>
+                <p class="serif-body" style="font-size:1rem; font-weight:700; color:#111; margin:0 0 0.3rem;">RoboGazeBench</p>
+                <p class="serif-body" style="font-size:0.95rem; color:#444; line-height:1.8; margin:0;">A human-validated benchmark of <strong>382</strong> generated robot-manipulation videos with temporally localized glitch annotations, severity labels, and diagnostic descriptions across simulation and real-world domains.</p>
+              </div>
+            </div>
+            <div style="border-top:0.5px solid #e0ddd8;"></div>
+            <div style="display:flex; gap:1.5rem; align-items:flex-start; padding:1.1rem 0;">
+              <div class="contrib-num"><span>3</span></div>
+              <div>
+                <p class="serif-body" style="font-size:1rem; font-weight:700; color:#111; margin:0 0 0.3rem;">RoboGaze, the evaluator</p>
+                <p class="serif-body" style="font-size:0.95rem; color:#444; line-height:1.8; margin:0;">A <strong>training-free, model-agnostic</strong> multi-agent VLM evaluator that performs temporally grounded failure diagnosis and produces structured diagnostic reports instead of scalar quality scores.</p>
+              </div>
+            </div>
+            <div style="border-top:0.5px solid #e0ddd8;"></div>
+            <div style="display:flex; gap:1.5rem; align-items:flex-start; padding:1.1rem 0;">
+              <div class="contrib-num"><span>4</span></div>
+              <div>
+                <p class="serif-body" style="font-size:1rem; font-weight:700; color:#111; margin:0 0 0.3rem;">Comprehensive empirical validation</p>
+                <p class="serif-body" style="font-size:0.95rem; color:#444; line-height:1.8; margin:0;">Across <strong>eight</strong> proprietary and open-source VLMs, RoboGaze shows substantially stronger agreement with human judgments and more accurate failure localization than existing prompting and evaluation baselines.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section" id="results">
-      <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">Main Results</h2>
-        <p class="section-intro">
-          RoboGaze consistently improves semantic agreement, temporal localization, joint diagnostic quality, and clean-clip accuracy across proprietary and open VLM backbones on RoboGazeBench.
-        </p>
-        <div class="table-legend">
-          <span class="lg"><span class="lg-key">V</span>Vanilla</span>
-          <span class="lg"><span class="lg-key">CoT</span>Chain-of-Thought</span>
-          <span class="lg lg-ours"><span class="lg-key">RG</span>RoboGaze <strong>(Ours)</strong></span>
-          <span class="lg"><span class="lg-dash"></span>Human ceiling</span>
-          <span class="lg lg-gain"><span class="gain-key">&#9650;</span>gain vs. best baseline</span>
-        </div>
-        <div class="results-table-wrap">
-          <table class="results-table">
-            <caption>Main results on RoboGazeBench, averaged across the three datasets. V, CoT, and RG denote vanilla prompting, chain-of-thought prompting, and the same backbone wrapped by RoboGaze. Green badges show the absolute gain of RoboGaze over the stronger of the two prompting baselines. Higher is better.</caption>
-            <thead>
-              <tr>
-                <th rowspan="2">Family</th>
-                <th rowspan="2">Model</th>
-                <th colspan="3" class="grp">Desc. F1</th>
-                <th colspan="3" class="grp">mIoU</th>
-                <th colspan="3" class="grp">F<sub>1</sub> &times; IoU</th>
-                <th colspan="3" class="grp">Clean</th>
-              </tr>
-              <tr>
-                <th class="grp">V</th>
-                <th>CoT</th>
-                <th class="rg-col">RG<span class="ours-tag">Ours</span></th>
-                <th class="grp">V</th>
-                <th>CoT</th>
-                <th class="rg-col">RG<span class="ours-tag">Ours</span></th>
-                <th class="grp">V</th>
-                <th>CoT</th>
-                <th class="rg-col">RG<span class="ours-tag">Ours</span></th>
-                <th class="grp">V</th>
-                <th>CoT</th>
-                <th class="rg-col">RG<span class="ours-tag">Ours</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th rowspan="4" scope="rowgroup">Prop.</th>
-                <td class="model-col">Gemini 3.1 Pro</td>
-                <td class="grp">25.4</td><td>32.4</td><td class="rg-col"><span class="val">67.9</span><span class="gain">+35.5</span></td>
-                <td class="grp">.39</td><td>.43</td><td class="rg-col"><span class="val">.64</span><span class="gain">+.21</span></td>
-                <td class="grp">9.8</td><td>13.9</td><td class="rg-col"><span class="val">43.7</span><span class="gain">+29.8</span></td>
-                <td class="grp">.13</td><td>.21</td><td class="rg-col"><span class="val">.92</span><span class="gain">+.71</span></td>
-              </tr>
-              <tr>
-                <td class="model-col">GPT-5.5</td>
-                <td class="grp">23.9</td><td>30.5</td><td class="rg-col"><span class="val">65.1</span><span class="gain">+34.6</span></td>
-                <td class="grp">.37</td><td>.41</td><td class="rg-col"><span class="val">.63</span><span class="gain">+.22</span></td>
-                <td class="grp">8.8</td><td>12.5</td><td class="rg-col"><span class="val">41.1</span><span class="gain">+28.6</span></td>
-                <td class="grp">.09</td><td>.18</td><td class="rg-col"><span class="val">.90</span><span class="gain">+.72</span></td>
-              </tr>
-              <tr>
-                <td class="model-col">Gemini 3.1 Flash</td>
-                <td class="grp">20.2</td><td>26.1</td><td class="rg-col"><span class="val">57.8</span><span class="gain">+31.7</span></td>
-                <td class="grp">.35</td><td>.39</td><td class="rg-col"><span class="val">.61</span><span class="gain">+.22</span></td>
-                <td class="grp">7.0</td><td>10.2</td><td class="rg-col"><span class="val">35.0</span><span class="gain">+24.8</span></td>
-                <td class="grp">.08</td><td>.16</td><td class="rg-col"><span class="val">.87</span><span class="gain">+.71</span></td>
-              </tr>
-              <tr>
-                <td class="model-col">Claude Sonnet 4.6</td>
-                <td class="grp">21.4</td><td>27.6</td><td class="rg-col"><span class="val">60.3</span><span class="gain">+32.7</span></td>
-                <td class="grp">.36</td><td>.40</td><td class="rg-col"><span class="val">.61</span><span class="gain">+.21</span></td>
-                <td class="grp">7.7</td><td>11.0</td><td class="rg-col"><span class="val">36.8</span><span class="gain">+25.8</span></td>
-                <td class="grp">.11</td><td>.20</td><td class="rg-col"><span class="val">.89</span><span class="gain">+.69</span></td>
-              </tr>
-              <tr>
-                <th rowspan="4" scope="rowgroup">Open</th>
-                <td class="model-col">Gemma4-31B</td>
-                <td class="grp">17.6</td><td>23.4</td><td class="rg-col"><span class="val">56.6</span><span class="gain">+33.2</span></td>
-                <td class="grp">.33</td><td>.37</td><td class="rg-col"><span class="val">.66</span><span class="gain">+.29</span></td>
-                <td class="grp">5.7</td><td>8.7</td><td class="rg-col"><span class="val">34.5</span><span class="gain">+25.8</span></td>
-                <td class="grp">.03</td><td>.12</td><td class="rg-col"><span class="val">.86</span><span class="gain">+.74</span></td>
-              </tr>
-              <tr>
-                <td class="model-col">Qwen3.6-35B</td>
-                <td class="grp">16.7</td><td>22.3</td><td class="rg-col"><span class="val">53.1</span><span class="gain">+30.8</span></td>
-                <td class="grp">.32</td><td>.36</td><td class="rg-col"><span class="val">.60</span><span class="gain">+.24</span></td>
-                <td class="grp">5.4</td><td>8.2</td><td class="rg-col"><span class="val">31.6</span><span class="gain">+23.4</span></td>
-                <td class="grp">.16</td><td>.23</td><td class="rg-col"><span class="val">.84</span><span class="gain">+.61</span></td>
-              </tr>
-              <tr>
-                <td class="model-col">LLaVA-OV-2-8B</td>
-                <td class="grp">14.2</td><td>19.5</td><td class="rg-col"><span class="val">47.9</span><span class="gain">+28.4</span></td>
-                <td class="grp">.30</td><td>.33</td><td class="rg-col"><span class="val">.56</span><span class="gain">+.23</span></td>
-                <td class="grp">4.3</td><td>6.5</td><td class="rg-col"><span class="val">26.9</span><span class="gain">+20.4</span></td>
-                <td class="grp">.18</td><td>.25</td><td class="rg-col"><span class="val">.82</span><span class="gain">+.57</span></td>
-              </tr>
-              <tr>
-                <td class="model-col">InternVL3.5-38B</td>
-                <td class="grp">15.5</td><td>21.0</td><td class="rg-col"><span class="val">50.1</span><span class="gain">+29.1</span></td>
-                <td class="grp">.31</td><td>.35</td><td class="rg-col"><span class="val">.58</span><span class="gain">+.23</span></td>
-                <td class="grp">4.8</td><td>7.4</td><td class="rg-col"><span class="val">28.9</span><span class="gain">+21.5</span></td>
-                <td class="grp">.04</td><td>.13</td><td class="rg-col"><span class="val">.81</span><span class="gain">+.68</span></td>
-              </tr>
-              <tr class="human-row">
-                <th scope="row">Human</th>
-                <td class="model-col"><span class="ceiling-pill">ceiling</span></td>
-                <td colspan="3" class="grp">75.5</td>
-                <td colspan="3" class="grp">0.71</td>
-                <td colspan="3" class="grp">47.1</td>
-                <td colspan="3" class="grp">0.94</td>
-              </tr>
-            </tbody>
-          </table>
+  <!-- ════════════════ METHOD ════════════════ -->
+  <section class="section" style="background:#fff; padding:4rem 1.5rem;" id="method">
+    <div class="container is-max-desktop">
+      <p class="eyebrow">Method</p>
+      <h2 class="display-h2">Three stages: ground the task, route to specialists, then verify.</h2>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:2.5rem;">
+
+        <!-- Custom video player -->
+        <div class="vplayer-wrap" id="rg-video-wrap">
+          <video id="rg-video" class="vplayer" autoplay loop muted playsinline poster="static/images/teaser_2.png">
+            <source src="static/videos/video_demo.mp4" type="video/mp4">
+          </video>
+          <div class="vctrl" id="rg-controls">
+            <button id="rg-playbtn" onclick="rgTogglePlay()">&#9646;&#9646;</button>
+            <input id="rg-seek" type="range" min="0" max="100" value="0" step="0.1">
+            <span class="t" id="rg-time">0:00</span>
+            <button id="rg-mutebtn" onclick="rgToggleMute()">&#128263;</button>
+          </div>
         </div>
 
-        <figure class="paper-figure performance-figure">
-          <img src="static/images/per_dim_performance-1.png" alt="Per-dimension description-F1 for Gemini 3.1 Pro on RoboGazeBench" loading="lazy">
-          <figcaption>
-            Per-dimension description-F<sub>1</sub> for Gemini 3.1 Pro on RoboGazeBench, averaged across the three datasets. The largest gains appear on Task Progress, Instruction Consistency, Object&ndash;Scene, and Robot-Body failures &mdash; where diagnosis depends on relational and causal reasoning.
-          </figcaption>
-        </figure>
+        <!-- 3-phase grid -->
+        <div style="width:100%; max-width:860px;">
+          <p class="label-sm" style="text-align:center; margin:0 0 1.4rem;">The RoboGaze Pipeline</p>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:0.5px solid #e8e5e0; border-radius:8px; overflow:hidden;">
+            <div style="padding:1.3rem 1.2rem; border-right:0.5px solid #e8e5e0;">
+              <span class="serif-body" style="font-size:0.85rem; font-weight:700; color:var(--rg-accent); display:block; margin-bottom:0.45rem;">Phase 1</span>
+              <p class="serif-body" style="font-size:1rem; font-weight:700; color:#111; margin:0 0 0.35rem;">Input &amp; Context Grounding</p>
+              <p class="serif-body" style="font-size:0.9rem; color:#555; margin:0; line-height:1.6;">Parse the instruction and initial frame into <em>task memory</em> (objective, subtasks, completion criteria) and <em>scene memory</em> (objects, robot parts, layout, uncertainty); split the video into clips and group them into subtask segments.</p>
+            </div>
+            <div style="padding:1.3rem 1.2rem; border-right:0.5px solid #e8e5e0;">
+              <span class="serif-body" style="font-size:0.85rem; font-weight:700; color:var(--rg-accent); display:block; margin-bottom:0.45rem;">Phase 2</span>
+              <p class="serif-body" style="font-size:1rem; font-weight:700; color:#111; margin:0 0 0.35rem;">Candidate Discovery &amp; Specialist Analysis</p>
+              <p class="serif-body" style="font-size:0.9rem; color:#555; margin:0; line-height:1.6;">A router predicts which of the six dimensions are plausible <em>per subtask</em> (sparse routing avoids noisy diagnoses); dimension specialists emit hypotheses with detection, reasoning, temporal span, evidence, severity, and confidence.</p>
+            </div>
+            <div style="padding:1.3rem 1.2rem;">
+              <span class="serif-body" style="font-size:0.85rem; font-weight:700; color:var(--rg-accent); display:block; margin-bottom:0.45rem;">Phase 3</span>
+              <p class="serif-body" style="font-size:1rem; font-weight:700; color:#111; margin:0 0 0.35rem;">Verification &amp; Reporting</p>
+              <p class="serif-body" style="font-size:0.9rem; color:#555; margin:0; line-height:1.6;">A critic verifier re-examines each hypothesis &mdash; <strong>accept</strong>, <strong>reject</strong>, or <strong>merge</strong> &mdash; against visual evidence, task context, and scene state, then synthesizes the survivors into one coherent report. <em>This is what kills the cry-wolf false positives.</em></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Framework figure -->
+        <div class="figure-card" style="margin-top:0.5rem;">
+          <img src="static/images/pipeline_v4444_200.png" alt="The RoboGaze three-phase framework" loading="lazy">
+          <hr class="figure-divider">
+          <p class="figure-caption">
+            <span class="figure-caption-label">The RoboGaze framework.</span>
+            A three-phase pipeline for video-generation diagnosis: (1) extracting task and scene context memories; (2) routing suspicious temporal spans to six dimension-specific specialists to generate glitch hypotheses; and (3) verifying and synthesizing hypotheses into a final structured glitch report.
+          </p>
+        </div>
+
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section hero is-light">
-      <div class="container is-max-widescreen">
-        <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
-        <p class="section-intro">
-          Representative cases: the verifier rescues a true glitch a vanilla judge mislabels, rejects a vanilla false positive, and handles failures both methods detect but localize differently.
-        </p>
-        <div class="stacked-figures">
-          <figure class="paper-figure paired-result-figure">
-            <img src="static/images/qualitative_3.png" alt="Qualitative comparison of RoboGaze and baseline judges" loading="lazy">
-            <figcaption>Representative cases where verification improves diagnosis and temporal localization.</figcaption>
-          </figure>
+  <!-- ════════════════ TAXONOMY ════════════════ -->
+  <section class="section" style="background:#f7f4ef; padding:4rem 1.5rem;" id="taxonomy">
+    <div class="container is-max-desktop">
+      <p class="eyebrow">Taxonomy</p>
+      <h2 class="display-h2">Six dimensions. Thirty failure types. One interpretable map.</h2>
+      <p class="serif-body" style="font-size:1rem; color:#444; line-height:1.8; max-width:760px; margin:-1rem 0 2rem;">
+        Failures are organized along six coarse dimensions, each refined into fine-grained types &mdash; 30 in total &mdash; spanning the full execution stack of a manipulation rollout. Specialists reason at the fine-grained type level; headline results aggregate at the dimension level.
+      </p>
+      <div class="dim-grid">
+        <div class="dim-card"><div class="ico" style="background:#D94F1E;"><i class="fas fa-tasks"></i></div><div><p class="nm">Task Progress</p><p class="ds">Subtask completion and execution order.</p></div></div>
+        <div class="dim-card"><div class="ico" style="background:#2563eb;"><i class="fas fa-clipboard-check"></i></div><div><p class="nm">Instruction Consistency</p><p class="ds">Alignment with the commanded task.</p></div></div>
+        <div class="dim-card"><div class="ico" style="background:#059669;"><i class="fas fa-cube"></i></div><div><p class="nm">Object&ndash;Scene</p><p class="ds">Object existence, identity, and interactions.</p></div></div>
+        <div class="dim-card"><div class="ico" style="background:#7c3aed;"><i class="fas fa-robot"></i></div><div><p class="nm">Robot-Body</p><p class="ds">Robot kinematics and self-consistency.</p></div></div>
+        <div class="dim-card"><div class="ico" style="background:#dc2626;"><i class="fas fa-atom"></i></div><div><p class="nm">Physical Plausibility</p><p class="ds">Contacts, collisions, and dynamics.</p></div></div>
+        <div class="dim-card"><div class="ico" style="background:#0891b2;"><i class="fas fa-eye"></i></div><div><p class="nm">Visual Quality</p><p class="ds">Rendering, artifacts, and temporal coherence.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ KEY FINDINGS ════════════════ -->
+  <section class="section" style="background:#fff; padding:4rem 1.5rem;" id="kf">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <p class="eyebrow">Key Findings</p>
+          <h2 class="display-h2">What we learned evaluating eight VLMs on robot videos.</h2>
+
+          <!-- Finding 1 -->
+          <div style="margin-bottom:3rem; padding-bottom:3rem; border-bottom:0.5px solid #e0ddd8;">
+            <p class="label-sm" style="margin:0 0 0.4rem;">Finding 01</p>
+            <p class="serif-body" style="font-size:1.15rem; font-weight:700; color:#111; margin:0 0 0.7rem; line-height:1.3;">Monolithic VLM judges are brittle &mdash; they cry wolf on clean videos</p>
+            <p class="serif-body" style="font-size:0.95rem; color:#444; line-height:1.8; margin:0 0 1.3rem;">
+              Vanilla and chain-of-thought VLMs recognize suspicious motion but cannot reliably decide whether it constitutes a real, task-grounded failure &mdash; so they hallucinate glitches in <em>clean</em> clips. Clean-clip accuracy sits under 25% for most backbones; RoboGaze lifts it past 80%.
+            </p>
+            <p class="serif-body" style="font-size:0.78rem; color:#888; margin:0 0 0.5rem; text-align:center;">Clean-clip accuracy (%) &mdash; higher is better. Vanilla vs. Chain-of-Thought vs. RoboGaze, per backbone.</p>
+            <div style="position:relative; height:300px;"><canvas id="cleanChart"></canvas></div>
+          </div>
+
+          <!-- Finding 2 -->
+          <div style="margin-bottom:3rem; padding-bottom:3rem; border-bottom:0.5px solid #e0ddd8;">
+            <p class="label-sm" style="margin:0 0 0.4rem;">Finding 02</p>
+            <p class="serif-body" style="font-size:1.15rem; font-weight:700; color:#111; margin:0 0 0.7rem; line-height:1.3;">RoboGaze improves diagnostic agreement across every model family</p>
+            <p class="serif-body" style="font-size:0.95rem; color:#444; line-height:1.8; margin:0 0 1.3rem;">
+              Wrapping the same backbone with RoboGaze consistently improves semantic agreement with human diagnoses &mdash; for both proprietary and open-source models. The improvement comes from evaluator <em>structure</em>, not backbone scale: even the weakest open model wrapped by RoboGaze beats the strongest proprietary model prompted directly.
+            </p>
+            <p class="serif-body" style="font-size:0.78rem; color:#888; margin:0 0 0.5rem; text-align:center;">Description-F<sub>1</sub> &mdash; agreement with human diagnostic descriptions, per backbone.</p>
+            <div style="position:relative; height:300px; margin-bottom:2rem;"><canvas id="descChart"></canvas></div>
+            <p class="serif-body" style="font-size:0.78rem; color:#888; margin:0 0 0.5rem; text-align:center;">Per-dimension Description-F<sub>1</sub> for Gemini 3.1 Pro &mdash; Human ceiling vs. Vanilla vs. RoboGaze.</p>
+            <div style="position:relative; height:420px;"><canvas id="perDimChart"></canvas></div>
+            <p class="figure-caption" style="max-width:760px; margin:1.1rem auto 0; text-align:left;">
+              <span class="figure-caption-label">Per-dimension breakdown.</span>
+              Description-F<sub>1</sub> for Gemini 3.1 Pro across the six dimensions. The largest gains appear on Task Progress, Instruction Consistency, Object&ndash;Scene, and Robot-Body &mdash; where diagnosis depends on relational and causal reasoning.
+            </p>
+          </div>
+
+          <!-- Finding 3 -->
+          <div>
+            <p class="label-sm" style="margin:0 0 0.4rem;">Finding 03</p>
+            <p class="serif-body" style="font-size:1.15rem; font-weight:700; color:#111; margin:0 0 0.7rem; line-height:1.3;">The critic verifier is the single most important component</p>
+            <p class="serif-body" style="font-size:0.95rem; color:#444; line-height:1.8; margin:0 0 1.3rem;">
+              Every structural component contributes, but ablating the <strong>critic verifier</strong> causes by far the largest degradation. The verifier's job is not to propose more glitches &mdash; it is to <em>reject weak ones</em> before they enter the report, checking each hypothesis against visual evidence, task context, and temporal consistency. This is what drives RoboGaze's clean-clip reliability.
+            </p>
+            <p class="serif-body" style="font-size:0.78rem; color:#888; margin:0 0 0.5rem; text-align:center;">Ablation on Gemma4-31B &mdash; removing each component (Description-F<sub>1</sub>). Removing the verifier hurts most.</p>
+            <div style="position:relative; height:300px;"><canvas id="ablationChart"></canvas></div>
+          </div>
+
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- CoRL 2026 double-blind: BibTeX hidden (reveals authors). Restore for the arXiv version.
-    <section class="section" id="bibtex">
-      <div class="container is-max-desktop">
-        <h2 class="title is-3 has-text-centered">BibTeX</h2>
-        <div class="bibtex-header">
-          <p class="section-intro" style="margin:0;text-align:left;">If you find RoboGaze useful, please consider citing:</p>
-          <button class="copy-bibtex-btn" onclick="copyBibTeX()">
-            <i class="fas fa-copy"></i><span class="copy-text">Copy</span>
-          </button>
+  <!-- ════════════════ EXPERIMENTS ════════════════ -->
+  <section class="section" style="background:#fdf9f7; padding:4rem 1.5rem;" id="exp_res">
+    <div class="container is-max-desktop">
+      <p class="eyebrow">Experiments &amp; Results</p>
+      <h2 class="display-h2">Catching glitches in the act, across three datasets.</h2>
+
+      <!-- Benchmark splits -->
+      <p class="label-sm" style="margin:0 0 0.9rem;">RoboGazeBench &mdash; 382 clips, three splits</p>
+      <div class="split-row">
+        <div class="split-card">
+          <div class="ico"><i class="fas fa-cube"></i></div>
+          <div class="cnt">154</div><div class="nm">GR1-Sim</div>
+          <ul><li><span>Domain</span><b>Simulated</b></li><li><span>View</span><b>Single</b></li><li><span>Duration</span><b>8&ndash;9 s</b></li></ul>
         </div>
-        <pre><code id="bibtex-code">@article{nguyen2026robogaze,
-  title   = {RoboGaze: Evaluating Robot World Models via Structured Vision-Language Analysis},
-  author  = {Nguyen, Minh-Loi and Diep, Nghiem Tuong and Nguyen, Hung Khang and
-             Le, Minh and Le Thien, Doanh and Tran, Hoang H. and Le, Dung Duy and
-             Duong, Vu and Sonntag, Daniel and Le, An Thai and Nguyen, Duy M. H. and
-             Vien, Ngo Anh and Nhiem, Tran Van},
-  journal = {arXiv preprint},
-  year    = {2026}
+        <div class="split-card">
+          <div class="ico"><i class="fas fa-video"></i></div>
+          <div class="cnt">100</div><div class="nm">GR1-Real</div>
+          <ul><li><span>Domain</span><b>Real-initialized</b></li><li><span>View</span><b>Single</b></li><li><span>Duration</span><b>5&ndash;6 s</b></li></ul>
+        </div>
+        <div class="split-card">
+          <div class="ico"><i class="fas fa-th-large"></i></div>
+          <div class="cnt">128</div><div class="nm">DROID-MV</div>
+          <ul><li><span>Domain</span><b>Real</b></li><li><span>View</span><b>Multi-view</b></li><li><span>Duration</span><b>17&ndash;18 s</b></li></ul>
+        </div>
+      </div>
+
+      <!-- Glitch example gallery (data-driven) -->
+      <p class="label-sm" style="margin:1.5rem 0 0.4rem;">Detected glitches on dataset examples</p>
+      <p class="serif-body" style="font-size:0.95rem; color:#444; line-height:1.8; max-width:760px; margin:0 0 1.6rem;">
+        Each clip is a generated robot video; the panel below it is the structured report RoboGaze produces &mdash; the dimension, fine-grained type, temporal span, and severity of every failure it finds. The timeline marks <em>when</em> each glitch occurs &mdash; click any row to replay that moment.
+      </p>
+
+      <div class="glitch-tabs" id="glitch-tabs"></div>
+      <div class="glitch-grid" id="glitch-grid"></div>
+
+      <!-- Main results table -->
+      <div style="border-top:0.5px solid #e0ddd8; margin:3rem 0 2.5rem;"></div>
+      <p class="label-sm" style="margin:0 0 0.9rem;">Main results on RoboGazeBench (averaged across the three splits)</p>
+      <div class="rg-table-wrap">
+        <table class="rg-table">
+          <caption>V, CoT, and RG denote vanilla prompting, chain-of-thought prompting, and the same backbone wrapped by RoboGaze. Green badges show the absolute gain of RoboGaze over the stronger baseline. Higher is better; Clean is clean-clip accuracy.</caption>
+          <thead>
+            <tr class="top">
+              <th rowspan="2" class="model">Family</th><th rowspan="2" class="model">Model</th>
+              <th colspan="3">Desc. F<sub>1</sub></th><th colspan="3">mIoU</th><th colspan="3">F<sub>1</sub>&times;IoU</th><th colspan="3">Clean</th>
+            </tr>
+            <tr class="sub">
+              <th>V</th><th>CoT</th><th class="rg-col">RG<span class="ours-tag">Ours</span></th>
+              <th>V</th><th>CoT</th><th class="rg-col">RG<span class="ours-tag">Ours</span></th>
+              <th>V</th><th>CoT</th><th class="rg-col">RG<span class="ours-tag">Ours</span></th>
+              <th>V</th><th>CoT</th><th class="rg-col">RG<span class="ours-tag">Ours</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td rowspan="4" class="famcell">Prop.</td><td class="model">Gemini 3.1 Pro</td>
+              <td>25.4</td><td>32.4</td><td class="rg-col"><span class="val">67.9</span><span class="gain">+35.5</span></td>
+              <td>.39</td><td>.43</td><td class="rg-col"><span class="val">.64</span><span class="gain">+.21</span></td>
+              <td>9.8</td><td>13.9</td><td class="rg-col"><span class="val">43.7</span><span class="gain">+29.8</span></td>
+              <td>.13</td><td>.21</td><td class="rg-col"><span class="val">.92</span><span class="gain">+.71</span></td></tr>
+            <tr><td class="model">GPT-5.5</td>
+              <td>23.9</td><td>30.5</td><td class="rg-col"><span class="val">65.1</span><span class="gain">+34.6</span></td>
+              <td>.37</td><td>.41</td><td class="rg-col"><span class="val">.63</span><span class="gain">+.22</span></td>
+              <td>8.8</td><td>12.5</td><td class="rg-col"><span class="val">41.1</span><span class="gain">+28.6</span></td>
+              <td>.09</td><td>.18</td><td class="rg-col"><span class="val">.90</span><span class="gain">+.72</span></td></tr>
+            <tr><td class="model">Gemini 3.1 Flash</td>
+              <td>20.2</td><td>26.1</td><td class="rg-col"><span class="val">57.8</span><span class="gain">+31.7</span></td>
+              <td>.35</td><td>.39</td><td class="rg-col"><span class="val">.61</span><span class="gain">+.22</span></td>
+              <td>7.0</td><td>10.2</td><td class="rg-col"><span class="val">35.0</span><span class="gain">+24.8</span></td>
+              <td>.08</td><td>.16</td><td class="rg-col"><span class="val">.87</span><span class="gain">+.71</span></td></tr>
+            <tr><td class="model">Claude Sonnet 4.6</td>
+              <td>21.4</td><td>27.6</td><td class="rg-col"><span class="val">60.3</span><span class="gain">+32.7</span></td>
+              <td>.36</td><td>.40</td><td class="rg-col"><span class="val">.61</span><span class="gain">+.21</span></td>
+              <td>7.7</td><td>11.0</td><td class="rg-col"><span class="val">36.8</span><span class="gain">+25.8</span></td>
+              <td>.11</td><td>.20</td><td class="rg-col"><span class="val">.89</span><span class="gain">+.69</span></td></tr>
+            <tr><td rowspan="4" class="famcell">Open</td><td class="model">Gemma4-31B</td>
+              <td>17.6</td><td>23.4</td><td class="rg-col"><span class="val">56.6</span><span class="gain">+33.2</span></td>
+              <td>.33</td><td>.37</td><td class="rg-col"><span class="val">.66</span><span class="gain">+.29</span></td>
+              <td>5.7</td><td>8.7</td><td class="rg-col"><span class="val">34.5</span><span class="gain">+25.8</span></td>
+              <td>.03</td><td>.12</td><td class="rg-col"><span class="val">.86</span><span class="gain">+.74</span></td></tr>
+            <tr><td class="model">Qwen3.6-35B</td>
+              <td>16.7</td><td>22.3</td><td class="rg-col"><span class="val">53.1</span><span class="gain">+30.8</span></td>
+              <td>.32</td><td>.36</td><td class="rg-col"><span class="val">.60</span><span class="gain">+.24</span></td>
+              <td>5.4</td><td>8.2</td><td class="rg-col"><span class="val">31.6</span><span class="gain">+23.4</span></td>
+              <td>.16</td><td>.23</td><td class="rg-col"><span class="val">.84</span><span class="gain">+.61</span></td></tr>
+            <tr><td class="model">LLaVA-OV-2-8B</td>
+              <td>14.2</td><td>19.5</td><td class="rg-col"><span class="val">47.9</span><span class="gain">+28.4</span></td>
+              <td>.30</td><td>.33</td><td class="rg-col"><span class="val">.56</span><span class="gain">+.23</span></td>
+              <td>4.3</td><td>6.5</td><td class="rg-col"><span class="val">26.9</span><span class="gain">+20.4</span></td>
+              <td>.18</td><td>.25</td><td class="rg-col"><span class="val">.82</span><span class="gain">+.57</span></td></tr>
+            <tr><td class="model">InternVL3.5-38B</td>
+              <td>15.5</td><td>21.0</td><td class="rg-col"><span class="val">50.1</span><span class="gain">+29.1</span></td>
+              <td>.31</td><td>.35</td><td class="rg-col"><span class="val">.58</span><span class="gain">+.23</span></td>
+              <td>4.8</td><td>7.4</td><td class="rg-col"><span class="val">28.9</span><span class="gain">+21.5</span></td>
+              <td>.04</td><td>.13</td><td class="rg-col"><span class="val">.81</span><span class="gain">+.68</span></td></tr>
+            <tr class="human"><th scope="row" class="famcell">Human</th><td class="model">ceiling</td>
+              <td colspan="3">75.5</td><td colspan="3">0.71</td><td colspan="3">47.1</td><td colspan="3">0.94</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ QUALITATIVE ════════════════ -->
+  <section class="section" style="background:#f7f4ef; padding:4rem 1.5rem;" id="qualitative">
+    <div class="container is-max-desktop">
+      <p class="eyebrow">Qualitative Analysis</p>
+      <h2 class="display-h2">Where verification changes the verdict.</h2>
+      <p class="serif-body" style="font-size:1rem; color:#444; line-height:1.8; max-width:760px; margin:-1rem 0 2rem;">
+        Representative cases: (a) the verifier rescues a true glitch a vanilla judge mislabels, (b) a vanilla false positive is rejected, and (c) a failure both methods detect but localize differently.
+      </p>
+      <div class="figure-card">
+        <img src="static/images/qualitative_3.png" alt="Qualitative comparison of RoboGaze and baseline judges" loading="lazy">
+        <hr class="figure-divider">
+        <p class="figure-caption">
+          <span class="figure-caption-label">Vanilla baselines vs. RoboGaze.</span>
+          By contesting specialist hypotheses before they enter the report, RoboGaze rejects false positives and recovers true glitches with sharper temporal localization.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ CITATION (hidden for double-blind) ════════════════ -->
+  <section class="section" style="background:#f7f4ef; padding:1rem 1.5rem 4.5rem;" id="BibTeX">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <p class="eyebrow">Citation</p>
+          <h2 class="display-h2" style="margin-bottom:1rem;">BibTeX</h2>
+          <p class="serif-body" style="font-size:0.95rem; color:#666; margin:0 0 1.2rem;">
+            Author and citation details are withheld during double-blind review. The full BibTeX entry will be published with the camera-ready version.
+          </p>
+          <pre style="background:#1f1a16; color:#f3ece2; border-left:4px solid var(--rg-accent); border-radius:8px; padding:1.5rem; overflow-x:auto; margin:0; font-family:'Courier New',Courier,monospace; font-size:0.85rem; line-height:1.7;"><code>@inproceedings{robogaze2026,
+  title  = {RoboGaze: Evaluating Robot World Models via
+            Structured Vision-Language Analysis},
+  author = {Anonymous},
+  booktitle = {Conference on Robot Learning (CoRL)},
+  year   = {2026}
 }</code></pre>
+        </div>
       </div>
-    </section>
-    -->
-  </main>
+    </div>
+  </section>
+
+  <!-- ════════════════ LIGHTBOX ════════════════ -->
+  <div id="img-lightbox"><span id="lightbox-close">&times;</span><img id="lightbox-img" src="" alt=""></div>
+
+  <!-- ════════════════ SIDE NAV ════════════════ -->
+  <nav id="side-nav">
+    <p class="serif-body" style="font-size:1rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:#bbb; margin:0 0 0.8rem 0.1rem;">Contents</p>
+    <a href="#abstract"      class="side-nav-link"><span class="side-nav-num">01</span><span class="side-nav-label">Abstract</span></a>
+    <a href="#contributions" class="side-nav-link"><span class="side-nav-num">02</span><span class="side-nav-label">Contributions</span></a>
+    <a href="#method"        class="side-nav-link"><span class="side-nav-num">03</span><span class="side-nav-label">Method</span></a>
+    <a href="#taxonomy"      class="side-nav-link"><span class="side-nav-num">04</span><span class="side-nav-label">Taxonomy</span></a>
+    <a href="#kf"            class="side-nav-link"><span class="side-nav-num">05</span><span class="side-nav-label">Key Findings</span></a>
+    <a href="#exp_res"       class="side-nav-link"><span class="side-nav-num">06</span><span class="side-nav-label">Experiments</span></a>
+    <a href="#qualitative"   class="side-nav-link"><span class="side-nav-num">07</span><span class="side-nav-label">Qualitative</span></a>
+  </nav>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer style="position:relative; padding:2rem 2.5rem; border-top:0.5px solid #e0ddd8; background-color:#faf8f4; background-image:radial-gradient(circle, #ddd9d2 1px, transparent 1px); background-size:16px 16px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; max-width:1100px; margin:0 auto; flex-wrap:wrap; gap:0.5rem;">
+      <p class="serif-body" style="font-size:0.85rem; color:#444; margin:0;">CoRL 2026 &nbsp;·&nbsp; Under Review &nbsp;·&nbsp; Anonymous Submission</p>
+      <p class="serif-body" style="font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#888; margin:0;">RoboGaze &mdash; Structured robot-video diagnosis</p>
+    </div>
+  </footer>
+
+  <!-- ════════════════ SCRIPTS ════════════════ -->
+  <script>
+  /* ---- Custom video player ---- */
+  (function() {
+    var vid = document.getElementById('rg-video'), wrap = document.getElementById('rg-video-wrap');
+    var controls = document.getElementById('rg-controls'), seek = document.getElementById('rg-seek');
+    var timeEl = document.getElementById('rg-time'), playBtn = document.getElementById('rg-playbtn');
+    var hideTimer;
+    function showControls() { controls.style.opacity = '1'; clearTimeout(hideTimer);
+      hideTimer = setTimeout(function(){ if(!vid.paused) controls.style.opacity='0'; }, 2500); }
+    wrap.addEventListener('mouseenter', showControls);
+    wrap.addEventListener('mousemove', showControls);
+    wrap.addEventListener('mouseleave', function(){ if(!vid.paused){ clearTimeout(hideTimer); controls.style.opacity='0'; } });
+    vid.addEventListener('click', function(){ rgTogglePlay(); });
+    window.rgTogglePlay = function() {
+      if (vid.paused) { vid.play(); playBtn.innerHTML='&#9646;&#9646;'; }
+      else { vid.pause(); playBtn.innerHTML='&#9654;'; controls.style.opacity='1'; }
+      showControls();
+    };
+    window.rgToggleMute = function() { vid.muted = !vid.muted; document.getElementById('rg-mutebtn').innerHTML = vid.muted ? '&#128263;' : '&#128266;'; };
+    vid.addEventListener('timeupdate', function() {
+      if(!vid.duration) return;
+      seek.value = (vid.currentTime/vid.duration)*100;
+      var m=Math.floor(vid.currentTime/60), s=Math.floor(vid.currentTime%60);
+      timeEl.textContent = m+':'+(s<10?'0':'')+s;
+    });
+    seek.addEventListener('input', function(){ if(vid.duration) vid.currentTime=(seek.value/100)*vid.duration; showControls(); });
+  })();
+
+  /* ---- Lightbox ---- */
+  ['img[src*="teaser_2"]','img[src*="pipeline_v4444"]','img[src*="qualitative_3"]'].forEach(function(sel){
+    document.querySelectorAll(sel).forEach(function(img){
+      img.classList.add('zoomable');
+      img.addEventListener('click', function(){
+        var lb=document.getElementById('img-lightbox');
+        document.getElementById('lightbox-img').src=img.src;
+        document.getElementById('lightbox-img').alt=img.alt;
+        lb.classList.add('active'); document.body.style.overflow='hidden';
+      });
+    });
+  });
+  function closeLightbox(){ document.getElementById('img-lightbox').classList.remove('active'); document.body.style.overflow=''; }
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('img-lightbox').addEventListener('click', function(e){ if(e.target===this) closeLightbox(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
+
+  /* ---- Side nav ---- */
+  (function() {
+    var nav=document.getElementById('side-nav'), MIN=960+200*2;
+    function checkSpace(){ nav.style.display = window.innerWidth>=MIN ? 'flex':'none'; }
+    window.addEventListener('resize', checkSpace); checkSpace();
+    var ids=['abstract','contributions','method','taxonomy','kf','exp_res','qualitative'];
+    var links=document.querySelectorAll('.side-nav-link');
+    function onScroll(){
+      var y=window.scrollY+window.innerHeight*0.35, active=ids[0];
+      var atBottom = window.innerHeight+window.scrollY >= document.documentElement.scrollHeight-2;
+      if(atBottom){ active=ids[ids.length-1]; }
+      else { ids.forEach(function(id){ var el=document.getElementById(id);
+        if(el && el.getBoundingClientRect().top+window.scrollY<=y) active=id; }); }
+      links.forEach(function(l){ l.classList.toggle('active', l.getAttribute('href').replace('#','')===active); });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll); onScroll();
+  })();
+
+  /* ════════════════ GLITCH EXAMPLE GALLERY (data-driven) ════════════════
+     EDIT HERE to swap in real labeled examples.
+     Each example: { video, task, duration (seconds), clean (optional), glitches: [...] }
+     Each glitch: { dim, type, start, end, severity (1-5), desc }
+     `dim` must be one of the keys in DIM below.                              */
+  var DIM = {
+    "Task Progress":           "#D94F1E",
+    "Instruction Consistency": "#2563eb",
+    "Object–Scene":            "#059669",
+    "Robot-Body":              "#7c3aed",
+    "Physical Plausibility":   "#dc2626",
+    "Visual Quality":          "#0891b2"
+  };
+  var DIM_SHORT = {
+    "Task Progress":"TP","Instruction Consistency":"IC","Object–Scene":"OSC",
+    "Robot-Body":"RBC","Physical Plausibility":"PP","Visual Quality":"VQ"
+  };
+
+  var GLITCH_DATA = {
+    "GR1-Sim": [
+      { video:"static/videos/sim_bad1.mp4", task:"Pick and place the novel object from the <b>cutting board</b> to the <b>pot</b>", duration:8.69,
+        glitches:[
+          { dim:"Object–Scene", type:"Object color or shape drift", start:2.00, end:8.69, severity:4, desc:"The source object looks can-like on the cutting board but appears rounded and ball-like near the pot by the end." },
+          { dim:"Task Progress", type:"Failed placement", start:6.00, end:8.69, severity:4, desc:"The object reaches the pot region but is not clearly released and left inside as a stable object." },
+          { dim:"Task Progress", type:"Ambiguous task success", start:7.00, end:8.69, severity:3, desc:"Shape change and unclear release make it ambiguous whether the original object was placed." },
+          { dim:"Task Progress", type:"Premature termination", start:8.00, end:8.69, severity:3, desc:"The clip ends before a clean release, hand retraction, and stable final state are shown." }
+        ] },
+      { video:"static/videos/sim_bad2.mp4", task:"Pick and place the novel object from the <b>cutting board</b> to the <b>pot</b>", duration:8.69,
+        glitches:[
+          { dim:"Object–Scene", type:"Object hallucination", start:0.80, end:2.20, severity:5, desc:"A round orange-like object appears already held by the hand, with no preceding pickup from the cutting board." },
+          { dim:"Physical Plausibility", type:"Object teleportation", start:0.80, end:2.20, severity:4, desc:"The object jumps from not-grasped on the board to held above the pot, with no continuous pickup trajectory." },
+          { dim:"Task Progress", type:"Failed grasp", start:2.80, end:4.00, severity:4, desc:"The hand near the cutting board never establishes a clean grasp on the original object." },
+          { dim:"Robot-Body", type:"Duplicated arm or gripper", start:3.00, end:8.00, severity:4, desc:"Around 3–8s an extra right-hand / gripper appears on the table alongside the main arm." },
+          { dim:"Instruction Consistency", type:"Ignored instruction constraint", start:0.80, end:4.00, severity:4, desc:"The transported object is not shown originating from the required cutting-board location." },
+          { dim:"Task Progress", type:"Ambiguous task success", start:4.00, end:8.60, severity:3, desc:"An object appears in the pot, but the invalid pickup and broken body consistency make success untrustworthy." }
+        ] },
+      { video:"static/videos/sim_bad3.mp4", task:"Pick and place the novel object from the <b>cutting board</b> to the <b>pan</b>", duration:8.69,
+        glitches:[
+          { dim:"Object–Scene", type:"Object color or shape drift", start:1.20, end:5.00, severity:4, desc:"The flat irregular yellow object becomes rounded and blob-like on the pan, changing its geometry." },
+          { dim:"Physical Plausibility", type:"Object floating", start:2.00, end:3.80, severity:4, desc:"During placement the yellow object floats while the right hand has already released it." },
+          { dim:"Task Progress", type:"Ambiguous task success", start:3.50, end:8.69, severity:3, desc:"The object reaches the pan, but shape drift and physically inconsistent contact make the placement unreliable." }
+        ] },
+      { video:"static/videos/sim_good.mp4", task:"Pick and place the novel object from the <b>cutting board</b> to the <b>cardboard box</b>", duration:8.69, clean:true,
+        glitches:[] }
+    ],
+    "GR1-Real": [
+      { video:"static/videos/real_bad1.mp4", task:"Use the right hand to pick up the <b>shaker</b> and crack it on the side of the <b>bowl</b>", duration:5.81,
+        glitches:[
+          { dim:"Object–Scene", type:"Object hallucination", start:0.00, end:0.60, severity:4, desc:"The red-blue shaker is not present initially and appears near the right hand around 0.5s with no visible source." },
+          { dim:"Task Progress", type:"Ambiguous task success", start:2.50, end:5.81, severity:3, desc:"The shaker is held near the bowl edge, but no clear cracking action or post-contact state is visible." },
+          { dim:"Task Progress", type:"Premature termination", start:5.00, end:5.81, severity:3, desc:"The clip ends while the hand still holds the shaker, before a completed cracked state." },
+          { dim:"Instruction Consistency", type:"Ignored instruction constraint", start:2.00, end:5.81, severity:3, desc:"The object is brought near the bowl, but the side-of-bowl cracking constraint is not clearly satisfied." }
+        ] },
+      { video:"static/videos/real_bad2.mp4", task:"Use the right hand to pick up the <b>glass</b>, place it under the <b>Coca-Cola dispenser</b>, and press the lever to fill it", duration:5.81,
+        glitches:[
+          { dim:"Instruction Consistency", type:"Wrong target location", start:1.00, end:4.50, severity:4, desc:"The glass stays near the right-side cup area rather than under the Coca-Cola dispenser nozzle." },
+          { dim:"Instruction Consistency", type:"Ignored instruction constraint", start:2.00, end:5.00, severity:4, desc:"No clear lever press is visible before or during the liquid appearance." },
+          { dim:"Object–Scene", type:"Object hallucination", start:2.50, end:4.00, severity:4, desc:"Red liquid appears in the glass with no visible dispenser stream, nozzle contact, or lever activation." },
+          { dim:"Physical Plausibility", type:"Impossible motion", start:2.50, end:4.00, severity:3, desc:"The glass goes from empty to filled with red liquid without any visible fluid-flow path." },
+          { dim:"Task Progress", type:"Ambiguous task success", start:4.00, end:5.81, severity:3, desc:"The glass ends up filled, but the place–press–fill procedure is not completed in a verifiable sequence." }
+        ] },
+      { video:"static/videos/real_bad3.mp4", task:"Use the right hand to pick up the <b>purple grapes</b> from the center of the table and move them to the <b>white tray</b>", duration:5.81,
+        glitches:[
+          { dim:"Object–Scene", type:"Object hallucination / duplicated object", start:3.50, end:5.81, severity:4, desc:"A second grape cluster appears near the right hand while the original grapes remain at the center of the table." },
+          { dim:"Instruction Consistency", type:"Ignored instruction constraint", start:3.50, end:5.20, severity:4, desc:"The original center-table grapes stay in place while the hand manipulates a separate grape-like object." },
+          { dim:"Task Progress", type:"Failed placement", start:5.20, end:5.81, severity:4, desc:"The grape-like object ends on the tabletop near the tray, not inside it; the original grapes remain on the table." },
+          { dim:"Instruction Consistency", type:"Wrong target location", start:5.20, end:5.81, severity:3, desc:"The final grape-like object is outside the white tray rather than inside it." }
+        ] },
+      { video:"static/videos/real_good.mp4", task:"Use the right hand to pick up the <b>white mug</b> from right of the pink plate and move it to the center of the <b>teal plate</b>", duration:5.81, clean:true,
+        glitches:[] }
+    ],
+    "DROID-MV": [
+      { video:"static/videos/droid_bad1.mp4", task:"Remove the <b>spray bottle</b> from the <b>sink</b> (multi-view)", duration:17.31,
+        glitches:[
+          { dim:"Physical Plausibility", type:"Impossible motion", start:11.00, end:17.31, severity:4, desc:"The spray bottle is upright in the wrist view but angled in the exterior views — incompatible poses across synchronized views." },
+          { dim:"Object–Scene", type:"Object distortion / pose inconsistency", start:11.00, end:14.31, severity:4, desc:"The bottle's orientation differs between views (upright vs. tilted), making its geometry unreliable after removal." },
+          { dim:"Task Progress", type:"Ambiguous task success", start:15.00, end:17.31, severity:3, desc:"The bottle appears removed, but its final state is not physically coherent across the synchronized views." }
+        ] },
+      { video:"static/videos/droid_bad2.mp4", task:"Put the <b>yellow ball</b> into the <b>bowl</b> (multi-view)", duration:17.31,
+        glitches:[
+          { dim:"Object–Scene", type:"Object disappearance", start:9.50, end:11.00, severity:5, desc:"A yellow ball already in the bowl disappears when a second ball is placed, violating object permanence." },
+          { dim:"Object–Scene", type:"Object hallucination / duplicated object", start:6.00, end:9.00, severity:4, desc:"A second yellow-ball instance is manipulated while one is already in the bowl, though the task is singular." },
+          { dim:"Task Progress", type:"Ambiguous task success", start:15.00, end:17.00, severity:3, desc:"A ball is placed, but the disappearance of the previously placed ball makes the final state unreliable." }
+        ] },
+      { video:"static/videos/droid_bad3.mp4", task:"Put two slices of <b>bread</b> in the <b>toaster</b> (multi-view)", duration:17.31,
+        glitches:[
+          { dim:"Physical Plausibility", type:"Object penetration", start:4.00, end:7.31, severity:5, desc:"The bread passes through the toaster body instead of entering a valid slot opening." },
+          { dim:"Instruction Consistency", type:"Ignored instruction constraint", start:15.00, end:17.31, severity:4, desc:"The task requires two slices, but only one is clearly handled and the two-slice final state is never shown." },
+          { dim:"Task Progress", type:"Failed placement", start:8.00, end:10.00, severity:4, desc:"The bread reaches the toaster but is not cleanly placed into a slot — it goes through the structure." },
+          { dim:"Task Progress", type:"Ambiguous task success", start:16.00, end:17.31, severity:3, desc:"Final frames show bread near the toaster, but penetration and unclear release make success untrustworthy." }
+        ] },
+      { video:"static/videos/droid_good.mp4", task:"Put the <b>red block</b> on the <b>yellow block</b> (multi-view)", duration:17.31, clean:true,
+        glitches:[] }
+    ]
+  };
+
+  (function() {
+    var tabsEl = document.getElementById('glitch-tabs'), gridEl = document.getElementById('glitch-grid');
+    var datasets = Object.keys(GLITCH_DATA);
+    function sevDots(n){ var s=''; for(var i=1;i<=5;i++){ s += i<=n ? '<span style="color:var(--rg-accent);">●</span>' : '<span style="color:#d8d3cc;">●</span>'; } return s; }
+    function card(ex){
+      var segs='', ticks='<span>0s</span><span>'+ex.duration+'s</span>';
+      ex.glitches.forEach(function(g,gi){
+        var left=(g.start/ex.duration)*100, w=Math.max(((g.end-g.start)/ex.duration)*100,2);
+        segs += '<div class="timeline-seg" data-gi="'+gi+'" style="left:'+left+'%; width:'+w+'%; background:'+DIM[g.dim]+';"></div>';
+      });
+      segs += '<div class="timeline-playhead"></div>';
+      var rows='';
+      if(ex.clean){
+        rows = '<div class="glitch-row clean"><span class="clean-tag"><i class="fas fa-check-circle"></i> No glitch detected — clean clip</span></div>';
+      } else {
+        ex.glitches.forEach(function(g,gi){
+          rows += '<div class="glitch-row" data-gi="'+gi+'" title="Click to replay this moment">'+
+            '<span class="dim-dot" style="background:'+DIM[g.dim]+';"></span>'+
+            '<div class="glitch-meta">'+
+              '<div class="glitch-head">'+
+                '<span class="dim-badge" style="background:'+DIM[g.dim]+';">'+DIM_SHORT[g.dim]+'</span>'+
+                '<span class="glitch-type">'+g.type+'</span>'+
+                '<span class="time-chip">'+g.start.toFixed(1)+'–'+g.end.toFixed(1)+'s</span>'+
+                '<span class="sev">'+sevDots(g.severity)+'</span>'+
+                '<span class="replay-tag"><i class="fas fa-redo"></i> replaying</span>'+
+              '</div>'+
+              '<p class="glitch-desc">'+g.desc+'</p>'+
+            '</div></div>';
+        });
+      }
+      return '<div class="glitch-card">'+
+        '<video src="'+ex.video+'" autoplay loop muted playsinline></video>'+
+        '<div class="glitch-body">'+
+          '<p class="glitch-task">'+ex.task+'</p>'+
+          '<div class="timeline">'+segs+'</div>'+
+          '<div class="timeline-ticks">'+ticks+'</div>'+
+          rows+
+        '</div></div>';
+    }
+
+    var ctrls = [];
+    function wire(cardEl, ex){
+      var video=cardEl.querySelector('video'), tl=cardEl.querySelector('.timeline');
+      var ph=cardEl.querySelector('.timeline-playhead');
+      var segs=[].slice.call(cardEl.querySelectorAll('.timeline-seg'));
+      var rows=[].slice.call(cardEl.querySelectorAll('.glitch-row[data-gi]'));
+      var exDur=ex.duration, gl=ex.glitches||[];
+      var ctrl={video:video, ph:ph, segs:segs, rows:rows, exDur:exDur, gl:gl, loop:null};
+      function toVid(t){ return video.duration ? (t/exDur)*video.duration : 0; }
+      function setLoop(gi){
+        ctrl.loop = (ctrl.loop===gi) ? null : gi;
+        rows.forEach(function(r,i){ r.classList.toggle('looping', i===ctrl.loop); });
+        if(ctrl.loop!=null && video.duration){ video.currentTime=toVid(gl[gi].start); video.play(); }
+      }
+      function clearLoop(){ if(ctrl.loop!=null){ ctrl.loop=null; rows.forEach(function(r){ r.classList.remove('looping'); }); } }
+      tl.addEventListener('click', function(e){
+        if(e.target.classList.contains('timeline-seg')) return; // segment clicks handled below
+        clearLoop();
+        var rect=tl.getBoundingClientRect(), f=Math.min(Math.max((e.clientX-rect.left)/rect.width,0),1);
+        if(video.duration) video.currentTime=f*video.duration;
+        video.play();
+      });
+      video.addEventListener('click', clearLoop);
+      rows.forEach(function(row,gi){
+        row.addEventListener('click', function(){ setLoop(gi); });
+        row.addEventListener('mouseenter', function(){ if(segs[gi]) segs[gi].classList.add('hl'); });
+        row.addEventListener('mouseleave', function(){ if(segs[gi]) segs[gi].classList.remove('hl'); });
+      });
+      segs.forEach(function(seg,gi){
+        seg.addEventListener('mouseenter', function(){ if(rows[gi]) rows[gi].classList.add('hover'); });
+        seg.addEventListener('mouseleave', function(){ if(rows[gi]) rows[gi].classList.remove('hover'); });
+        seg.addEventListener('click', function(e){ e.stopPropagation(); setLoop(gi); });
+      });
+      // Event-driven updates make the playhead/highlight robust even when rAF is throttled.
+      ['loadedmetadata','timeupdate','seeked','play'].forEach(function(ev){
+        video.addEventListener(ev, function(){ updateOne(ctrl); });
+      });
+      ctrls.push(ctrl);
+      updateOne(ctrl); // initialize position immediately
+    }
+
+    function updateOne(c){
+      var v=c.video; if(!v.duration){ if(c.ph) c.ph.style.left='0%'; return; }
+      if(c.loop!=null){ var g=c.gl[c.loop], sV=(g.start/c.exDur)*v.duration, eV=(g.end/c.exDur)*v.duration;
+        if(v.currentTime>=eV-0.03 || v.currentTime<sV-0.08){ v.currentTime=sV; } }
+      var frac=v.currentTime/v.duration;
+      if(c.ph) c.ph.style.left=(frac*100)+'%';
+      var t=frac*c.exDur;
+      c.gl.forEach(function(g,gi){
+        var on=(gi===c.loop) || (t>=g.start-0.06 && t<=g.end+0.06);
+        if(c.rows[gi]) c.rows[gi].classList.toggle('active', on);
+        if(c.segs[gi]) c.segs[gi].classList.toggle('active', on);
+      });
+    }
+    function tick(){ ctrls.forEach(updateOne); requestAnimationFrame(tick); }
+
+    function render(ds){
+      gridEl.innerHTML = GLITCH_DATA[ds].map(card).join('');
+      ctrls = [];
+      var cards=gridEl.querySelectorAll('.glitch-card');
+      GLITCH_DATA[ds].forEach(function(ex,i){ wire(cards[i], ex); });
+    }
+    datasets.forEach(function(ds, i){
+      var b=document.createElement('button');
+      b.className='glitch-tab'+(i===0?' active':'');
+      b.innerHTML = ds+' <small>'+GLITCH_DATA[ds].length+' clips</small>';
+      b.addEventListener('click', function(){
+        tabsEl.querySelectorAll('.glitch-tab').forEach(function(x){x.classList.remove('active');});
+        b.classList.add('active'); render(ds);
+      });
+      tabsEl.appendChild(b);
+    });
+    render(datasets[0]);
+    requestAnimationFrame(tick);
+  })();
+  </script>
+
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script>
+  window.addEventListener('load', function() {
+    if (typeof Chart === 'undefined') return;
+    var FONT = "'Georgia', serif";
+    var C = { v:'#cdbfae', cot:'#9a8c7a', rg:'#D94F1E' };
+    var MODELS = ['Gemini 3.1 Pro','GPT-5.5','Gemini 3.1 Flash','Claude Sonnet 4.6','Gemma4-31B','Qwen3.6-35B','LLaVA-OV-2-8B','InternVL3.5-38B'];
+    function grouped(id, title, max, v, cot, rg) {
+      var el=document.getElementById(id); if(!el) return;
+      new Chart(el, { type:'bar',
+        data:{ labels:MODELS, datasets:[
+          {label:'Vanilla', data:v, backgroundColor:C.v, borderRadius:3},
+          {label:'Chain-of-Thought', data:cot, backgroundColor:C.cot, borderRadius:3},
+          {label:'RoboGaze (Ours)', data:rg, backgroundColor:C.rg, borderRadius:3}
+        ]},
+        options:{ responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{ position:'top', labels:{ font:{family:FONT,size:11}, color:'#333', boxWidth:12 } },
+            tooltip:{ bodyFont:{family:FONT,size:11}, titleFont:{family:FONT,size:11} } },
+          scales:{ x:{ ticks:{ font:{family:FONT,size:9}, color:'#555', maxRotation:40, minRotation:40 }, grid:{display:false} },
+            y:{ beginAtZero:true, max:max, ticks:{ font:{family:FONT,size:9}, color:'#999' }, grid:{color:'#eee'} } } }
+      });
+    }
+    // Finding 1 — clean-clip accuracy (%)
+    grouped('cleanChart', 'Clean acc', 100,
+      [13,9,8,11,3,16,18,4], [21,18,16,20,12,23,25,13], [92,90,87,89,86,84,82,81]);
+    // Finding 2 — description-F1
+    grouped('descChart', 'Desc F1', 80,
+      [25.4,23.9,20.2,21.4,17.6,16.7,14.2,15.5], [32.4,30.5,26.1,27.6,23.4,22.3,19.5,21.0], [67.9,65.1,57.8,60.3,56.6,53.1,47.9,50.1]);
+    // Finding 2 — per-dimension breakdown (Gemini 3.1 Pro), horizontal
+    var pdEl=document.getElementById('perDimChart');
+    if(pdEl){
+      new Chart(pdEl, { type:'bar',
+        data:{ labels:['TP','IC','OSC','RBC','PP','VQ'], datasets:[
+          {label:'Human ceiling', data:[84.2,81.5,78.8,76.0,69.5,67.0], backgroundColor:'#7ecbb9', borderRadius:3},
+          {label:'Vanilla model', data:[32.0,28.4,26.1,23.5,17.8,20.6], backgroundColor:'#e8b9a6', borderRadius:3},
+          {label:'RoboGaze', data:[77.8,74.2,70.5,64.7,50.4,52.6], backgroundColor:'#D94F1E', borderRadius:3}
+        ]},
+        options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{ position:'top', labels:{ font:{family:FONT,size:11}, color:'#333', boxWidth:12 } },
+            tooltip:{ bodyFont:{family:FONT,size:11}, titleFont:{family:FONT,size:11} } },
+          scales:{ x:{ beginAtZero:true, max:90, ticks:{ font:{family:FONT,size:9}, color:'#999' }, grid:{color:'#eee'},
+              title:{ display:true, text:'Description F1 (%)', font:{family:FONT,size:11}, color:'#555' } },
+            y:{ ticks:{ font:{family:FONT,size:12}, color:'#333' }, grid:{display:false} } } }
+      });
+    }
+    // Finding 3 — ablation (Gemma4-31B, Desc-F1)
+    var abEl=document.getElementById('ablationChart');
+    if(abEl){
+      var labels=['Full RoboGaze','w/o task mem.','w/o scene mem.','w/o subtask seg.','w/o router','w/o critic verifier'];
+      var data=[56.6,51.2,50.0,52.7,51.5,44.3];
+      var cols=labels.map(function(l,i){ return i===0 ? '#D94F1E' : (i===labels.length-1 ? '#dc2626' : '#cdbfae'); });
+      new Chart(abEl, { type:'bar',
+        data:{ labels:labels, datasets:[{ label:'Description-F1', data:data, backgroundColor:cols, borderRadius:3 }] },
+        options:{ responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{display:false}, tooltip:{ bodyFont:{family:FONT,size:11}, titleFont:{family:FONT,size:11} } },
+          scales:{ x:{ ticks:{ font:{family:FONT,size:9}, color:'#555', maxRotation:40, minRotation:40 }, grid:{display:false} },
+            y:{ beginAtZero:true, max:60, ticks:{ font:{family:FONT,size:9}, color:'#999' }, grid:{color:'#eee'} } } }
+      });
+    }
+  });
+  </script>
 
 </body>
 </html>
