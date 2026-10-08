@@ -1,0 +1,48 @@
+{
+  "clip_id": "cp_pp_spatula",
+  "file": "cp_pp_spatula.mp4",
+  "thumbnail": "../../images/thumbs/cp_pp_spatula.jpg",
+  "title": "Water from spatula",
+  "instruction": "Put the spatula on the tray",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 5.81,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 93,
+  "codec": "h264",
+  "size_bytes": 933514,
+  "failure_free": false,
+  "n_events": 2,
+  "dimensions": [
+    "PP",
+    "IC"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_pp_spatula_e1",
+      "dimension": "physical_plausibility",
+      "dimension_code": "PP",
+      "type": "other_implausible_dynamics",
+      "start_s": 5.1,
+      "end_s": 5.8,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "Water comes out of the spatula without any source of liquid."
+    },
+    {
+      "event_id": "cp_pp_spatula_e2",
+      "dimension": "instruction_consistency",
+      "dimension_code": "IC",
+      "type": "ignored_constraint",
+      "start_s": 4.1,
+      "end_s": 5.7,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "Instead of placing the spatula on the tray, the robot performs a pouring-like motion with it."
+    }
+  ]
+}

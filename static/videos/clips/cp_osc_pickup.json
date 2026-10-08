@@ -1,0 +1,95 @@
+{
+  "clip_id": "cp_osc_pickup",
+  "file": "cp_osc_pickup.mp4",
+  "thumbnail": "../../images/thumbs/cp_osc_pickup.jpg",
+  "title": "Object appears in hand",
+  "instruction": "Pick and place the novel object from the cutting board to the pot",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 8.69,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 139,
+  "codec": "h264",
+  "size_bytes": 1058050,
+  "failure_free": false,
+  "n_events": 6,
+  "dimensions": [
+    "OSC",
+    "PP",
+    "TP",
+    "RBC",
+    "IC"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_osc_pickup_e1",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_hallucination",
+      "start_s": 0.8,
+      "end_s": 2.2,
+      "severity": 5,
+      "evidence_limiting": false,
+      "description": "A round orange-like object appears already held by the hand, with no preceding pickup from the cutting board."
+    },
+    {
+      "event_id": "cp_osc_pickup_e2",
+      "dimension": "physical_plausibility",
+      "dimension_code": "PP",
+      "type": "object_teleportation",
+      "start_s": 0.8,
+      "end_s": 2.2,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The object jumps from not-grasped on the board to held above the pot, with no continuous path."
+    },
+    {
+      "event_id": "cp_osc_pickup_e3",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "failed_grasp",
+      "start_s": 2.8,
+      "end_s": 4,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The hand near the cutting board never establishes a clean grasp on the original object."
+    },
+    {
+      "event_id": "cp_osc_pickup_e4",
+      "dimension": "robot_body",
+      "dimension_code": "RBC",
+      "type": "duplicated_arm_or_gripper",
+      "start_s": 3,
+      "end_s": 8,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "Around 3–8 s an extra right hand appears on the table alongside the main arm."
+    },
+    {
+      "event_id": "cp_osc_pickup_e5",
+      "dimension": "instruction_consistency",
+      "dimension_code": "IC",
+      "type": "ignored_constraint",
+      "start_s": 0.8,
+      "end_s": 4,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The transported object is not shown originating from the required cutting board."
+    },
+    {
+      "event_id": "cp_osc_pickup_e6",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "ambiguous_task_success",
+      "start_s": 4,
+      "end_s": 8.6,
+      "severity": 3,
+      "evidence_limiting": true,
+      "description": "An object appears in the pot, but the invalid pickup and broken body consistency make success unverifiable."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "clip_id": "cp_tp_grapes",
+  "file": "cp_tp_grapes.mp4",
+  "thumbnail": "../../images/thumbs/cp_tp_grapes.jpg",
+  "title": "Second grape cluster",
+  "instruction": "Use the right hand to pick up the purple grapes from the center of the table and move them to the white tray",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 5.81,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 93,
+  "codec": "h264",
+  "size_bytes": 1125980,
+  "failure_free": false,
+  "n_events": 4,
+  "dimensions": [
+    "OSC",
+    "IC",
+    "TP"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_tp_grapes_e1",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_hallucination",
+      "start_s": 3.5,
+      "end_s": 5.81,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "A second grape cluster appears near the right hand while the original grapes remain at the center of the table."
+    },
+    {
+      "event_id": "cp_tp_grapes_e2",
+      "dimension": "instruction_consistency",
+      "dimension_code": "IC",
+      "type": "ignored_constraint",
+      "start_s": 3.5,
+      "end_s": 5.2,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The original center-table grapes stay in place while the hand manipulates a separate grape-like object."
+    },
+    {
+      "event_id": "cp_tp_grapes_e3",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "failed_placement",
+      "start_s": 5.2,
+      "end_s": 5.81,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The grape-like object ends on the tabletop near the tray, not inside it; the original grapes remain on the table."
+    },
+    {
+      "event_id": "cp_tp_grapes_e4",
+      "dimension": "instruction_consistency",
+      "dimension_code": "IC",
+      "type": "wrong_target_location",
+      "start_s": 5.2,
+      "end_s": 5.81,
+      "severity": 3,
+      "evidence_limiting": false,
+      "description": "The final grape-like object is outside the white tray rather than inside it."
+    }
+  ]
+}

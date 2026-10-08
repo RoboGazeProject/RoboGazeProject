@@ -1,0 +1,22 @@
+{
+  "clip_id": "cp_clean_a",
+  "file": "cp_clean_a.mp4",
+  "thumbnail": "../../images/thumbs/cp_clean_a.jpg",
+  "title": "Failure-free clip",
+  "instruction": "Pick and place the novel object from the cutting board to the cardboard box",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 8.69,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 139,
+  "codec": "h264",
+  "size_bytes": 696360,
+  "failure_free": true,
+  "n_events": 0,
+  "dimensions": [],
+  "page_note": null,
+  "events": []
+}

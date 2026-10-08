@@ -1,0 +1,83 @@
+{
+  "clip_id": "cp_ic_dispenser",
+  "file": "cp_ic_dispenser.mp4",
+  "thumbnail": "../../images/thumbs/cp_ic_dispenser.jpg",
+  "title": "Wrong target",
+  "instruction": "Use the right hand to pick up the glass, place it under the Coca-Cola dispenser, and press the lever to fill it",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 5.81,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 93,
+  "codec": "h264",
+  "size_bytes": 1292967,
+  "failure_free": false,
+  "n_events": 5,
+  "dimensions": [
+    "IC",
+    "OSC",
+    "PP",
+    "TP"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_ic_dispenser_e1",
+      "dimension": "instruction_consistency",
+      "dimension_code": "IC",
+      "type": "wrong_target_location",
+      "start_s": 1,
+      "end_s": 4.5,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The glass stays near the right-side cup area rather than under the dispenser nozzle."
+    },
+    {
+      "event_id": "cp_ic_dispenser_e2",
+      "dimension": "instruction_consistency",
+      "dimension_code": "IC",
+      "type": "ignored_constraint",
+      "start_s": 2,
+      "end_s": 5,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "No clear lever press is visible before or during the liquid appearance."
+    },
+    {
+      "event_id": "cp_ic_dispenser_e3",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_hallucination",
+      "start_s": 2.5,
+      "end_s": 4,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "Red liquid appears in the glass with no visible dispenser stream, nozzle contact, or lever activation."
+    },
+    {
+      "event_id": "cp_ic_dispenser_e4",
+      "dimension": "physical_plausibility",
+      "dimension_code": "PP",
+      "type": "other_implausible_dynamics",
+      "start_s": 2.5,
+      "end_s": 4,
+      "severity": 3,
+      "evidence_limiting": false,
+      "description": "The glass goes from empty to filled with red liquid without any visible fluid-flow path."
+    },
+    {
+      "event_id": "cp_ic_dispenser_e5",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "ambiguous_task_success",
+      "start_s": 4,
+      "end_s": 5.81,
+      "severity": 3,
+      "evidence_limiting": true,
+      "description": "The glass ends up filled, but the place–press–fill procedure is not completed in a verifiable sequence."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "clip_id": "dd_osc_mug",
+  "file": "dd_osc_mug.mp4",
+  "thumbnail": "../../images/thumbs/dd_osc_mug.jpg",
+  "title": "Mug vanishes",
+  "instruction": "Put the white lid on the top of the black mug",
+  "generator": "DreamDojo",
+  "generation_mechanism": "autoregressive",
+  "embodiment": "bimanual",
+  "duration_s": 49.3,
+  "duration_band": "40-80s",
+  "resolution": "640x480",
+  "fps": 10,
+  "frames": 493,
+  "codec": "h264",
+  "size_bytes": 1413616,
+  "failure_free": false,
+  "n_events": 2,
+  "dimensions": [
+    "OSC",
+    "TP"
+  ],
+  "page_note": "The manipulator covers the mug before it disappears, so the report has to separate occlusion from a real disappearance.",
+  "events": [
+    {
+      "event_id": "dd_osc_mug_e1",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_disappearance",
+      "start_s": 34,
+      "end_s": 43,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "After being covered by the right manipulator, the mug with its lid disappears."
+    },
+    {
+      "event_id": "dd_osc_mug_e2",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "ambiguous_task_success",
+      "start_s": 40.1,
+      "end_s": 49.3,
+      "severity": null,
+      "evidence_limiting": true,
+      "description": "By the end of the clip, the relevant objects have disappeared from the scene, making it impossible to determine whether the task was completed."
+    }
+  ]
+}

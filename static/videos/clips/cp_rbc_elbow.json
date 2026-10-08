@@ -1,0 +1,48 @@
+{
+  "clip_id": "cp_rbc_elbow",
+  "file": "cp_rbc_elbow.mp4",
+  "thumbnail": "../../images/thumbs/cp_rbc_elbow.jpg",
+  "title": "Duplicated elbow",
+  "instruction": "Put the black box inside the microwave",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 8.69,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 139,
+  "codec": "h264",
+  "size_bytes": 671208,
+  "failure_free": false,
+  "n_events": 2,
+  "dimensions": [
+    "RBC",
+    "TP"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_rbc_elbow_e1",
+      "dimension": "robot_body",
+      "dimension_code": "RBC",
+      "type": "duplicated_arm_or_gripper",
+      "start_s": 6,
+      "end_s": 8,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "The elbow of the right hand is duplicated."
+    },
+    {
+      "event_id": "cp_rbc_elbow_e2",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "ambiguous_task_success",
+      "start_s": 6.2,
+      "end_s": 8.7,
+      "severity": null,
+      "evidence_limiting": true,
+      "description": "The clip ends while the right hand is still holding the black box, without placing it inside the microwave."
+    }
+  ]
+}

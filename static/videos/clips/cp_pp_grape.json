@@ -1,0 +1,48 @@
+{
+  "clip_id": "cp_pp_grape",
+  "file": "cp_pp_grape.mp4",
+  "thumbnail": "../../images/thumbs/cp_pp_grape.jpg",
+  "title": "Grape slides into hand",
+  "instruction": "Pick up the grape and put it in the white tray on the shelf",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 5.81,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 93,
+  "codec": "h264",
+  "size_bytes": 888728,
+  "failure_free": false,
+  "n_events": 2,
+  "dimensions": [
+    "PP",
+    "TP"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_pp_grape_e1",
+      "dimension": "physical_plausibility",
+      "dimension_code": "PP",
+      "type": "grasp_without_visible_support",
+      "start_s": 2.5,
+      "end_s": 4,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "The grape slides by itself into the open right hand."
+    },
+    {
+      "event_id": "cp_pp_grape_e2",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "ambiguous_task_success",
+      "start_s": 4.7,
+      "end_s": 5.8,
+      "severity": null,
+      "evidence_limiting": true,
+      "description": "The clip ends with the grape still in the right hand instead of being placed in the white tray on the shelf."
+    }
+  ]
+}

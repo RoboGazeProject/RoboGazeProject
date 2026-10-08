@@ -1,0 +1,36 @@
+{
+  "clip_id": "dd_osc_button",
+  "file": "dd_osc_button.mp4",
+  "thumbnail": "../../images/thumbs/dd_osc_button.jpg",
+  "title": "Pink button vanishes",
+  "instruction": "Press the pink and then the blue and then the green button",
+  "generator": "DreamDojo",
+  "generation_mechanism": "autoregressive",
+  "embodiment": "single_arm",
+  "duration_s": 20.07,
+  "duration_band": "15-40s",
+  "resolution": "640x480",
+  "fps": 15,
+  "frames": 301,
+  "codec": "h264",
+  "size_bytes": 593392,
+  "failure_free": false,
+  "n_events": 1,
+  "dimensions": [
+    "OSC"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "dd_osc_button_e1",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_disappearance",
+      "start_s": 12,
+      "end_s": 19,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "The pink button disappears when the gripper passes through it."
+    }
+  ]
+}

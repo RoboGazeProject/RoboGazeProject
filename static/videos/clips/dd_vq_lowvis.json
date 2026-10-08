@@ -1,0 +1,36 @@
+{
+  "clip_id": "dd_vq_lowvis",
+  "file": "dd_vq_lowvis.mp4",
+  "thumbnail": "../../images/thumbs/dd_vq_lowvis.jpg",
+  "title": "Gear degrades",
+  "instruction": "Insert the pin to the center of the blue gear",
+  "generator": "DreamDojo",
+  "generation_mechanism": "autoregressive",
+  "embodiment": "bimanual",
+  "duration_s": 24.1,
+  "duration_band": "15-40s",
+  "resolution": "640x480",
+  "fps": 10,
+  "frames": 241,
+  "codec": "h264",
+  "size_bytes": 724217,
+  "failure_free": false,
+  "n_events": 1,
+  "dimensions": [
+    "VQ"
+  ],
+  "page_note": "Low visibility is an evidence-limiting type: it records that the frames cannot decide, instead of asserting a defect.",
+  "events": [
+    {
+      "event_id": "dd_vq_lowvis_e1",
+      "dimension": "visual_quality",
+      "dimension_code": "VQ",
+      "type": "low_visibility",
+      "start_s": 15,
+      "end_s": 20,
+      "severity": null,
+      "evidence_limiting": true,
+      "description": "After the pin is inserted into the center of the gear, the visual quality of the pin and the gear degrades."
+    }
+  ]
+}

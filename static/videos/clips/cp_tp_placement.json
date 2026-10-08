@@ -1,0 +1,70 @@
+{
+  "clip_id": "cp_tp_placement",
+  "file": "cp_tp_placement.mp4",
+  "thumbnail": "../../images/thumbs/cp_tp_placement.jpg",
+  "title": "Failed placement",
+  "instruction": "Pick and place the novel object from the cutting board to the pot",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 8.69,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 139,
+  "codec": "h264",
+  "size_bytes": 660456,
+  "failure_free": false,
+  "n_events": 4,
+  "dimensions": [
+    "OSC",
+    "TP"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_tp_placement_e1",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_distortion",
+      "start_s": 2,
+      "end_s": 8.69,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The source object looks can-like on the cutting board but appears rounded and ball-like near the pot."
+    },
+    {
+      "event_id": "cp_tp_placement_e2",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "failed_placement",
+      "start_s": 6,
+      "end_s": 8.69,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The object reaches the pot region but is not clearly released and left inside as a stable object."
+    },
+    {
+      "event_id": "cp_tp_placement_e3",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "ambiguous_task_success",
+      "start_s": 7,
+      "end_s": 8.69,
+      "severity": 3,
+      "evidence_limiting": true,
+      "description": "Shape change and unclear release make it ambiguous whether the original object was placed."
+    },
+    {
+      "event_id": "cp_tp_placement_e4",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "premature_termination",
+      "start_s": 8,
+      "end_s": 8.69,
+      "severity": 3,
+      "evidence_limiting": false,
+      "description": "The clip ends before a clean release, hand retraction, and stable final state are shown."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "clip_id": "cp_rbc_fingers",
+  "file": "cp_rbc_fingers.mp4",
+  "thumbnail": "../../images/thumbs/cp_rbc_fingers.jpg",
+  "title": "Fingers deform",
+  "instruction": "Pick up the lemon and put it into the basket",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 8.69,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 139,
+  "codec": "h264",
+  "size_bytes": 768541,
+  "failure_free": false,
+  "n_events": 2,
+  "dimensions": [
+    "RBC",
+    "TP"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_rbc_fingers_e1",
+      "dimension": "robot_body",
+      "dimension_code": "RBC",
+      "type": "robot_body_deformation",
+      "start_s": 3.4,
+      "end_s": 8.3,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "The fingers of the left hand turn into potato-like shapes."
+    },
+    {
+      "event_id": "cp_rbc_fingers_e2",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "ambiguous_task_success",
+      "start_s": 6.1,
+      "end_s": 8.7,
+      "severity": null,
+      "evidence_limiting": true,
+      "description": "Until the end of the clip, the right hand is still holding the lemon and has not put it inside the basket."
+    }
+  ]
+}

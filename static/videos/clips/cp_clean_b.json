@@ -1,0 +1,22 @@
+{
+  "clip_id": "cp_clean_b",
+  "file": "cp_clean_b.mp4",
+  "thumbnail": "../../images/thumbs/cp_clean_b.jpg",
+  "title": "Failure-free clip",
+  "instruction": "Use the right hand to pick up the white mug from right of the pink plate and move it to the center of the teal plate",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 5.81,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 93,
+  "codec": "h264",
+  "size_bytes": 599718,
+  "failure_free": true,
+  "n_events": 0,
+  "dimensions": [],
+  "page_note": null,
+  "events": []
+}

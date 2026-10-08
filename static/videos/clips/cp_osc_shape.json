@@ -1,0 +1,60 @@
+{
+  "clip_id": "cp_osc_shape",
+  "file": "cp_osc_shape.mp4",
+  "thumbnail": "../../images/thumbs/cp_osc_shape.jpg",
+  "title": "Shape drift on pan",
+  "instruction": "Pick and place the novel object from the cutting board to the pan",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 8.69,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 139,
+  "codec": "h264",
+  "size_bytes": 1008435,
+  "failure_free": false,
+  "n_events": 3,
+  "dimensions": [
+    "OSC",
+    "PP",
+    "TP"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_osc_shape_e1",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_distortion",
+      "start_s": 1.2,
+      "end_s": 5,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The flat irregular yellow object becomes rounded and blob-like on the pan, changing its geometry."
+    },
+    {
+      "event_id": "cp_osc_shape_e2",
+      "dimension": "physical_plausibility",
+      "dimension_code": "PP",
+      "type": "object_floating",
+      "start_s": 2,
+      "end_s": 3.8,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "During placement the yellow object floats while the right hand has already released it."
+    },
+    {
+      "event_id": "cp_osc_shape_e3",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "ambiguous_task_success",
+      "start_s": 3.5,
+      "end_s": 8.69,
+      "severity": 3,
+      "evidence_limiting": true,
+      "description": "The object reaches the pan, but shape drift and physically inconsistent contact make the placement unreliable."
+    }
+  ]
+}

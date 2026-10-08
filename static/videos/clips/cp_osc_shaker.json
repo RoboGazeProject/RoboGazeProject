@@ -1,0 +1,71 @@
+{
+  "clip_id": "cp_osc_shaker",
+  "file": "cp_osc_shaker.mp4",
+  "thumbnail": "../../images/thumbs/cp_osc_shaker.jpg",
+  "title": "Shaker appears",
+  "instruction": "Use the right hand to pick up the shaker and crack it on the side of the bowl",
+  "generator": "Cosmos-Predict2.5",
+  "generation_mechanism": "fine-tuned one-shot",
+  "embodiment": "humanoid",
+  "duration_s": 5.81,
+  "duration_band": "<=15s",
+  "resolution": "1280x800",
+  "fps": 16,
+  "frames": 93,
+  "codec": "h264",
+  "size_bytes": 876150,
+  "failure_free": false,
+  "n_events": 4,
+  "dimensions": [
+    "OSC",
+    "TP",
+    "IC"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "cp_osc_shaker_e1",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_hallucination",
+      "start_s": 0,
+      "end_s": 0.6,
+      "severity": 4,
+      "evidence_limiting": false,
+      "description": "The red-blue shaker is not present initially and appears near the right hand around 0.5 s with no visible source."
+    },
+    {
+      "event_id": "cp_osc_shaker_e2",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "ambiguous_task_success",
+      "start_s": 2.5,
+      "end_s": 5.81,
+      "severity": 3,
+      "evidence_limiting": true,
+      "description": "The shaker is held near the bowl edge, but no clear cracking action or post-contact state is visible."
+    },
+    {
+      "event_id": "cp_osc_shaker_e3",
+      "dimension": "task_progress",
+      "dimension_code": "TP",
+      "type": "premature_termination",
+      "start_s": 5,
+      "end_s": 5.81,
+      "severity": 3,
+      "evidence_limiting": false,
+      "description": "The clip ends while the hand still holds the shaker, before a completed cracked state."
+    },
+    {
+      "event_id": "cp_osc_shaker_e4",
+      "dimension": "instruction_consistency",
+      "dimension_code": "IC",
+      "type": "ignored_constraint",
+      "start_s": 2,
+      "end_s": 5.81,
+      "severity": 3,
+      "evidence_limiting": false,
+      "description": "The object is brought near the bowl, but the side-of-bowl cracking constraint is not clearly satisfied."
+    }
+  ]
+}

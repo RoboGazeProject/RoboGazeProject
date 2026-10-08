@@ -1,0 +1,258 @@
+{
+  "schema": "RoboGaze demo clips",
+  "n_clips": 18,
+  "clips": [
+    {
+      "clip_id": "dd_osc_button",
+      "file": "dd_osc_button.mp4",
+      "title": "Pink button vanishes",
+      "generator": "DreamDojo",
+      "embodiment": "single_arm",
+      "duration_s": 20.07,
+      "failure_free": false,
+      "n_events": 1,
+      "dimensions": [
+        "OSC"
+      ]
+    },
+    {
+      "clip_id": "dd_vq_collapse",
+      "file": "dd_vq_collapse.mp4",
+      "title": "Long-horizon collapse",
+      "generator": "DreamDojo",
+      "embodiment": "humanoid",
+      "duration_s": 142.1,
+      "failure_free": false,
+      "n_events": 3,
+      "dimensions": [
+        "OSC",
+        "VQ"
+      ]
+    },
+    {
+      "clip_id": "cp_rbc_fingers",
+      "file": "cp_rbc_fingers.mp4",
+      "title": "Fingers deform",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 8.69,
+      "failure_free": false,
+      "n_events": 2,
+      "dimensions": [
+        "RBC",
+        "TP"
+      ]
+    },
+    {
+      "clip_id": "cp_rbc_elbow",
+      "file": "cp_rbc_elbow.mp4",
+      "title": "Duplicated elbow",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 8.69,
+      "failure_free": false,
+      "n_events": 2,
+      "dimensions": [
+        "RBC",
+        "TP"
+      ]
+    },
+    {
+      "clip_id": "cp_pp_grape",
+      "file": "cp_pp_grape.mp4",
+      "title": "Grape slides into hand",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 5.81,
+      "failure_free": false,
+      "n_events": 2,
+      "dimensions": [
+        "PP",
+        "TP"
+      ]
+    },
+    {
+      "clip_id": "cp_pp_spatula",
+      "file": "cp_pp_spatula.mp4",
+      "title": "Water from spatula",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 5.81,
+      "failure_free": false,
+      "n_events": 2,
+      "dimensions": [
+        "PP",
+        "IC"
+      ]
+    },
+    {
+      "clip_id": "dd_osc_mug",
+      "file": "dd_osc_mug.mp4",
+      "title": "Mug vanishes",
+      "generator": "DreamDojo",
+      "embodiment": "bimanual",
+      "duration_s": 49.3,
+      "failure_free": false,
+      "n_events": 2,
+      "dimensions": [
+        "OSC",
+        "TP"
+      ]
+    },
+    {
+      "clip_id": "dd_vq_lowvis",
+      "file": "dd_vq_lowvis.mp4",
+      "title": "Gear degrades",
+      "generator": "DreamDojo",
+      "embodiment": "bimanual",
+      "duration_s": 24.1,
+      "failure_free": false,
+      "n_events": 1,
+      "dimensions": [
+        "VQ"
+      ]
+    },
+    {
+      "clip_id": "dg_osc_switch",
+      "file": "dg_osc_switch.mp4",
+      "title": "Switch light changes",
+      "generator": "DreamGen",
+      "embodiment": null,
+      "duration_s": 11.56,
+      "failure_free": false,
+      "n_events": 4,
+      "dimensions": [
+        "OSC",
+        "IC",
+        "TP"
+      ]
+    },
+    {
+      "clip_id": "dg_rbc_toaster",
+      "file": "dg_rbc_toaster.mp4",
+      "title": "Gripper fingers shorten",
+      "generator": "DreamGen",
+      "embodiment": null,
+      "duration_s": 11.56,
+      "failure_free": false,
+      "n_events": 1,
+      "dimensions": [
+        "RBC"
+      ]
+    },
+    {
+      "clip_id": "cp_ic_dispenser",
+      "file": "cp_ic_dispenser.mp4",
+      "title": "Wrong target",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 5.81,
+      "failure_free": false,
+      "n_events": 5,
+      "dimensions": [
+        "IC",
+        "OSC",
+        "PP",
+        "TP"
+      ]
+    },
+    {
+      "clip_id": "cp_tp_placement",
+      "file": "cp_tp_placement.mp4",
+      "title": "Failed placement",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 8.69,
+      "failure_free": false,
+      "n_events": 4,
+      "dimensions": [
+        "OSC",
+        "TP"
+      ]
+    },
+    {
+      "clip_id": "cp_osc_pickup",
+      "file": "cp_osc_pickup.mp4",
+      "title": "Object appears in hand",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 8.69,
+      "failure_free": false,
+      "n_events": 6,
+      "dimensions": [
+        "OSC",
+        "PP",
+        "TP",
+        "RBC",
+        "IC"
+      ]
+    },
+    {
+      "clip_id": "cp_osc_shape",
+      "file": "cp_osc_shape.mp4",
+      "title": "Shape drift on pan",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 8.69,
+      "failure_free": false,
+      "n_events": 3,
+      "dimensions": [
+        "OSC",
+        "PP",
+        "TP"
+      ]
+    },
+    {
+      "clip_id": "cp_tp_grapes",
+      "file": "cp_tp_grapes.mp4",
+      "title": "Second grape cluster",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 5.81,
+      "failure_free": false,
+      "n_events": 4,
+      "dimensions": [
+        "OSC",
+        "IC",
+        "TP"
+      ]
+    },
+    {
+      "clip_id": "cp_osc_shaker",
+      "file": "cp_osc_shaker.mp4",
+      "title": "Shaker appears",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 5.81,
+      "failure_free": false,
+      "n_events": 4,
+      "dimensions": [
+        "OSC",
+        "TP",
+        "IC"
+      ]
+    },
+    {
+      "clip_id": "cp_clean_a",
+      "file": "cp_clean_a.mp4",
+      "title": "Failure-free clip",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 8.69,
+      "failure_free": true,
+      "n_events": 0,
+      "dimensions": []
+    },
+    {
+      "clip_id": "cp_clean_b",
+      "file": "cp_clean_b.mp4",
+      "title": "Failure-free clip",
+      "generator": "Cosmos-Predict2.5",
+      "embodiment": "humanoid",
+      "duration_s": 5.81,
+      "failure_free": true,
+      "n_events": 0,
+      "dimensions": []
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "clip_id": "dg_rbc_toaster",
+  "file": "dg_rbc_toaster.mp4",
+  "thumbnail": "../../images/thumbs/dg_rbc_toaster.jpg",
+  "title": "Gripper fingers shorten",
+  "instruction": "Push down the toaster lever",
+  "generator": "DreamGen",
+  "generation_mechanism": "segment-conditioned",
+  "embodiment": null,
+  "duration_s": 11.56,
+  "duration_band": "<=15s",
+  "resolution": "768x432",
+  "fps": 16,
+  "frames": 185,
+  "codec": "h264",
+  "size_bytes": 1029374,
+  "failure_free": false,
+  "n_events": 1,
+  "dimensions": [
+    "RBC"
+  ],
+  "page_note": null,
+  "events": [
+    {
+      "event_id": "dg_rbc_toaster_e1",
+      "dimension": "robot_body",
+      "dimension_code": "RBC",
+      "type": "missing_robot_part",
+      "start_s": 6,
+      "end_s": 10,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "The fingers of the gripper get shorter or disappear when it interacts with the toaster lever."
+    }
+  ]
+}

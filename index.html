@@ -359,6 +359,22 @@
     .dim-filter.gallery { margin:1.2rem 0 0; }
     .dim-pill .ct { color:#aaa; font-weight:400; }
 
+    .thumb .keep { position:absolute; top:4px; left:5px; font-size:1rem; line-height:1; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.7); cursor:pointer; }
+    .thumb.kept { border-color:#e7b100; }
+    .thumb .cid { display:block; padding:0 6px 5px; font-size:0.56rem; color:#999; font-family:ui-monospace,monospace; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .filmstrip:not(.expanded) .thumb.extra { display:none; }
+    .more-wrap { text-align:center; margin-top:1rem; }
+    .more-btn { font-family:'Georgia',serif; font-size:0.78rem; font-weight:700; color:#555; background:#fff; border:1px solid #d8d3cc; border-radius:999px; padding:6px 16px; cursor:pointer; }
+    .more-btn:hover { border-color:#999; color:#111; }
+    .focus-band { position:absolute; top:-4px; bottom:-4px; border:1.5px dashed #b5afa6; border-radius:6px; pointer-events:none; }
+    .focus-band.off { display:none; }
+    .meta-chip.focus-chip { background:#fbf1ea; color:#9a3c14; }
+    .gsq { display:inline-block; width:0.55rem; height:0.55rem; border-radius:2px; margin-right:0.3rem; vertical-align:baseline; flex:0 0 auto; }
+    .thumb .tl span.lbl { display:inline-flex; align-items:center; }
+    .thumb .tl .gsq { width:7px; height:7px; margin-right:3px; }
+    .clip-note { display:block; margin-top:0.55rem; font-style:italic; font-size:0.8rem; color:#777; line-height:1.5; font-weight:400; }
+    .filmstrip { grid-template-columns:repeat(6,minmax(0,1fr)); }
+
     @media (max-width:900px) {
       .viewer { grid-template-columns:1fr; }
       .report { border-left:none; border-top:1px solid #eeebe6; min-height:0; }
@@ -456,7 +472,7 @@
       <p class="eyebrow">See it work</p>
       <h2 class="display-h2">A report, not a score.</h2>
       <p class="lede">
-        Pick a generated clip below. The panel beside the video is its structured report: dimension, failure type, time span, severity and evidence for every failure. Each event is also marked on the timeline. Click an event to loop exactly that moment. Two of the clips contain no failure; for those, the correct report is an empty one.
+        Pick a generated clip below. The panel beside the video is its structured report: failure dimension, type, time span and description for every event. Each event is also marked on the timeline. Click an event to loop exactly that moment. The ten featured clips span three robot embodiments and lengths from 5.8 to 142 seconds, and two of them contain no failure at all: for those, the correct report is an empty one. More examples are available below.
       </p>
 
       <div class="viewer" id="viewer">
@@ -482,9 +498,7 @@
 
       <div class="dim-filter gallery" id="dim-filter" aria-label="Filter events by failure dimension"></div>
       <div class="filmstrip" id="filmstrip" role="tablist" aria-label="Example clips"></div>
-      <p class="serif-body" style="font-size:0.78rem; color:#999; line-height:1.6; margin:0.9rem 0 0;">
-        All eight clips come from the Cosmos-Predict2.5 fine-tuned one-shot block of RoboGazeBench. Four are conditioned on simulator frames and four on real images. The benchmark adds four more generators and clips up to 148.9&nbsp;s long.
-      </p>
+      <div class="more-wrap"><button type="button" class="more-btn" id="more-btn" aria-expanded="false"></button></div>
     </div>
   </section>
 
@@ -531,7 +545,6 @@
         </div>
 
         <div class="vplayer-wrap" id="rg-video-wrap">
-          <p class="chart-cap">80-second walkthrough &middot; audio available</p>
           <video id="rg-video" class="vplayer" controls playsinline preload="metadata" poster="static/images/hero_poster.jpg" aria-label="RoboGaze method walkthrough">
             <source src="static/videos/robogaze_1080.mp4" type="video/mp4">
           </video>
@@ -815,6 +828,7 @@
     <div style="display:flex; justify-content:space-between; align-items:center; max-width:1100px; margin:0 auto; flex-wrap:wrap; gap:0.5rem;">
       <p class="serif-body" style="font-size:0.85rem; color:#444; margin:0;">ICLR 2027 &nbsp;·&nbsp; Under Review &nbsp;·&nbsp; Anonymous Submission</p>
       <p class="serif-body" style="font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#888; margin:0;">RoboGaze &mdash; Structured robot-video diagnosis</p>
+      <p class="serif-body" style="font-size:0.68rem; color:#999; margin:0; width:100%; text-align:center;">Built from the <a href="https://github.com/nerfies/nerfies.github.io" style="color:#999; text-decoration:underline;">Nerfies project page template</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:#999; text-decoration:underline;">CC BY-SA 4.0</a>.</p>
     </div>
   </footer>
 
@@ -951,55 +965,118 @@
   /* ════════════════ EXAMPLE GALLERY — one unified pool (data-driven) ════════════════
      Each clip: { id, video, thumb, cond, task, duration, clean?, glitches:[{dim,type,start,end,severity,desc}] }
      `dim` must be a key of DIM; `type` uses the 30-type schema names.                                   */
+  /* GENERATORS: dot colour is by generation mechanism (kept apart from the six dimension colours). */
+  var GEN = {
+    "Cosmos-Predict2.5": { mech:"fine-tuned one-shot",  color:"#d6a84f" },
+    "DreamGen":          { mech:"segment-conditioned",  color:"#7a8aa0" },
+    "DreamDojo":         { mech:"autoregressive",       color:"#a07856" }
+  };
+  /* Clip pool. Events for the 10 newest clips use the dimension/type proposed from the schema and the RoboGaze
+     notes (time span + description); severity is left out where it has not been provided. emb:null = not stated. */
   var CLIPS = [
-    { id:"sim_bad2", cond:"Sim-conditioned", task:"Pick and place the novel object from the <b>cutting board</b> to the <b>pot</b>", duration:8.69,
+    { id:"dd_osc_button", short:"Pink button vanishes", gen:"DreamDojo", emb:"Single arm", duration:20.07, focus:[9,20.07],
+      task:"Press the <b>pink</b> and then the <b>blue</b> and then the <b>green</b> button",
+      glitches:[ { dim:"Object–Scene", type:"Object disappearance", start:12.0, end:19.0, desc:"The pink button disappears when the gripper passes through it." } ] },
+    { id:"dd_vq_collapse", short:"Long-horizon collapse", gen:"DreamDojo", emb:"Humanoid", duration:142.10, focus:[8,40],
+      note:"Long horizon: one of the 35 benchmark clips longer than 80 s, where RoboGaze's gain over the strongest control is largest.",
+      task:"use the right hand to pick up bottles on the shelf and put them into the box",
+      glitches:[
+        { dim:"Object–Scene", type:"Object disappearance", start:10.5, end:21.7, desc:"The black bottle that the robot is aiming to pick up disappears during interaction with the right hand." },
+        { dim:"Object–Scene", type:"Object hallucination", start:25.2, end:30.0, desc:"An apple-like object appears from nowhere, held by the right hand." },
+        { dim:"Visual Quality", type:"Frame corruption", start:30.0, end:141.2, desc:"Objects and background blur and blend together, so the task objects can no longer be told apart." } ] },
+    { id:"cp_rbc_fingers", short:"Fingers deform", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:8.69,
+      task:"Pick up the <b>lemon</b> and put it into the <b>basket</b>",
+      glitches:[
+        { dim:"Robot-Body", type:"Robot body deformation", start:3.4, end:8.3, desc:"The fingers of the left hand turn into potato-like shapes." },
+        { dim:"Task Progress", type:"Ambiguous task success", start:6.1, end:8.7, desc:"Until the end of the clip, the right hand is still holding the lemon and has not put it inside the basket." } ] },
+    { id:"cp_pp_grape", short:"Grape slides into hand", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:5.81,
+      task:"Pick up the <b>grape</b> and put it in the <b>white tray</b> on the shelf",
+      glitches:[
+        { dim:"Physical Plausibility", type:"Grasp without visible support", start:2.5, end:4.0, desc:"The grape slides by itself into the open right hand." },
+        { dim:"Task Progress", type:"Ambiguous task success", start:4.7, end:5.8, desc:"The clip ends with the grape still in the right hand instead of being placed in the white tray on the shelf." } ] },
+    { id:"dd_osc_mug", short:"Mug vanishes", gen:"DreamDojo", emb:"Bimanual", duration:49.30, focus:[30,49.3],
+      note:"The manipulator covers the mug before it disappears, so the report has to separate occlusion from a real disappearance.",
+      task:"Put the <b>white lid</b> on the top of the <b>black mug</b>",
+      glitches:[
+        { dim:"Object–Scene", type:"Object disappearance", start:34.0, end:43.0, desc:"After being covered by the right manipulator, the mug with its lid disappears." },
+        { dim:"Task Progress", type:"Ambiguous task success", start:40.1, end:49.3, desc:"By the end of the clip, the relevant objects have disappeared from the scene, making it impossible to determine whether the task was completed." } ] },
+    { id:"dd_vq_lowvis", short:"Gear degrades", gen:"DreamDojo", emb:"Bimanual", duration:24.10, focus:[11,24.1],
+      note:"Low visibility is an evidence-limiting type: it records that the frames cannot decide, instead of asserting a defect.",
+      task:"Insert the <b>pin</b> to the center of the <b>blue gear</b>",
+      glitches:[ { dim:"Visual Quality", type:"Low visibility", start:15.0, end:20.0, desc:"After the pin is inserted into the center of the gear, the visual quality of the pin and the gear degrades." } ] },
+    { id:"cp_ic_dispenser", short:"Wrong target", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:5.81,
+      task:"Use the right hand to pick up the <b>glass</b>, place it under the <b>Coca-Cola dispenser</b>, and press the lever to fill it",
+      glitches:[
+        { dim:"Instruction Consistency", type:"Wrong target location", start:1.00, end:4.50, severity:4, desc:"The glass stays near the right-side cup area rather than under the dispenser nozzle." },
+        { dim:"Instruction Consistency", type:"Ignored constraint", start:2.00, end:5.00, severity:4, desc:"No clear lever press is visible before or during the liquid appearance." },
+        { dim:"Object–Scene", type:"Object hallucination", start:2.50, end:4.00, severity:4, desc:"Red liquid appears in the glass with no visible dispenser stream, nozzle contact, or lever activation." },
+        { dim:"Physical Plausibility", type:"Other implausible dynamics", start:2.50, end:4.00, severity:3, desc:"The glass goes from empty to filled with red liquid without any visible fluid-flow path." },
+        { dim:"Task Progress", type:"Ambiguous task success", start:4.00, end:5.81, severity:3, desc:"The glass ends up filled, but the place–press–fill procedure is not completed in a verifiable sequence." } ] },
+    { id:"cp_tp_placement", short:"Failed placement", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:8.69,
+      task:"Pick and place the novel object from the <b>cutting board</b> to the <b>pot</b>",
+      glitches:[
+        { dim:"Object–Scene", type:"Object distortion", start:2.00, end:8.69, severity:4, desc:"The source object looks can-like on the cutting board but appears rounded and ball-like near the pot." },
+        { dim:"Task Progress", type:"Failed placement", start:6.00, end:8.69, severity:4, desc:"The object reaches the pot region but is not clearly released and left inside as a stable object." },
+        { dim:"Task Progress", type:"Ambiguous task success", start:7.00, end:8.69, severity:3, desc:"Shape change and unclear release make it ambiguous whether the original object was placed." },
+        { dim:"Task Progress", type:"Premature termination", start:8.00, end:8.69, severity:3, desc:"The clip ends before a clean release, hand retraction, and stable final state are shown." } ] },
+    { id:"cp_clean_a", short:"Failure-free clip", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:8.69, clean:true,
+      task:"Pick and place the novel object from the <b>cutting board</b> to the <b>cardboard box</b>", glitches:[] },
+    { id:"cp_clean_b", short:"Failure-free clip", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:5.81, clean:true,
+      task:"Use the right hand to pick up the <b>white mug</b> from right of the pink plate and move it to the center of the <b>teal plate</b>", glitches:[] },
+    { id:"cp_rbc_elbow", short:"Duplicated elbow", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:8.69,
+      task:"Put the <b>black box</b> inside the <b>microwave</b>",
+      glitches:[
+        { dim:"Robot-Body", type:"Duplicated arm or gripper", start:6.0, end:8.0, desc:"The elbow of the right hand is duplicated." },
+        { dim:"Task Progress", type:"Ambiguous task success", start:6.2, end:8.7, desc:"The clip ends while the right hand is still holding the black box, without placing it inside the microwave." } ] },
+    { id:"cp_pp_spatula", short:"Water from spatula", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:5.81,
+      task:"Put the <b>spatula</b> on the <b>tray</b>",
+      glitches:[
+        { dim:"Physical Plausibility", type:"Other implausible dynamics", start:5.1, end:5.8, desc:"Water comes out of the spatula without any source of liquid." },
+        { dim:"Instruction Consistency", type:"Ignored constraint", start:4.1, end:5.7, desc:"Instead of placing the spatula on the tray, the robot performs a pouring-like motion with it." } ] },
+    { id:"dg_osc_switch", short:"Switch light changes", gen:"DreamGen", emb:null, duration:11.56,
+      task:"Turn on the <b>third switch</b> from the left",
+      glitches:[
+        { dim:"Object–Scene", type:"Object identity swap", start:0.3, end:2.0, desc:"The light at the far left turns into a light with a white cover." },
+        { dim:"Object–Scene", type:"Object disappearance", start:3.5, end:4.2, desc:"The white cover of the light disappears." },
+        { dim:"Instruction Consistency", type:"Wrong object", start:5.8, end:7.6, desc:"The gripper presses the plug socket instead of the third switch." },
+        { dim:"Task Progress", type:"Task incompletion", start:7.6, end:11.56, desc:"Because the manipulator presses the wrong object, the switch light never changes state and the task remains incomplete." } ] },
+    { id:"dg_rbc_toaster", short:"Gripper fingers shorten", gen:"DreamGen", emb:null, duration:11.56,
+      task:"Push down the <b>toaster lever</b>",
+      glitches:[ { dim:"Robot-Body", type:"Missing robot part", start:6.0, end:10.0, desc:"The fingers of the gripper get shorter or disappear when it interacts with the toaster lever." } ] },
+    { id:"cp_osc_pickup", short:"Object appears in hand", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:8.69,
+      task:"Pick and place the novel object from the <b>cutting board</b> to the <b>pot</b>",
       glitches:[
         { dim:"Object–Scene", type:"Object hallucination", start:0.80, end:2.20, severity:5, desc:"A round orange-like object appears already held by the hand, with no preceding pickup from the cutting board." },
         { dim:"Physical Plausibility", type:"Object teleportation", start:0.80, end:2.20, severity:4, desc:"The object jumps from not-grasped on the board to held above the pot, with no continuous path." },
         { dim:"Task Progress", type:"Failed grasp", start:2.80, end:4.00, severity:4, desc:"The hand near the cutting board never establishes a clean grasp on the original object." },
         { dim:"Robot-Body", type:"Duplicated arm or gripper", start:3.00, end:8.00, severity:4, desc:"Around 3–8 s an extra right hand appears on the table alongside the main arm." },
         { dim:"Instruction Consistency", type:"Ignored constraint", start:0.80, end:4.00, severity:4, desc:"The transported object is not shown originating from the required cutting board." },
-        { dim:"Task Progress", type:"Ambiguous task success", start:4.00, end:8.60, severity:3, desc:"An object appears in the pot, but the invalid pickup and broken body consistency make success unverifiable." }
-      ] },
-    { id:"real_bad2", cond:"Real-conditioned", task:"Use the right hand to pick up the <b>glass</b>, place it under the <b>Coca-Cola dispenser</b>, and press the lever to fill it", duration:5.81,
-      glitches:[
-        { dim:"Instruction Consistency", type:"Wrong target location", start:1.00, end:4.50, severity:4, desc:"The glass stays near the right-side cup area rather than under the dispenser nozzle." },
-        { dim:"Instruction Consistency", type:"Ignored constraint", start:2.00, end:5.00, severity:4, desc:"No clear lever press is visible before or during the liquid appearance." },
-        { dim:"Object–Scene", type:"Object hallucination", start:2.50, end:4.00, severity:4, desc:"Red liquid appears in the glass with no visible dispenser stream, nozzle contact, or lever activation." },
-        { dim:"Physical Plausibility", type:"Other implausible dynamics", start:2.50, end:4.00, severity:3, desc:"The glass goes from empty to filled with red liquid without any visible fluid-flow path." },
-        { dim:"Task Progress", type:"Ambiguous task success", start:4.00, end:5.81, severity:3, desc:"The glass ends up filled, but the place–press–fill procedure is not completed in a verifiable sequence." }
-      ] },
-    { id:"sim_bad3", cond:"Sim-conditioned", task:"Pick and place the novel object from the <b>cutting board</b> to the <b>pan</b>", duration:8.69,
+        { dim:"Task Progress", type:"Ambiguous task success", start:4.00, end:8.60, severity:3, desc:"An object appears in the pot, but the invalid pickup and broken body consistency make success unverifiable." } ] },
+    { id:"cp_osc_shape", short:"Shape drift on pan", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:8.69,
+      task:"Pick and place the novel object from the <b>cutting board</b> to the <b>pan</b>",
       glitches:[
         { dim:"Object–Scene", type:"Object distortion", start:1.20, end:5.00, severity:4, desc:"The flat irregular yellow object becomes rounded and blob-like on the pan, changing its geometry." },
         { dim:"Physical Plausibility", type:"Object floating", start:2.00, end:3.80, severity:4, desc:"During placement the yellow object floats while the right hand has already released it." },
-        { dim:"Task Progress", type:"Ambiguous task success", start:3.50, end:8.69, severity:3, desc:"The object reaches the pan, but shape drift and physically inconsistent contact make the placement unreliable." }
-      ] },
-    { id:"real_bad3", cond:"Real-conditioned", task:"Use the right hand to pick up the <b>purple grapes</b> from the center of the table and move them to the <b>white tray</b>", duration:5.81,
+        { dim:"Task Progress", type:"Ambiguous task success", start:3.50, end:8.69, severity:3, desc:"The object reaches the pan, but shape drift and physically inconsistent contact make the placement unreliable." } ] },
+    { id:"cp_tp_grapes", short:"Second grape cluster", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:5.81,
+      task:"Use the right hand to pick up the <b>purple grapes</b> from the center of the table and move them to the <b>white tray</b>",
       glitches:[
         { dim:"Object–Scene", type:"Object hallucination", start:3.50, end:5.81, severity:4, desc:"A second grape cluster appears near the right hand while the original grapes remain at the center of the table." },
         { dim:"Instruction Consistency", type:"Ignored constraint", start:3.50, end:5.20, severity:4, desc:"The original center-table grapes stay in place while the hand manipulates a separate grape-like object." },
         { dim:"Task Progress", type:"Failed placement", start:5.20, end:5.81, severity:4, desc:"The grape-like object ends on the tabletop near the tray, not inside it; the original grapes remain on the table." },
-        { dim:"Instruction Consistency", type:"Wrong target location", start:5.20, end:5.81, severity:3, desc:"The final grape-like object is outside the white tray rather than inside it." }
-      ] },
-    { id:"sim_good", cond:"Sim-conditioned", task:"Pick and place the novel object from the <b>cutting board</b> to the <b>cardboard box</b>", duration:8.69, clean:true, glitches:[] },
-    { id:"sim_bad1", cond:"Sim-conditioned", task:"Pick and place the novel object from the <b>cutting board</b> to the <b>pot</b>", duration:8.69,
-      glitches:[
-        { dim:"Object–Scene", type:"Object distortion", start:2.00, end:8.69, severity:4, desc:"The source object looks can-like on the cutting board but appears rounded and ball-like near the pot." },
-        { dim:"Task Progress", type:"Failed placement", start:6.00, end:8.69, severity:4, desc:"The object reaches the pot region but is not clearly released and left inside as a stable object." },
-        { dim:"Task Progress", type:"Ambiguous task success", start:7.00, end:8.69, severity:3, desc:"Shape change and unclear release make it ambiguous whether the original object was placed." },
-        { dim:"Task Progress", type:"Premature termination", start:8.00, end:8.69, severity:3, desc:"The clip ends before a clean release, hand retraction, and stable final state are shown." }
-      ] },
-    { id:"real_bad1", cond:"Real-conditioned", task:"Use the right hand to pick up the <b>shaker</b> and crack it on the side of the <b>bowl</b>", duration:5.81,
+        { dim:"Instruction Consistency", type:"Wrong target location", start:5.20, end:5.81, severity:3, desc:"The final grape-like object is outside the white tray rather than inside it." } ] },
+    { id:"cp_osc_shaker", short:"Shaker appears", gen:"Cosmos-Predict2.5", emb:"Humanoid", duration:5.81,
+      task:"Use the right hand to pick up the <b>shaker</b> and crack it on the side of the <b>bowl</b>",
       glitches:[
         { dim:"Object–Scene", type:"Object hallucination", start:0.00, end:0.60, severity:4, desc:"The red-blue shaker is not present initially and appears near the right hand around 0.5 s with no visible source." },
         { dim:"Task Progress", type:"Ambiguous task success", start:2.50, end:5.81, severity:3, desc:"The shaker is held near the bowl edge, but no clear cracking action or post-contact state is visible." },
         { dim:"Task Progress", type:"Premature termination", start:5.00, end:5.81, severity:3, desc:"The clip ends while the hand still holds the shaker, before a completed cracked state." },
-        { dim:"Instruction Consistency", type:"Ignored constraint", start:2.00, end:5.81, severity:3, desc:"The object is brought near the bowl, but the side-of-bowl cracking constraint is not clearly satisfied." }
-      ] },
-    { id:"real_good", cond:"Real-conditioned", task:"Use the right hand to pick up the <b>white mug</b> from right of the pink plate and move it to the center of the <b>teal plate</b>", duration:5.81, clean:true, glitches:[] }
+        { dim:"Instruction Consistency", type:"Ignored constraint", start:2.00, end:5.81, severity:3, desc:"The object is brought near the bowl, but the side-of-bowl cracking constraint is not clearly satisfied." } ] }
   ];
-  CLIPS.forEach(function(c){ c.video='static/videos/'+c.id+'.mp4'; c.thumb='static/images/thumbs/'+c.id+'.jpg'; });
+  var FEATURED = 10;  /* the first FEATURED clips are shown by default; the rest sit behind "More examples" */
+  CLIPS.forEach(function(c){ c.video='static/videos/clips/'+c.id+'.mp4'; c.thumb='static/images/thumbs/'+c.id+'.jpg'; });
+  function fmtDur(d){ return d<10 ? d.toFixed(1) : d<100 && Math.abs(d-Math.round(d))>0.05 ? d.toFixed(1) : Math.round(d)+''; }
+  function bandOf(d){ return d<=15 ? '≤15 s' : d<=40 ? '15–40 s' : d<=80 ? '40–80 s' : '>80 s'; }
 
   (function(){
     var video=document.getElementById('v-video'), tl=document.getElementById('v-timeline'), ticks=document.getElementById('v-ticks');
@@ -1008,37 +1085,72 @@
     var strip=document.getElementById('filmstrip'), filterEl=document.getElementById('dim-filter');
     var active={}; Object.keys(DIM).forEach(function(d){ active[d]=true; });
     var cur=0, loop=null, segs=[], rows=[], userPaused=false, inView=false;
+    var expanded=false, free=false, moreBtn=document.getElementById('more-btn');
+    function visN(){ return expanded ? CLIPS.length : Math.min(FEATURED, CLIPS.length); }
+    function setExpanded(v){
+      expanded=v; strip.classList.toggle('expanded', v);
+      if(moreBtn){ moreBtn.setAttribute('aria-expanded', v?'true':'false'); moreBtn.textContent = v ? 'Show fewer examples' : 'More examples ('+(CLIPS.length-FEATURED)+')'; moreBtn.style.display = CLIPS.length>FEATURED ? '' : 'none'; }
+      if(!v && cur>=FEATURED) select(0, true);
+      if(typeof updatePills==='function') updatePills();
+    }
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function dimsOf(c){ var o=[]; c.glitches.forEach(function(g){ if(o.indexOf(g.dim)<0) o.push(g.dim); }); return o; }
 
     /* filmstrip */
     CLIPS.forEach(function(c,i){
-      var b=document.createElement('button'); b.type='button'; b.className='thumb'; b.setAttribute('role','tab');
-      b.setAttribute('aria-label', (c.clean?'Failure-free clip':'Clip with '+c.glitches.length+' events')+': '+c.task.replace(/<[^>]+>/g,''));
+      var b=document.createElement('button'); b.type='button'; b.className='thumb'+(i>=FEATURED?' extra':''); b.setAttribute('role','tab');
+      b.setAttribute('aria-label', (c.clean?'Failure-free clip':'Clip with '+c.glitches.length+(c.glitches.length===1?' event':' events'))+', '+c.gen+': '+c.task.replace(/<[^>]+>/g,''));
       var dots=dimsOf(c).map(function(d){ return '<span class="d" style="background:'+DIM[d]+'"></span>'; }).join('');
       b.innerHTML='<img src="'+c.thumb+'" alt="" loading="lazy" width="360" height="225">'+
-        (c.clean?'<span class="tb ok">&#10003; clean</span>':'<span class="tb">'+c.glitches.length+' events</span>')+
-        '<span class="tl">'+(dots||'<span class="d" style="background:#059669"></span>')+'<span class="lbl">'+(c.cond==='Sim-conditioned'?'Sim':'Real')+' &middot; '+c.duration.toFixed(1)+' s</span></span>';
+        (c.clean?'<span class="tb ok">&#10003; clean</span>':'<span class="tb">'+c.glitches.length+(c.glitches.length===1?' event':' events')+'</span>')+
+        '<span class="tl">'+(dots||'<span class="d" style="background:#059669"></span>')+'<span class="lbl"><i class="gsq" style="background:'+GEN[c.gen].color+'" title="'+c.gen+'"></i>'+fmtDur(c.duration)+' s</span></span>';
       b.addEventListener('click', function(){ select(i, true); });
       b.addEventListener('keydown', function(e){
-        if(e.key==='ArrowRight'){ e.preventDefault(); select((i+1)%CLIPS.length, true); strip.children[(i+1)%CLIPS.length].focus(); }
-        if(e.key==='ArrowLeft'){ e.preventDefault(); var j=(i-1+CLIPS.length)%CLIPS.length; select(j, true); strip.children[j].focus(); }
+        if(e.key==='ArrowRight'){ e.preventDefault(); var nx=(i+1)%visN(); select(nx, true); strip.children[nx].focus(); }
+        if(e.key==='ArrowLeft'){ e.preventDefault(); var j=(i-1+visN())%visN(); select(j, true); strip.children[j].focus(); }
       });
       strip.appendChild(b);
     });
 
-    /* dimension filter */
+    /* curation helper: open the page with ?curate to star clips; the shortlist lives in this browser only */
+    if(/[?&]curate/.test(location.search)){
+      setExpanded(true); if(moreBtn) moreBtn.style.display='none';
+      var keep={}; try{ (JSON.parse(localStorage.getItem('rg_keep')||'[]')).forEach(function(k){ keep[k]=1; }); }catch(e){}
+      var bar=document.createElement('div'); bar.style.cssText='position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:50;background:#111;color:#fff;font:0.78rem Georgia,serif;padding:8px 14px;border-radius:999px;display:flex;gap:12px;align-items:center;box-shadow:0 4px 18px rgba(0,0,0,.3);';
+      var cnt=document.createElement('span'), cpy=document.createElement('button'); cpy.type='button'; cpy.textContent='Copy kept ids';
+      cpy.style.cssText='background:#fff;color:#111;border:0;border-radius:999px;padding:3px 10px;cursor:pointer;font:inherit;font-weight:700;';
+      bar.appendChild(cnt); bar.appendChild(cpy); document.body.appendChild(bar);
+      function sync(){ var ids=CLIPS.filter(function(c){return keep[c.id];}).map(function(c){return c.id;});
+        cnt.textContent='Shortlist: '+ids.length+' of '+CLIPS.length; try{ localStorage.setItem('rg_keep', JSON.stringify(ids)); }catch(e){}
+        [].forEach.call(strip.children, function(b,i){ b.classList.toggle('kept', !!keep[CLIPS[i].id]); var k=b.querySelector('.keep'); if(k) k.textContent = keep[CLIPS[i].id] ? '★' : '☆'; }); }
+      cpy.addEventListener('click', function(){ var t=CLIPS.filter(function(c){return keep[c.id];}).map(function(c){return c.id;}).join('\n'); if(navigator.clipboard) navigator.clipboard.writeText(t); cpy.textContent='Copied'; setTimeout(function(){ cpy.textContent='Copy kept ids'; },1200); });
+      [].forEach.call(strip.children, function(b,i){
+        var id=CLIPS[i].id, k=document.createElement('span'); k.className='keep'; k.setAttribute('role','button'); k.setAttribute('aria-label','Shortlist '+id);
+        k.addEventListener('click', function(e){ e.stopPropagation(); keep[id]=keep[id]?0:1; sync(); });
+        b.appendChild(k); var l=document.createElement('span'); l.className='cid'; l.textContent=id; b.appendChild(l);
+      });
+      sync();
+    }
+
+    /* dimension filter: counts are clips (among the visible set) that contain an event of that dimension */
+    var pills=[];
     Object.keys(DIM).forEach(function(d){
-      var n=CLIPS.reduce(function(a,c){ return a+c.glitches.filter(function(g){return g.dim===d;}).length; },0);
       var p=document.createElement('button'); p.className='dim-pill'; p.type='button'; p.setAttribute('aria-pressed','true');
-      p.innerHTML='<span class="sw" style="background:'+DIM[d]+';"></span>'+d+' <span class="ct">'+n+'</span>';
-      if(!n){ p.classList.add('zero'); p.disabled=true; p.title='No example of this dimension among these eight clips'; }
+      p.innerHTML='<span class="sw" style="background:'+DIM[d]+';"></span>'+d+' <span class="ct"></span>';
       p.addEventListener('click', function(){
         active[d]=!active[d]; p.classList.toggle('off', !active[d]); p.setAttribute('aria-pressed', active[d]?'true':'false'); applyFilter();
       });
-      filterEl.appendChild(p);
+      filterEl.appendChild(p); pills.push({d:d, el:p});
     });
+    function updatePills(){
+      if(!pills) return;
+      pills.forEach(function(o){
+        var n=CLIPS.slice(0,visN()).filter(function(c){ return c.glitches.some(function(g){ return g.dim===o.d; }); }).length;
+        o.el.querySelector('.ct').textContent=n; o.el.title=n+(n===1?' clip':' clips')+' with a '+o.d+' event';
+        o.el.classList.toggle('zero', !n); o.el.disabled=!n;
+      });
+    }
 
     function applyFilter(){
       [].forEach.call(document.querySelectorAll('#viewer [data-dim]'), function(el){ el.classList.toggle('dim-off', !active[el.getAttribute('data-dim')]); });
@@ -1050,16 +1162,17 @@
     function toVid(t){ var c=CLIPS[cur]; return video.duration ? (t/c.duration)*video.duration : 0; }
 
     function select(i, user){
-      cur=i; loop=null; var c=CLIPS[i];
+      cur=i; loop=null; free=false; var c=CLIPS[i];
       [].forEach.call(strip.children, function(b,k){ b.classList.toggle('active', k===i); b.setAttribute('aria-selected', k===i?'true':'false'); });
       video.src=c.video; video.poster=c.thumb;
       badge.textContent = c.clean ? 'Generated video · failure-free' : 'Generated video';
-      taskEl.innerHTML='<span class="label-sm" style="display:block; margin-bottom:0.25rem;">Instruction</span>'+c.task;
-      countEl.textContent = c.clean ? 'empty report' : c.glitches.length+' events';
-      metaEl.innerHTML='<span class="meta-chip">Cosmos-Predict2.5</span><span class="meta-chip">'+c.cond+'</span><span class="meta-chip">Humanoid</span><span class="meta-chip">'+c.duration.toFixed(2)+' s</span>'+
+      taskEl.innerHTML='<span class="label-sm" style="display:block; margin-bottom:0.25rem;">Instruction</span>'+c.task+(c.note?'<span class="clip-note">'+c.note+'</span>':'');
+      var foot=document.querySelector('#viewer .report-foot'); if(foot) foot.style.display = c.glitches.some(function(g){return g.severity;}) ? '' : 'none';
+      countEl.textContent = c.clean ? 'empty report' : c.glitches.length+(c.glitches.length===1?' event':' events');
+      metaEl.innerHTML='<span class="meta-chip"><i class="gsq" style="background:'+GEN[c.gen].color+'"></i>'+c.gen+' &middot; '+GEN[c.gen].mech+'</span>'+(c.emb?'<span class="meta-chip">'+c.emb+'</span>':'')+'<span class="meta-chip">'+c.duration.toFixed(1)+' s &middot; '+bandOf(c.duration)+' band</span>'+(c.focus?'<span class="meta-chip focus-chip" id="focus-chip">Looping '+c.focus[0]+'&ndash;'+Math.round(c.focus[1])+' s &middot; click the timeline for the full clip</span>':'')+
         '<span class="viewer-nav"><button type="button" aria-label="Previous clip" data-step="-1">&lsaquo;</button><button type="button" aria-label="Next clip" data-step="1">&rsaquo;</button></span>';
       [].forEach.call(metaEl.querySelectorAll('[data-step]'), function(b){
-        b.addEventListener('click', function(){ select((cur+parseInt(b.getAttribute('data-step'),10)+CLIPS.length)%CLIPS.length, true); });
+        b.addEventListener('click', function(){ select((cur+parseInt(b.getAttribute('data-step'),10)+visN())%visN(), true); });
       });
       /* stack overlapping events into lanes so every span stays visible */
       var laneEnd=[], laneOf=[];
@@ -1071,7 +1184,7 @@
         var left=(g.start/c.duration)*100, w=Math.max(((g.end-g.start)/c.duration)*100,2);
         lanes[laneOf[gi]]+='<div class="timeline-seg" data-gi="'+gi+'" data-dim="'+g.dim+'" title="'+g.type+'" style="left:'+left+'%; width:'+w+'%; background:'+DIM[g.dim]+';"></div>';
       });
-      tl.innerHTML=lanes.map(function(h){ return '<div class="lane">'+h+'</div>'; }).join('')+'<div class="timeline-playhead"></div>';
+      tl.innerHTML=lanes.map(function(h){ return '<div class="lane">'+h+'</div>'; }).join('')+(c.focus?'<div class="focus-band" id="focus-band" style="left:'+(c.focus[0]/c.duration*100)+'%; width:'+((c.focus[1]-c.focus[0])/c.duration*100)+'%;"></div>':'')+'<div class="timeline-playhead"></div>';
       tl.style.position='relative';
       segs=[]; [].forEach.call(tl.querySelectorAll('.timeline-seg'), function(el){ segs[+el.getAttribute('data-gi')]=el; });
       var half=(c.duration/2).toFixed(1);
@@ -1087,7 +1200,7 @@
             '<span class="dim-badge" style="background:'+DIM[g.dim]+';">'+DIM_SHORT[g.dim]+'</span>'+
             '<span class="glitch-type">'+g.type+'</span>'+
             '<span class="time-chip">'+g.start.toFixed(1)+'–'+g.end.toFixed(1)+' s</span>'+
-            '<span class="sev" title="Severity '+SEV_LABEL[g.severity]+'">'+sevDots(g.severity)+'</span>'+
+            (g.severity?'<span class="sev" title="Severity '+SEV_LABEL[g.severity]+'">'+sevDots(g.severity)+'</span>':'')+
             '<span class="replay-tag"><span aria-hidden="true">&#8635;</span> looping</span>'+
             '</div><p class="glitch-desc">'+g.desc+'</p></div></div>';
         });
@@ -1111,14 +1224,16 @@
     }
 
     function maybePlay(){ if(inView && !userPaused && !reduceMotion){ var p=video.play(); if(p&&p.catch) p.catch(function(){}); } }
+    function releaseFocus(){ if(free) return; free=true; var fc=document.getElementById('focus-chip'), fb=document.getElementById('focus-band'); if(fc) fc.remove(); if(fb) fb.classList.add('off'); }
     function setLoop(gi){
+      releaseFocus();
       loop = (loop===gi) ? null : gi;
       rows.forEach(function(r,i){ r.classList.toggle('looping', i===loop); });
       if(loop!=null && video.duration){ video.currentTime=toVid(CLIPS[cur].glitches[gi].start); userPaused=false; var p=video.play(); if(p&&p.catch) p.catch(function(){}); }
     }
     tl.addEventListener('click', function(e){
       if(e.target.classList.contains('timeline-seg')) return;
-      loop=null; rows.forEach(function(r){ r.classList.remove('looping'); });
+      loop=null; rows.forEach(function(r){ r.classList.remove('looping'); }); releaseFocus();
       var rect=tl.getBoundingClientRect(), f=Math.min(Math.max((e.clientX-rect.left)/rect.width,0),1);
       if(video.duration) video.currentTime=f*video.duration;
     });
@@ -1131,6 +1246,7 @@
     function update(){
       var c=CLIPS[cur], ph=tl.querySelector('.timeline-playhead');
       if(video.duration){
+        if(c.focus && !free && loop==null){ var f0=toVid(c.focus[0]), f1=toVid(c.focus[1]); if(video.currentTime>=f1-0.05 || video.currentTime<f0-0.4) video.currentTime=f0; }
         if(loop!=null){ var g=c.glitches[loop], s=toVid(g.start), e=toVid(g.end);
           if(video.currentTime>=e-0.03 || video.currentTime<s-0.08) video.currentTime=s; }
         var frac=video.currentTime/video.duration, t=frac*c.duration;
@@ -1147,6 +1263,9 @@
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(en){ en.forEach(function(x){ inView=x.isIntersecting; if(inView) maybePlay(); else video.pause(); }); }, {threshold:0.25}).observe(video);
     }
+    if(moreBtn) moreBtn.addEventListener('click', function(){ setExpanded(!expanded); });
+    var curateOn=/[?&]curate/.test(location.search);
+    setExpanded(curateOn); if(curateOn && moreBtn) moreBtn.style.display='none';
     select(0, false);
     requestAnimationFrame(update);
   })();

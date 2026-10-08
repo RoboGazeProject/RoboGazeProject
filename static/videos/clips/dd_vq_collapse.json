@@ -1,0 +1,59 @@
+{
+  "clip_id": "dd_vq_collapse",
+  "file": "dd_vq_collapse.mp4",
+  "thumbnail": "../../images/thumbs/dd_vq_collapse.jpg",
+  "title": "Long-horizon collapse",
+  "instruction": "use the right hand to pick up bottles on the shelf and put them into the box",
+  "generator": "DreamDojo",
+  "generation_mechanism": "autoregressive",
+  "embodiment": "humanoid",
+  "duration_s": 142.1,
+  "duration_band": ">80s",
+  "resolution": "640x480",
+  "fps": 10,
+  "frames": 1421,
+  "codec": "h264",
+  "size_bytes": 9021012,
+  "failure_free": false,
+  "n_events": 3,
+  "dimensions": [
+    "OSC",
+    "VQ"
+  ],
+  "page_note": "Long horizon: one of the 35 benchmark clips longer than 80 s, where RoboGaze's gain over the strongest control is largest.",
+  "events": [
+    {
+      "event_id": "dd_vq_collapse_e1",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_disappearance",
+      "start_s": 10.5,
+      "end_s": 21.7,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "The black bottle that the robot is aiming to pick up disappears during interaction with the right hand."
+    },
+    {
+      "event_id": "dd_vq_collapse_e2",
+      "dimension": "object_scene",
+      "dimension_code": "OSC",
+      "type": "object_hallucination",
+      "start_s": 25.2,
+      "end_s": 30,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "An apple-like object appears from nowhere, held by the right hand."
+    },
+    {
+      "event_id": "dd_vq_collapse_e3",
+      "dimension": "visual_quality",
+      "dimension_code": "VQ",
+      "type": "frame_corruption",
+      "start_s": 30,
+      "end_s": 141.2,
+      "severity": null,
+      "evidence_limiting": false,
+      "description": "Objects and background blur and blend together, so the task objects can no longer be told apart."
+    }
+  ]
+}
