@@ -8,7 +8,7 @@ Robot world models now generate synthetic manipulation videos, but evaluating th
 
 ## About this repository
 
-This repository hosts the static project page for an anonymous submission under double-blind review. It contains no author information. Code and the benchmark will be made public upon acceptance.
+This repository hosts the venue-neutral RoboGaze project page, shared by the conference submission and arXiv preprint. Author identities and links that reveal them are omitted while this URL is used for anonymous review. Paper, code, and benchmark links will be enabled as resources become available.
 
 To view the page locally:
 
