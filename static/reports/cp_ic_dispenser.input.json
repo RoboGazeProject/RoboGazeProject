@@ -1,0 +1,9 @@
+{
+  "clip_id": "cp_ic_dispenser",
+  "video": "../videos/clips/cp_ic_dispenser.mp4",
+  "instruction": "Use the right hand to pick up the glass, place it under the Coca-Cola dispenser, and press the lever to fill it",
+  "initial_observation": "../images/usage/dispenser-initial.jpg",
+  "duration_s": 5.81,
+  "fps": 16,
+  "resolution": "1280x800"
+}

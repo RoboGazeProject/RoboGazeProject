@@ -1,0 +1,857 @@
+{
+  "source": "Frames extracted from existing demo clips; timestamps use each clip annotation scale. No new inference.",
+  "clips": {
+    "cp_clean_a": [
+      [
+        {
+          "src": "static/images/evidence/cp_clean_a-e0-0.jpg",
+          "time_s": 0,
+          "label": "Initial state"
+        },
+        {
+          "src": "static/images/evidence/cp_clean_a-e0-1.jpg",
+          "time_s": 4.34,
+          "label": "Execution"
+        },
+        {
+          "src": "static/images/evidence/cp_clean_a-e0-2.jpg",
+          "time_s": 8.54,
+          "label": "Final state"
+        }
+      ]
+    ],
+    "cp_clean_b": [
+      [
+        {
+          "src": "static/images/evidence/cp_clean_b-e0-0.jpg",
+          "time_s": 0,
+          "label": "Initial state"
+        },
+        {
+          "src": "static/images/evidence/cp_clean_b-e0-1.jpg",
+          "time_s": 2.9,
+          "label": "Execution"
+        },
+        {
+          "src": "static/images/evidence/cp_clean_b-e0-2.jpg",
+          "time_s": 5.66,
+          "label": "Final state"
+        }
+      ]
+    ],
+    "cp_ic_dispenser": [
+      [
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e0-0.jpg",
+          "time_s": 0.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e0-1.jpg",
+          "time_s": 2.75,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e0-2.jpg",
+          "time_s": 4.9,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e1-0.jpg",
+          "time_s": 1.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e1-1.jpg",
+          "time_s": 3.5,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e1-2.jpg",
+          "time_s": 5.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e2-0.jpg",
+          "time_s": 1.8,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e2-1.jpg",
+          "time_s": 3.25,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e2-2.jpg",
+          "time_s": 4.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e3-0.jpg",
+          "time_s": 1.8,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e3-1.jpg",
+          "time_s": 3.25,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e3-2.jpg",
+          "time_s": 4.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e4-0.jpg",
+          "time_s": 3.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e4-1.jpg",
+          "time_s": 4.9,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_ic_dispenser-e4-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "cp_osc_pickup": [
+      [
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e0-0.jpg",
+          "time_s": 0.1,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e0-1.jpg",
+          "time_s": 1.5,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e0-2.jpg",
+          "time_s": 2.6,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e1-0.jpg",
+          "time_s": 0.1,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e1-1.jpg",
+          "time_s": 1.5,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e1-2.jpg",
+          "time_s": 2.6,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e2-0.jpg",
+          "time_s": 2.1,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e2-1.jpg",
+          "time_s": 3.4,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e2-2.jpg",
+          "time_s": 4.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e3-0.jpg",
+          "time_s": 2.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e3-1.jpg",
+          "time_s": 5.5,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e3-2.jpg",
+          "time_s": 8.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e4-0.jpg",
+          "time_s": 0.1,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e4-1.jpg",
+          "time_s": 2.4,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e4-2.jpg",
+          "time_s": 4.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e5-0.jpg",
+          "time_s": 3.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e5-1.jpg",
+          "time_s": 6.3,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_pickup-e5-2.jpg",
+          "time_s": 8.57,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "cp_osc_shaker": [
+      [
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e0-0.jpg",
+          "time_s": 0,
+          "label": "Initial frame"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e0-1.jpg",
+          "time_s": 0.3,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e0-2.jpg",
+          "time_s": 1.0,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e1-0.jpg",
+          "time_s": 1.8,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e1-1.jpg",
+          "time_s": 4.15,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e1-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e2-0.jpg",
+          "time_s": 4.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e2-1.jpg",
+          "time_s": 5.4,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e2-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e3-0.jpg",
+          "time_s": 1.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e3-1.jpg",
+          "time_s": 3.9,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shaker-e3-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "cp_osc_shape": [
+      [
+        {
+          "src": "static/images/evidence/cp_osc_shape-e0-0.jpg",
+          "time_s": 0.5,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shape-e0-1.jpg",
+          "time_s": 3.1,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shape-e0-2.jpg",
+          "time_s": 5.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_shape-e1-0.jpg",
+          "time_s": 1.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shape-e1-1.jpg",
+          "time_s": 2.9,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shape-e1-2.jpg",
+          "time_s": 4.2,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_osc_shape-e2-0.jpg",
+          "time_s": 2.8,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shape-e2-1.jpg",
+          "time_s": 6.09,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_osc_shape-e2-2.jpg",
+          "time_s": 8.57,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "cp_pp_grape": [
+      [
+        {
+          "src": "static/images/evidence/cp_pp_grape-e0-0.jpg",
+          "time_s": 1.8,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_pp_grape-e0-1.jpg",
+          "time_s": 3.25,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_pp_grape-e0-2.jpg",
+          "time_s": 4.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_pp_grape-e1-0.jpg",
+          "time_s": 4.0,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_pp_grape-e1-1.jpg",
+          "time_s": 5.25,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_pp_grape-e1-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "cp_pp_spatula": [
+      [
+        {
+          "src": "static/images/evidence/cp_pp_spatula-e0-0.jpg",
+          "time_s": 4.4,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_pp_spatula-e0-1.jpg",
+          "time_s": 5.45,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_pp_spatula-e0-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_pp_spatula-e1-0.jpg",
+          "time_s": 3.4,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_pp_spatula-e1-1.jpg",
+          "time_s": 4.9,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_pp_spatula-e1-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "cp_rbc_elbow": [
+      [
+        {
+          "src": "static/images/evidence/cp_rbc_elbow-e0-0.jpg",
+          "time_s": 5.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_rbc_elbow-e0-1.jpg",
+          "time_s": 7.0,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_rbc_elbow-e0-2.jpg",
+          "time_s": 8.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_rbc_elbow-e1-0.jpg",
+          "time_s": 5.5,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_rbc_elbow-e1-1.jpg",
+          "time_s": 7.45,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_rbc_elbow-e1-2.jpg",
+          "time_s": 8.57,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "cp_rbc_fingers": [
+      [
+        {
+          "src": "static/images/evidence/cp_rbc_fingers-e0-0.jpg",
+          "time_s": 2.7,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_rbc_fingers-e0-1.jpg",
+          "time_s": 5.85,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_rbc_fingers-e0-2.jpg",
+          "time_s": 8.57,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_rbc_fingers-e1-0.jpg",
+          "time_s": 5.4,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_rbc_fingers-e1-1.jpg",
+          "time_s": 7.4,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_rbc_fingers-e1-2.jpg",
+          "time_s": 8.57,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "cp_tp_grapes": [
+      [
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e0-0.jpg",
+          "time_s": 2.8,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e0-1.jpg",
+          "time_s": 4.65,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e0-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e1-0.jpg",
+          "time_s": 2.8,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e1-1.jpg",
+          "time_s": 4.35,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e1-2.jpg",
+          "time_s": 5.6,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e2-0.jpg",
+          "time_s": 4.5,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e2-1.jpg",
+          "time_s": 5.5,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e2-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e3-0.jpg",
+          "time_s": 4.5,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e3-1.jpg",
+          "time_s": 5.5,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_grapes-e3-2.jpg",
+          "time_s": 5.69,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "cp_tp_placement": [
+      [
+        {
+          "src": "static/images/evidence/cp_tp_placement-e0-0.jpg",
+          "time_s": 1.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_placement-e0-1.jpg",
+          "time_s": 5.34,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_placement-e0-2.jpg",
+          "time_s": 8.57,
+          "label": "Final frame"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_tp_placement-e1-0.jpg",
+          "time_s": 5.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_placement-e1-1.jpg",
+          "time_s": 7.34,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_placement-e1-2.jpg",
+          "time_s": 8.57,
+          "label": "Final frame"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_tp_placement-e2-0.jpg",
+          "time_s": 6.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_placement-e2-1.jpg",
+          "time_s": 7.84,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_placement-e2-2.jpg",
+          "time_s": 8.57,
+          "label": "Final frame"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/cp_tp_placement-e3-0.jpg",
+          "time_s": 7.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_placement-e3-1.jpg",
+          "time_s": 8.34,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/cp_tp_placement-e3-2.jpg",
+          "time_s": 8.57,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "dd_osc_button": [
+      [
+        {
+          "src": "static/images/evidence/dd_osc_button-e0-0.jpg",
+          "time_s": 11.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dd_osc_button-e0-1.jpg",
+          "time_s": 15.5,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dd_osc_button-e0-2.jpg",
+          "time_s": 19.4,
+          "label": "After interval"
+        }
+      ]
+    ],
+    "dd_osc_mug": [
+      [
+        {
+          "src": "static/images/evidence/dd_osc_mug-e0-0.jpg",
+          "time_s": 33.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dd_osc_mug-e0-1.jpg",
+          "time_s": 38.5,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dd_osc_mug-e0-2.jpg",
+          "time_s": 43.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/dd_osc_mug-e1-0.jpg",
+          "time_s": 39.4,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dd_osc_mug-e1-1.jpg",
+          "time_s": 44.7,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dd_osc_mug-e1-2.jpg",
+          "time_s": 49.18,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "dd_vq_collapse": [
+      [
+        {
+          "src": "static/images/evidence/dd_vq_collapse-e0-0.jpg",
+          "time_s": 9.8,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dd_vq_collapse-e0-1.jpg",
+          "time_s": 16.1,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dd_vq_collapse-e0-2.jpg",
+          "time_s": 22.1,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/dd_vq_collapse-e1-0.jpg",
+          "time_s": 24.5,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dd_vq_collapse-e1-1.jpg",
+          "time_s": 27.6,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dd_vq_collapse-e1-2.jpg",
+          "time_s": 30.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/dd_vq_collapse-e2-0.jpg",
+          "time_s": 29.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dd_vq_collapse-e2-1.jpg",
+          "time_s": 85.6,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dd_vq_collapse-e2-2.jpg",
+          "time_s": 141.6,
+          "label": "After interval"
+        }
+      ]
+    ],
+    "dd_vq_lowvis": [
+      [
+        {
+          "src": "static/images/evidence/dd_vq_lowvis-e0-0.jpg",
+          "time_s": 14.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dd_vq_lowvis-e0-1.jpg",
+          "time_s": 17.5,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dd_vq_lowvis-e0-2.jpg",
+          "time_s": 20.4,
+          "label": "After interval"
+        }
+      ]
+    ],
+    "dg_osc_switch": [
+      [
+        {
+          "src": "static/images/evidence/dg_osc_switch-e0-0.jpg",
+          "time_s": 0,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dg_osc_switch-e0-1.jpg",
+          "time_s": 1.15,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dg_osc_switch-e0-2.jpg",
+          "time_s": 2.4,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/dg_osc_switch-e1-0.jpg",
+          "time_s": 2.8,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dg_osc_switch-e1-1.jpg",
+          "time_s": 3.85,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dg_osc_switch-e1-2.jpg",
+          "time_s": 4.6,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/dg_osc_switch-e2-0.jpg",
+          "time_s": 5.1,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dg_osc_switch-e2-1.jpg",
+          "time_s": 6.7,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dg_osc_switch-e2-2.jpg",
+          "time_s": 8.0,
+          "label": "After interval"
+        }
+      ],
+      [
+        {
+          "src": "static/images/evidence/dg_osc_switch-e3-0.jpg",
+          "time_s": 6.9,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dg_osc_switch-e3-1.jpg",
+          "time_s": 9.58,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dg_osc_switch-e3-2.jpg",
+          "time_s": 11.44,
+          "label": "Final frame"
+        }
+      ]
+    ],
+    "dg_rbc_toaster": [
+      [
+        {
+          "src": "static/images/evidence/dg_rbc_toaster-e0-0.jpg",
+          "time_s": 5.3,
+          "label": "Context"
+        },
+        {
+          "src": "static/images/evidence/dg_rbc_toaster-e0-1.jpg",
+          "time_s": 8.0,
+          "label": "Reported interval"
+        },
+        {
+          "src": "static/images/evidence/dg_rbc_toaster-e0-2.jpg",
+          "time_s": 10.4,
+          "label": "After interval"
+        }
+      ]
+    ]
+  }
+}
