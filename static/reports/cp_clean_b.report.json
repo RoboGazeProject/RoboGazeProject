@@ -1,8 +1,0 @@
-{
-  "clip_id": "cp_clean_b",
-  "instruction": "Use the right hand to pick up the white mug from right of the pink plate and move it to the center of the teal plate",
-  "duration_s": 5.81,
-  "failure_free": true,
-  "n_events": 0,
-  "events": []
-}
