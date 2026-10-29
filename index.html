@@ -74,7 +74,6 @@
       <span class="btn off" aria-disabled="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Paper <small>soon</small></span>
       <span class="btn off" aria-disabled="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>Code <small>soon</small></span>
       <span class="btn off" aria-disabled="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Benchmark <small>soon</small></span>
-      <button class="btn" type="button" id="openOverview" data-open-overview><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>Watch the 3-minute overview</button>
     </div>
 
     <div class="stats">
@@ -86,7 +85,17 @@
 
     <figure class="figure-card">
       <a class="zoom" href="static/img/teaser.webp" target="_blank" rel="noopener" aria-label="Open the figure at full size"><img src="static/img/teaser.webp" srcset="static/img/teaser-1200.webp 1200w, static/img/teaser.webp 2400w" sizes="(max-width: 1160px) 100vw, 1110px" width="2400" height="1188" alt="Left: a generated clip in which a robot hand passes through a cup between 2.4 and 3.1 seconds. Middle: a score-based evaluator gives 4 out of 5 and misses the failure, while the RoboGaze diagnosis states what (object penetration), when (2.4 to 3.1 s), why and severity 4 of 5. Right: bar charts of event description F1 and clean-clip accuracy for CoT, GLiDE+ and RoboGaze, with dashed lines for human agreement."></a>
-      <figcaption><b>From a score to a diagnosis.</b> A score-based judge rates this clip 4/5 on every axis and misses the hand passing through the cup. RoboGaze localizes the failure at 2.4–3.1 s, explains it and grades its severity, matching the human annotation. Right: event description F<sub>1</sub> and clean-clip accuracy of chain-of-thought prompting (CoT), the GLiDE+ detector and RoboGaze (RG) on Gemini 3.1 Pro; dashed lines mark human agreement.</figcaption>
+      <figcaption><b>A score misses it. RoboGaze explains it.</b> A judge rates this clip 4/5 and misses the hand passing through the cup. Results on Gemini 3.1 Pro; RG is RoboGaze.</figcaption>
+    </figure>
+
+    <figure class="ov" id="overview">
+      <div class="ov-box">
+        <video id="ovVideo" controls muted loop playsinline preload="none" poster="static/video/overview.jpg" width="1920" height="1080" data-audio aria-label="RoboGaze overview video: the problem, a diagnosis as the clip plays, the method, the benchmark and the main results.">
+          <source src="static/video/overview.mp4" type="video/mp4">
+        </video>
+        <button class="ov-sound" type="button" id="ovSound" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path class="w" d="M16 9a5 5 0 0 1 0 6"/><path class="w" d="M19.4 18.4a9 9 0 0 0 0-12.8"/><path class="m" d="m22 9-6 6"/><path class="m" d="m16 9 6 6"/></svg><span>Sound on</span></button>
+      </div>
+      <figcaption><b>RoboGaze in two minutes.</b> The problem, a diagnosis as the clip plays, the method, the benchmark and the results.</figcaption>
     </figure>
   </div>
 </header>
@@ -138,7 +147,7 @@
     </div>
     <figure class="figure-card" style="margin-top:0">
       <a class="zoom" href="static/img/pipeline.webp" target="_blank" rel="noopener" aria-label="Open the figure at full size"><img src="static/img/pipeline.webp" srcset="static/img/pipeline-1200.webp 1200w, static/img/pipeline.webp 2400w" sizes="(max-width: 1160px) 100vw, 1110px" width="2400" height="1024" loading="lazy" alt="RoboGaze framework in three phases: input and context grounding with task memory, scene memory, an observer over fixed-length windows and subtask segments; candidate discovery where a router sends suspicious spans to six dimension-specific specialists that produce failure hypotheses; verification and reporting where a critic verifier accepts, merges or rejects hypotheses and synthesizes the final report with dimension, description, severity and time."></a>
-      <figcaption><b>The RoboGaze framework.</b> (1) Build task and scene memories and split the video into subtask segments. (2) A router sends each segment to at most three of six dimension-specific specialists, which propose failure hypotheses. (3) A critic verifies the hypotheses and writes the structured report.</figcaption>
+      <figcaption><b>Three phases.</b> Ground the task and scene, send each subtask to at most three of six specialists, then verify every hypothesis before it enters the report.</figcaption>
     </figure>
     <figure class="anim">
       <video id="animVideo" class="autoplay" muted loop playsinline preload="none" poster="static/video/method/method.webp" width="1920" height="1080" aria-label="Animation of RoboGaze diagnosing one clip: inputs, task and scene memory, observer windows and subtasks, router scores, specialist hypotheses, critic verdicts and the final report.">
@@ -357,11 +366,6 @@
   </div>
 </footer>
 
-<dialog class="lb" id="lb" aria-label="Overview video">
-  <button class="x" type="button" id="lbClose" aria-label="Close video">×</button>
-  <video id="lbVideo" controls playsinline preload="none" poster="static/video/overview.jpg"><source src="static/video/overview.mp4" type="video/mp4"></video>
-  <div class="cap">RoboGaze in 3 minutes: the problem, the framework, RoboGazeBench and the main results.</div>
-</dialog>
 
 <script src="static/js/site.js" defer></script>
 </body>

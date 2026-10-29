@@ -256,19 +256,42 @@
     window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll); onScroll();
   }
 
-  /* ------------------------------------------------------------- overview video */
-  function Lightbox() {
-    var dlg = $('lb'), v = $('lbVideo');
-    if (!dlg) return;
-    [].forEach.call(document.querySelectorAll('[data-open-overview]'), function (btn) {
-      btn.addEventListener('click', function () { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); var p = v.play(); if (p && p.catch) p.catch(function () {}); });
-    });
-    function close() { v.pause(); if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
-    $('lbClose').addEventListener('click', close);
-    dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
-    dlg.addEventListener('close', function () { v.pause(); });
+  /* ------------------------------------------------------------- overview video
+     Muted autoplay while on screen (browsers only autoplay muted video). Pauses when
+     scrolled away, never restarts after the viewer pauses it. The video is narrated:
+     data-audio on the <video> shows the "Sound on" button, which unmutes and restarts
+     from the beginning. */
+  function Overview() {
+    var v = $('ovVideo');
+    if (!v) return;
+    var auto = false, userPaused = false;
+    v.addEventListener('pause', function () { if (auto) auto = false; else if (!v.ended) userPaused = true; });
+    v.addEventListener('play', function () { userPaused = false; });
+    function play() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    if (!reduce && 'IntersectionObserver' in window) {
+      v.preload = 'metadata';
+      new IntersectionObserver(function (en) {
+        en.forEach(function (x) {
+          if (x.isIntersecting) { if (!userPaused && v.paused) play(); }
+          else if (!v.paused) { auto = true; v.pause(); }
+        });
+      }, { threshold: 0.4 }).observe(v);
+    }
+    var btn = $('ovSound');
+    if (btn && v.hasAttribute('data-audio')) {
+      var restarted = false, label = btn.querySelector('span');
+      function sync() { btn.classList.toggle('on', !v.muted); label.textContent = v.muted ? 'Sound on' : 'Mute'; btn.setAttribute('aria-pressed', String(!v.muted)); }
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        v.muted = !v.muted;
+        if (!v.muted && !restarted) { restarted = true; v.currentTime = 0; }
+        if (!v.muted) { userPaused = false; play(); }
+        sync();
+      });
+      v.addEventListener('volumechange', sync); sync();
+    }
   }
 
-  function init() { Demo(); Loops(); Nav(); Lightbox(); }
+  function init() { Demo(); Loops(); Nav(); Overview(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
